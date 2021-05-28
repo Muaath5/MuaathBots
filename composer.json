@@ -1,9 +1,19 @@
 {
-  "name": "muaath5/heroku-telegram-bots",
+  "name": "muaath5/muaath-bots",
   "description": "A Telegram bots in PHP uploaded on Heroku",
   "type": "project",
   "homepage": "https://muaath-bots.herokuapp.com/",  
-  "keywords": ["php", "telegram-bot", "payment", "no-db", "heroku-app"],
+  "keywords": [
+    "php",
+    "telegram-bot",
+    "payment",
+    "no-db",
+    "heroku-app",
+    "heroku",
+    "free",
+    "telegram-bot-api",
+    "webhook"
+  ],
   "version": "1.1-beta",
   "readme": "README.md",
   "authors": [
