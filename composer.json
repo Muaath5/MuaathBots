@@ -4,14 +4,22 @@
   "type": "project",
   "homepage": "https://muaath-bots.herokuapp.com/",  
   "keywords": ["php", "telegram-bot", "payment", "no-db", "heroku-app"],
-  "version": "1.0",
+  "version": "1.1-beta",
   "readme": "README.md",
   "authors": [
     {
       "name": "Muaath Alqarni",
-      "email": "muaath1428@hotmail.com"
+      "email": "muaath1428@hotmail.com",
+      "role": "Developer"
     }
   ],
+  "support": {
+    "email": "muaath1428@hotmail.com",
+    "source": "https://github.com/Muaath5/MuaathBots",
+    "chat": "https://t.me/MuaathBotsChat",
+    "issues": "https://github.com/Muaath5/MuaathBots/issues"
+  },
+  "license": "GPL-3.0-only",
   "require": {},
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
