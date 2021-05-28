@@ -14,7 +14,6 @@
     "telegram-bot-api",
     "webhook"
   ],
-  "version": "1.1-beta",
   "readme": "README.md",
   "authors": [
     {

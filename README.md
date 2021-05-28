@@ -23,7 +23,7 @@
 | Is there any idea to pay for bots?      | Currently, No. Because this project hasn't any money source like some bots.                                              |
 
 ## Issues, Pull requests, And Questions
-Please read [Contributing guidelines](CONTRIBUTING)
+Please read [**Contributing guidelines**](CONTRIBUTING.md)
 
 ## Importing project
 **Before importing this project, Read these instructions please:**
@@ -56,4 +56,4 @@ ssh-add github_key
 
 
 ## Licence
-This project is under [###### Licence](LICENCE).
+This project is under [GPL v3.0 Licence](LICENCE).

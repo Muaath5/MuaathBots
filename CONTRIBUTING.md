@@ -29,6 +29,8 @@ You should report a bug/feature request in [issues tab](https://github.com/Muaat
 
 New bot pull requests should follow [new bot requests instructions](#new-bot-requests-instructions).
 
+**Note:** Also add yourself in [`composer.json`](composer.json) file in `authors` section, And choose `role` as `Developer` or `Translator`.
+
 ## Project forks
 If you have a fork from Muaath Bots, It'll be good to see it in [discussions](https://github.com/Muaath5/MuaathBots/discussions)!
 Upload to GitHub
