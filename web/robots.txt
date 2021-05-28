@@ -1,0 +1,17 @@
+# Disable bots folder
+User-agent: *
+Disallow: /bots/
+
+User-agent: *
+Disallow: /admin/
+
+User-agent: *
+Disallow: /css/
+
+User-agent: *
+Disallow: /.htaccess
+
+User-agent: *
+Disallow: /lib/
+
+Sitemap: /sitemap.xml

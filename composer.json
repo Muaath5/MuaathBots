@@ -1,0 +1,19 @@
+{
+  "name": "muaath5/heroku-telegram-bots",
+  "description": "A Telegram bots in PHP uploaded on Heroku",
+  "type": "project",
+  "homepage": "https://muaath-bots.herokuapp.com/",  
+  "keywords": ["php", "telegram-bot", "payment", "no-db", "heroku-app"],
+  "version": "1.0",
+  "readme": "README.md",
+  "authors": [
+    {
+      "name": "Muaath Alqarni",
+      "email": "muaath1428@hotmail.com"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
+  }
+}
