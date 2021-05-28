@@ -79,5 +79,6 @@ if (!empty($update))
 }
 else
 {
+    define("BotDir", dirname(__FILE__));
     include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php';
 }

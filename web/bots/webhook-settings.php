@@ -56,7 +56,7 @@
 
 
             echo '<h2><code>setWebhook</code> method called</h2>';
-            $webhookResult = SetWebhook('https://muaath-bots.herokuapp.com/bots/' . BotDirectory . '/webhook.php?token=' . Token, '', $ip_address, $max_connections, $allowed_updates);
+            $webhookResult = SetWebhook('https://muaath-bots.herokuapp.com/bots/' . BotDir . '/webhook.php?token=' . Token, '', $ip_address, $max_connections, $allowed_updates);
             if ($webhookResult == true)
             {
                 echo '<h1 class="success">Success</h1>';
