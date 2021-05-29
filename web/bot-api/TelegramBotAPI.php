@@ -1,18 +1,59 @@
 <?php
+    include './UpdatesHandler.php';
+    include './BotAPIException.php';
+    include './ErrorParameters.php';
+
+
     class TelegramBot
     {
         private ?string $TelegramUrl = null;
         private ?string $Token = null;
         private ?string $TelegramFileUrl = null;
         
-        public function __constructor(string $token)
+        private ?UpdatesHandler $UpdatesHandler = null;
+
+        public function __constructor(string $token, UpdatesHandler $updates_handler = null)
         {
             $this->Token = $token;
             $this->TelegramUrl = 'https://api.telegram.org/bot' . $this->Token . '/';
             $this->TelegramFileUrl = 'https://api.telegram.org/file/bot' . $this->Token . '/';
+            $this->UpdatesHandler = $updates_handler;
         }
+
+        public function SetUpdatesHandler(UpdatesHandler $new_updates_handler)
+        {
+            $this->UpdatesHandler = $new_updates_handler;
+        }
+
+        public function OnUpdate(object $update) : bool
+        {
+            switch ($update)
+            {
+                case property_exists($update, 'message'):
+                    return $this->UpdatesHandler->MessageHandler($update->message);
+                
+                case property_exists($update, 'edited_message'):
+                    return $this->UpdatesHandler->EditedMessageHandler($update->edited_message);
+
+
+                case property_exists($update, 'channel_post'):
+                    return $this->UpdatesHandler->ChannelPostHandler($update->channel_post);
+
+                case property_exists($update, 'edited_channel_post'):
+                    return $this->UpdatesHandler->EditedChannelPostHandler($update->edited_channel_post);
+
+
+                case property_exists($update, 'inline_query'):
+                    return $this->UpdatesHandler->InlineQueryHandler($update->message);
+
+                default:
+                    # Don't do anything, Only when Bot API version in later
+                    return false;
+            }
+        }
+
         // Needs to "caption_entities"
-        function SendMessage(int|string $chatId, string $text, int $replyToMessageId = 0, string $replyMarkup = "", string $parseMode = "HTML", bool $disableWebpagePreview = false, bool $disableNotification = false, bool $allowSendingWithoutReply = true)
+        public function SendMessage(int|string $chatId, string $text, int $replyToMessageId = 0, string $replyMarkup = "", string $parseMode = "HTML", bool $disableWebpagePreview = false, bool $disableNotification = false, bool $allowSendingWithoutReply = true)
         {
             $params = 
             [
@@ -25,10 +66,10 @@
                 "disable_notification" => $disableNotification,
                 "allow_sending_without_reply" => $allowSendingWithoutReply
             ];
-            return $this->ProcessTelegramBotMethod("sendMessage", $params);
+            return $this->ProcessBotAPIMethod("sendMessage", $params);
         }
 
-        function ForwardMessage($fromChatId, int $messageId, $chatId, bool $disableNotification = false)
+        public function ForwardMessage($fromChatId, int $messageId, $chatId, bool $disableNotification = false)
         {
             $params = 
             [
@@ -37,9 +78,9 @@
                 "message_id" => $messageId,
                 "disable_notification" => $disableNotification
             ];
-            return $this->ProcessTelegramBotMethod("forwardMessage", $params);
+            return $this->ProcessBotAPIMethod("forwardMessage", $params);
         }
-        function CopyMessage($fromChatId, int $messageId, $chatId, string $caption = "", string $parseMode = 'HTML', string $captionEntities = '', int $replyToMessageId = 0, bool $disableNotification = false, bool $allowSendingWithoutReply = true, string $replyMarkup = "")
+        public function CopyMessage($fromChatId, int $messageId, $chatId, string $caption = "", string $parseMode = 'HTML', string $captionEntities = '', int $replyToMessageId = 0, bool $disableNotification = false, bool $allowSendingWithoutReply = true, string $replyMarkup = "")
         {
             $params = 
             [
@@ -54,11 +95,11 @@
                 "disable_notification" => $disableNotification,
                 "reply_markup" => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod("copyMessage", $params);
+            return $this->ProcessBotAPIMethod("copyMessage", $params);
         }
 
         # Non-offical Telegarm Bot API method
-        function FullCopyForMessage($msg, $chatId, int $replyToMessageId = 0, string $replyMarkup = '')
+        public function FullCopyForMessage(object $msg, string|int $chatId, int $replyToMessageId = 0, string $replyMarkup = '')
         {
             $caption = "";
             $captionEntities = "";
@@ -72,10 +113,10 @@
             }
 
             # Allow notification, Allow sending without reply.
-            return CopyMessage($msg->chat->id, $msg->message_id, $chatId, $caption, $parseMode = "", $captionEntities, $replyToMessageId, false, true, $replyMarkup); 
+            return $this->CopyMessage($msg->chat->id, $msg->message_id, $chatId, $caption, $parseMode = "", $captionEntities, $replyToMessageId, false, true, $replyMarkup); 
         }
 
-        function PinChatMessage($chatId, $messageId, $disableNotification = false)
+        public function PinChatMessage($chatId, $messageId, $disableNotification = false)
         {
             $params = 
             [
@@ -83,45 +124,45 @@
                 "message_id" => $messageId,
                 "disable_notification" => $disableNotification
             ];
-            return $this->ProcessTelegramBotMethod("pinChatMessage", $params);
+            return $this->ProcessBotAPIMethod("pinChatMessage", $params);
         }
 
         // Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
-        function UnpinChatMessage($chatId, int $messageId = 0)
+        public function UnpinChatMessage($chatId, int $messageId = 0)
         {
             $params = 
             [
                 "chat_id" => $chatId,
                 "message_id" => $messageId,
             ];
-            return $this->ProcessTelegramBotMethod("unpinChatMessage", $params);
+            return $this->ProcessBotAPIMethod("unpinChatMessage", $params);
         }
 
-        function UnpinAllChatMessages($chatId)
+        public function UnpinAllChatMessages($chatId)
         {
             $params = 
             [
                 "chat_id" => $chatId
             ];
-            return $this->ProcessTelegramBotMethod("unpinAllChatMessages", $params);
+            return $this->ProcessBotAPIMethod("unpinAllChatMessages", $params);
         }
 
-        function GetFile($fileId)
+        public function GetFile($fileId)
         {
             $params = 
             [
                 "file_id" => $fileId
             ];
-            return $this->ProcessTelegramBotMethod("getFile", $params);
+            return $this->ProcessBotAPIMethod("getFile", $params);
         }
 
-        function GetMe()
+        public function GetMe()
         {
             $params = [];
-            return $this->ProcessTelegramBotMethod("getMe", $params);
+            return $this->ProcessBotAPIMethod("getMe", $params);
         }
 
-        function AnswerInlineQuery(string $inlineQueryId, string $results, int $cacheTime = 300, bool $isPersonal = false, string $nextOffset = "", string $switchPmText = "", string $switchPmParameter = "")
+        public function AnswerInlineQuery(string $inlineQueryId, string $results, int $cacheTime = 300, bool $isPersonal = false, string $nextOffset = "", string $switchPmText = "", string $switchPmParameter = "")
         {
             $params = 
             [
@@ -133,10 +174,10 @@
                 "switch_pm_text" => $switchPmText,
                 "switch_pm_parameter" => $switchPmParameter
             ];
-            return $this->ProcessTelegramBotMethod("answerInlineQuery", $params);
+            return $this->ProcessBotAPIMethod("answerInlineQuery", $params);
         }
 
-        function AnswerCallbackQuery(string $id, string $text = '', bool $showAlert = false, string $url = '', int $cacheTime = 0)
+        public function AnswerCallbackQuery(string $id, string $text = '', bool $showAlert = false, string $url = '', int $cacheTime = 0)
         {
             $params = 
             [
@@ -146,10 +187,10 @@
                 'url' => $url,
                 'cache_time' => $cacheTime
             ];
-            return $this->ProcessTelegramBotMethod('answerCallbackQuery', $params);
+            return $this->ProcessBotAPIMethod('answerCallbackQuery', $params);
         }
 
-        function EditMessageText($chatId, int $messageId, string $inlineMessageId = '', string $text, string $parseMode = 'HTML', string $entities = '', bool $disableWebPagePreview = false, string $replyMarkup = '')
+        public function EditMessageText($chatId, int $messageId, string $inlineMessageId = '', string $text, string $parseMode = 'HTML', string $entities = '', bool $disableWebPagePreview = false, string $replyMarkup = '')
         {
             $params = 
             [
@@ -162,10 +203,10 @@
                 'disable_web_page_preview' => $disableWebPagePreview,
                 'reply_markup' => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod('editMessageText', $params);
+            return $this->ProcessBotAPIMethod('editMessageText', $params);
         }
 
-        function EditMessageCaption($chatId, int $messageId, string $caption, string $inlineMessageId = '', string $parseMode = 'HTML', string $entities = '', string $replyMarkup = '')
+        public function EditMessageCaption($chatId, int $messageId, string $caption, string $inlineMessageId = '', string $parseMode = 'HTML', string $entities = '', string $replyMarkup = '')
         {
             $params = 
             [
@@ -177,10 +218,10 @@
                 'entities' => $entities,
                 'reply_markup' => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod('editMessageCaption', $params);
+            return $this->ProcessBotAPIMethod('editMessageCaption', $params);
         }
 
-        function EditMessageReplyMarkup($chatId, int $messageId, string $inlineMessageId = '', string $replyMarkup = '')
+        public function EditMessageReplyMarkup($chatId, int $messageId, string $inlineMessageId = '', string $replyMarkup = '')
         {
             $params = 
             [
@@ -189,10 +230,10 @@
                 'inline_message_id' => $inlineMessageId,
                 'reply_markup' => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod('editMessageReplyMarkup', $params);
+            return $this->ProcessBotAPIMethod('editMessageReplyMarkup', $params);
         }
 
-        function EditMessageMedia($chatId, int $messageId, string $inlineMessageId = '', $media, string $replyMarkup = '', bool $isFile = false)
+        public function EditMessageMedia($chatId, int $messageId, string $inlineMessageId = '', $media, string $replyMarkup = '', bool $isFile = false)
         {
             $params = 
             [
@@ -202,10 +243,10 @@
                 'media' => $media,
                 'reply_markup' => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod('editMessageMedia', $params, $isFile);
+            return $this->ProcessBotAPIMethod('editMessageMedia', $params, $isFile);
         }
 
-        function StopPoll($chatId, int $messageId, string $replyMarkup = '')
+        public function StopPoll($chatId, int $messageId, string $replyMarkup = '')
         {
             $params = 
             [
@@ -213,7 +254,7 @@
                 'message_id' => $messageId,
                 'reply_markup' => $replyMarkup
             ];
-            return $this->ProcessTelegramBotMethod('stopPoll', $params);
+            return $this->ProcessBotAPIMethod('stopPoll', $params);
         }
 
         function DeleteMessage($chatId, int $messageId)
@@ -223,7 +264,7 @@
                 'chat_id' => $chatId,
                 'message_id' => $messageId,
             ];
-            return $this->ProcessTelegramBotMethod('deleteMessage', $params);
+            return $this->ProcessBotAPIMethod('deleteMessage', $params);
         }
 
         function GetStickerSet(string $name)
@@ -232,21 +273,21 @@
             [
                 'name' => $name,
             ];
-            return $this->ProcessTelegramBotMethod('getStickerSet', $params);
+            return $this->ProcessBotAPIMethod('getStickerSet', $params);
         }
 
         // Use this after method 'AddStickerToSet' or 'CreateStickerSet'
-        function UploadStickerFile(int $userId, $pngSticker, bool $isFile = false)
+        public function UploadStickerFile(int $userId, $pngSticker, bool $isFile = false)
         {
             $params = 
             [
                 'user_id' => $userId,
                 'png_sticker' => $pngSticker
             ];
-            return $this->ProcessTelegramBotMethod('uploadStickerFile', $params, $isFile);
+            return $this->ProcessBotAPIMethod('uploadStickerFile', $params, $isFile);
         }
 
-        function SendInvoice($chatId, string $title, string $description, string $payload, string $providerToken, string $currency, string $prices, int $maxTipAmount = 0,
+        public function SendInvoice($chatId, string $title, string $description, string $payload, string $providerToken, string $currency, string $prices, int $maxTipAmount = 0,
                              string $suggestedTipAmounts = '', string $startParameter = '', string $providerData = '', string $photoUrl = '', int $photoSize = 0,
                              int $photoWidth = 0, int $photoHeight = 0, bool $needName = true, bool $needPhoneNumber = true, bool $needEmail = true,
                              bool $needShippingAddress = true, bool $sendPhoneNumberToProvider = true, bool $sendEmailToProvider = true, bool $isFlexible = true,
@@ -280,10 +321,10 @@
                 'allow_sending_without_reply' => $allowSendingWithoutReply,
                 'reply_markup' => $replyMarkup,
             ];
-            return $this->ProcessTelegramBotMethod('sendInvoice', $params);
+            return $this->ProcessBotAPIMethod('sendInvoice', $params);
         }
 
-        function AnswerShippingQuery(string $shippingQueryId, bool $ok, string $shippingOptions = '', string $errorMessage = '')
+        public function AnswerShippingQuery(string $shippingQueryId, bool $ok, string $shippingOptions = '', string $errorMessage = '')
         {
             $params =
             [
@@ -292,10 +333,10 @@
                 'shipping_options' => $shippingOptions,
                 'error_message' => $errorMessage
             ];
-            return $this->ProcessTelegramBotMethod('answerShippingQuery', $params);
+            return $this->ProcessBotAPIMethod('answerShippingQuery', $params);
         }
 
-        function AnswerPreCheckoutQuery(string $preCheckoutQueryId, bool $ok, string $errorMessage = '')
+        public function AnswerPreCheckoutQuery(string $preCheckoutQueryId, bool $ok, string $errorMessage = '')
         {
             $params =
             [
@@ -303,10 +344,10 @@
                 'ok' => $ok,
                 'error_message' => $errorMessage
             ];
-            return $this->ProcessTelegramBotMethod('answerPreCheckoutQuery', $params);
+            return $this->ProcessBotAPIMethod('answerPreCheckoutQuery', $params);
         }
         
-        public function DownloadFile($file, string $writeFilePath) : int|bool
+        public function DownloadFile(object $file, string $writeFilePath) : int|bool
         {
             if (property_exists($file, "file_path"))
             {
@@ -318,16 +359,39 @@
             }
         }
         
-        public function ProcessTelegramBotMethod(string $method, $params) : object
+        public function SetWebhook(string $url)
+        {
+            $params =
+            [
+                'url' => $url
+            ];
+            return $this->ProcessBotAPIMethod('setWebhook', $params);
+        }
+
+        public function DeleteWebhook(bool $drop_pending_updates = false)
+        {
+            $params =
+            [
+                'drop_pending_updates' => $drop_pending_updates
+            ];
+            return $this->ProcessBotAPIMethod('deleteWebhook', $params);
+        }
+
+        public function GetWebhookInfo()
+        {
+            return $this->ProcessBotAPIMethod('getWebhookInfo');
+        }
+
+        public function ProcessBotAPIMethod(string $method, array $params = [], bool $uploading_file = false) : object
         {
             if (is_null($this->TelegramUrl))
             {
                 http_response_code(401);
             }
-            return $this->ProcessRequest($this->TelegramUrl.$method, $params);
+            return $this->ProcessRequest($this->TelegramUrl.$method, $params, $uploading_file);
         }
 
-        protected function ProcessRequest(string $method, $params, bool $uploadingFile = false) : object
+        protected function ProcessRequest(string $method, array $params = [], bool $uploading_file = false) : object
         {
             if(!$ch = curl_init())
             {
@@ -336,7 +400,7 @@
         
             $url_encoded = http_build_query($params, '&');
         
-            if ($uploadingFile)
+            if ($uploading_file)
             {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     "Content-Type:multipart/form-data"
@@ -345,7 +409,7 @@
             
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $url_encoded);
-            curl_setopt($ch, CURLOPT_URL, TelegramUrl.$method);
+            curl_setopt($ch, CURLOPT_URL, $this->TelegramUrl . $method);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_FAILONERROR, false);
         
@@ -359,7 +423,25 @@
             }
             else
             {
-                throw new Exception($output->description, $output->error_code);
+                // Error flood
+                if ($output->error_code === 429)
+                {
+                    // Sleep, Then rerequest
+                    usleep($output->parameters->retry_after * 1000000);
+                    return $this->ProcessRequest($method, $params, $uploading_file);
+                }
+                else
+                {
+                    $error = new BotAPIException($output->description, $output->error_code);
+                    if (property_exists($output, 'parameters'))
+                    {
+                        if (get_class_vars('ErrorParameters') === get_object_vars($output->parameters))
+                        {
+                            $error->parameters = $output->parameters;
+                        }
+                    }
+                    throw $error;
+                }
             }
         
             return $output;

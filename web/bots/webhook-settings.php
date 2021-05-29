@@ -36,6 +36,7 @@
             </form>
         </section>
         <?php
+        global $Bot;
 
         if ($_GET['m'] === 'setWebhook')
         {
@@ -56,7 +57,7 @@
 
 
             echo '<h2><code>setWebhook</code> method called</h2>';
-            $webhookResult = SetWebhook('https://muaath-bots.herokuapp.com/bots/' . BotDir . '/webhook.php?token=' . Token, '', $ip_address, $max_connections, $allowed_updates);
+            $webhookResult = $Bot->SetWebhook('https://muaath-bots.herokuapp.com/bots/' . BotDirectory . '/webhook.php?token=' . Token, '', $ip_address, $max_connections, $allowed_updates);
             if ($webhookResult == true)
             {
                 echo '<h1 class="success">Success</h1>';
@@ -79,10 +80,10 @@
             {
                 $drop_pending_update = $_GET['drop_pending_update'];
             }
-            DeleteWebhook($drop_pending_update);
+            $Bot->DeleteWebhook($drop_pending_update);
         }
         echo '<hr>';
-        $getWhInfo = GetWebhookInfo();
+        $getWhInfo = $Bot->GetWebhookInfo();
         echo '<h3>Webhook info</h3>';
         echo "<h3>Webhook Url: <code>{$getWhInfo->url}</code></h3>";
         echo "<h3>IP Address: <code>{$getWhInfo->ip_address}</code></h3>";
