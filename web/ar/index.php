@@ -7,7 +7,7 @@
   
     <body>
         <?php
-            include "header.php";
+            include './views/header.php';
         ?>
         
         <main class="has-view">
@@ -48,7 +48,7 @@
         </main>
         
         <?php
-            include "footer.php";
+            include './views/footer.php';
         ?>
     </body>
 </html>

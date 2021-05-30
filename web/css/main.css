@@ -1,38 +1,365 @@
-.jumbotron {
-  background: #532F8C;
-  color: white;
-  padding-bottom: 80px;
+:root
+{
+    --header-background-color: dodgerblue;
+    --footer-background-color: lightgray;
+    --site-text-color: white;
+    --site-back-color: #0088cc;
+    --heroku-color: #79589f;
+    --padding-around-page: 15px;
+    --view-hight: 150px;
+    --menu-background: #e8e8e8;
+    --menu-width: 200px;
 }
-.jumbotron .btn-primary {
-  background: #845ac7;
-  border-color: #845ac7;
+
+*
+{
+    box-sizing: border-box;   
 }
-.jumbotron .btn-primary:hover {
-  background: #7646c1;
+
+body
+{
+    margin: 0px;
+    padding: 0px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-.jumbotron p {
-  color: #d9ccee;
-  max-width: 75%;
-  margin: 1em auto 2em;
+
+header
+{
+    padding: var(--padding-around-page);
+    background-color: var(--header-background-color);
 }
-.jumbotron h1 {
-  font-size: 40px;
+
+.page-padding
+{
+    padding: var(--padding-around-page);
 }
-.navbar + .jumbotron {
-  margin-top: -20px;
+
+header > h2
+{
+    display: inline-block;
 }
-.jumbotron .lang-logo {
-  display: block;
-  background: #B01302;
-  border-radius: 50%;
-  overflow: hidden;
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border: 2px solid white;
+
+header > h2 > a
+{
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 15px;
+    color: white;
 }
-.jumbotron .lang-logo img {
-  max-width: 100%;
+
+header > nav
+{
+    display: inline-block;
+    transition: 0.5;
+}
+
+header > nav > ul
+{
+    display: inline;
+    list-style-type: none;
+}
+
+header > nav > ul > li
+{
+    display: inline;
+}
+
+header > nav > ul > li > a
+{
+    text-decoration: none;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 15px;
+    color: white;
+}
+
+header > nav > ul > li > a:hover
+{
+    background-color: gray;
+}
+
+header > section
+{
+    float: left;
+}
+
+header > section > a
+{
+    font-size: 22px;
+    color: white;
+    text-decoration: none;   
+}
+
+header > section > a > img
+{
+    width: 48px;   
+    height: 48px;
+    border-radius: 50%;
+    transform: translateY(25%);
+}
+
+header > button#open-close-nav
+{
+    display: none;
+}
+
+ul.no-items, ol.no-items
+{
+    list-style-type: none;
+}
+
+ul.horizontal, ol.horizontal
+{
+    display: inline;   
+}
+
+ul.horizontal, ol.horizontal > li
+{
+    display: inline
+}
+
+article
+{
+    font-size: 18px;
+}
+
+.inline
+{
+    display: inline;
+}
+
+.block
+{
+    display: block;
+}
+
+.view
+{
+    background-color: var(--site-back-color);
+    color: var(--site-text-color);
+    display: block;
+    min-height: var(--view-hight);
+}
+
+.telegram-view
+{
+    background-color: var(--site-back-color);
+    color: var(--site-text-color);
+    display: block;
+    min-height: var(--view-hight);
+}
+
+h5#author-space
+{
+    color: darkgray;
+    margin: 0px;
+}
+
+h5#author-space > span#author
+{
+    text-decoration: underline;
+}
+
+.splitter
+{
+    width: 100%;
+    height: 3px;
+    background-color: gray;
+}
+
+.center
+{
+    text-align: center;
+}
+
+buttom.primary
+{
+    border-radius: 4px;
+    background-color: blue;
+    cursor: pointer;
+    color: white;
+}
+
+button
+{
+    padding: 10px;
+    border-style: none;
+    border-radius: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 20px;
+}
+
+form > input[type="submit"], button[type="submit"]
+{
+    color: rgb(255 255 255);
+    background-color: rgb(46 164 79);
+    border-color: hsl(210deg 13% 12% / 15%);
+}
+
+.telegram-button
+{
+    background-color: #27A6E5;
+    background-size: 24px 24px;
+    text-decoration: none;
+    color: white;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px;
+    padding-right: 32px;
+}
+
+.telegram-tag
+{
+    background-image: url(https://telegram.org/img/t_logo.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 24px 24px;
+    padding-right: 30px; 
+}
+
+.heroku-button
+{
+    background-color: var(--heroku-color);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 22px;
+    height: 32px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    padding: 4px 15px;
+}
+
+.no-padding
+{
+    padding: 0px;
+}
+
+.no-margin
+{
+    margin: 0px;
+}
+
+.invisible
+{
+    display: none;
+    visibility: none;
+}
+
+textarea, input
+{
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+form > label
+{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+form > input
+{
+    width: 40%;
+}
+
+.mono-scape
+{
+    font-family: 'Courier New', monospace;
+}
+
+main
+{
+    padding: var(--padding-around-page);
+}
+
+main.has-view
+{
+    padding: 0px !important;
+}
+
+/*Needs script to open and close*/
+aside
+{
+    transition: 0.4s;
+    width: 25%;
+    border-radius: 15px 0px 0px 15px;
+    width: 0px;
+}
+
+main.has-view section, div, article
+{
+    width: 100%;
+    padding: var(--padding-around-page);
+}
+
+footer
+{
+    background-color: var(--footer-background-color);
+    padding: var(--padding-around-page);
+    margin-top: auto;
+    font-size: 20px;
+}
+
+footer > section
+{
+    padding: var(--padding-around-page);
+}
+
+div.menu
+{
+    transition: 0.4s;
+    height: 0px;
+    width: var(--menu-width);
+    border-radius: 10px;
+    background-color: var(--menu-background);
+}
+
+div.menu-on-hover
+{
+    transition: 0.4s;
+    height: 0px;
+    width: var(--menu-width);
+    background-color: var(--menu-background);
+    border-radius: 10px;
+}
+
+div.menu-on-hover:hover
+{
+    height: auto;
+}
+
+@media screen and (max-width: 500px) {
+    /* Default close */
+    header > nav
+    {
+        display: none;
+        height: 0px;
+        width: 100%;
+    }
+    
+    header > nav > ul
+    {
+        display: block !important;
+    }
+    
+    header > button#open-close-nav
+    {
+        display: block;
+        background-color: green;
+        border-radius: 20px;
+        border: none;
+    }
+    
+    header > button#open-close-nav:hover
+    {
+        background-color: lightgreen;
+    }
 }
 
 .error, .http-error, .error-missed-parameter {

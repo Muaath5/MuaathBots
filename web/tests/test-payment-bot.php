@@ -39,13 +39,13 @@ $update_message = json_decode(json_encode(
 include '/bot-api/UpdatesHandler.php';
 include '/bot-api/TelegramBotAPI.php';
 include '/bots/TestPaymentV2Bot/bot.php';
-$Bot = new TelegramBot();
-$PaymentHandler = new TestPaymentV2Bot();
+$Bot = new TelegramBot(getenv('TestPayment2Bot_Token'));
 // Test methods, Should run and log in logs channel
-$PaymentHandler->
+$PaymentHandler = new TestPaymentV2Bot();
 
 // Test a Telegram payment:
 // 1. Request invoice
-MessageHandler($update_message);
+$PaymentHandler->MessageHandler($update_message);
 // 2. Send a shipping query
+
 // 3. Send a precheckout query

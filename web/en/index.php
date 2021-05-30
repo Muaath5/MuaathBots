@@ -1,12 +1,12 @@
 <html lang="en">
     <head>
         <?php include './views/head.html' ?>
-        <title></title>
+        <title>Main page</title>
     </head>
   
     <body>
         <?php
-            include "header.php";
+            include './views/header.php';
         ?>
         
         <main class="has-view">
@@ -20,30 +20,31 @@
                 <br><br>
                 
                 <a href="https://t.me/ArabicTelegramBots" class="telegram-button">
-                    <pic src="https://telegram.org/img/t_logo.png" alt="شعار تيليجرام" width="32px" height="32px"></pic>
+                    <pic src="https://telegram.org/img/t_logo.png" alt="Telegram logo" width="32px" height="32px"></pic>
                     Out Telegram channel
                 </a>
                     
                 <a href="https://t.me/ArabicContactBot" class="telegram-button">
-                    <pic src="https://telegram.org/img/t_logo.png" alt="شعار تيليجرام" width="32px" height="32px"></pic>
+                    <pic src="https://telegram.org/img/t_logo.png" alt="Telegram logo" width="32px" height="32px"></pic>
                     Contact us on Telegram
                 </a>
                 
             </article>
             <hr>
             <article>
-                <h2>ما الأدوات المستعلمة في الآليين؟</h2>
-                نستعمل عددًا من الأدوات، منها:
+                <h2>What tools are used to create bots?</h2>
+                We are using these tools:
                 <ol>
-                    <li>استضافة موقع <a href="https://heroku.com">Heroku</a></li>
-                    <li>لغة برمجة PHP</li>
+                    <li><a href="https://heroku.com">Heroku</a> free host</li>
+                    <li>PHP Programming language</li>
+                    <li><a href="https://github.com">GitHub</a> to save open source code</li>
                 </ol>
-                ونحن لا نستعمل أي مكتبة خارجية، ونسعى لتطوير مكتبتنا الخاصة، ثم نشرها.
+                We are not using any third-party for Bot API library, And work on creating a small library and publish it.
             </article>
         </main>
         
         <?php
-            include "footer.php";
+            include './views/footer.php';
         ?>
     </body>
 </html>

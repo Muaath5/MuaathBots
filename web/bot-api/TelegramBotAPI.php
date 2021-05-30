@@ -13,7 +13,7 @@
         
         private ?UpdatesHandler $UpdatesHandler = null;
 
-        public function __constructor(string $token, UpdatesHandler $updates_handler = null)
+        public function __construct(string $token, UpdatesHandler $updates_handler = null)
         {
             $this->Token = $token;
             $this->TelegramUrl = 'https://api.telegram.org/bot' . $this->Token . '/';
