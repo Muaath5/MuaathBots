@@ -25,16 +25,6 @@ class TestPaymentV2Bot extends UpdatesHandler
         return false;
     }
 
-    private string $contact_the_dev = json_encode(
-    [
-        'inline_keyboard' =>
-        [
-            [
-                ['text' => 'Contanct the developer', 'url' => 'https://t.me/' . DevUsername] # @Muaath_5 is the main owner of this bot.
-            ]
-        ]
-    ]);
-
     # Update handlers
     public function MessageHandler($message) : bool
     {
@@ -43,201 +33,219 @@ class TestPaymentV2Bot extends UpdatesHandler
         global $bot_admins;
         global $Bot;
 
-        if (in_array($message->from->id, $bot_admins))
+        try
         {
-            if (false)
-            {
-                # Nothing here...
-            }
-        }
 
-        $senderChat = $message->from;
-        if (property_exists($message, 'text'))
-        {    
-            if ($message->text[0] === '/')
+            if (in_array($message->from->id, $bot_admins))
             {
-                $this->CommandsHandler($message->text, $settings);
-            }
-        }
-        else if (property_exists($message, 'successful_payment'))
-        {
-            $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $settings, true);
-            $Bot->SendMessage(LogsChatID, "JSON for resultInvoice is: <code>" . json_encode($resultInvoice) . '</code>');
-            $successedInvoice = $resultInvoice[0];
-            # Handle limits
-            if ($resultInvoice[0]->limit > 0 && $resultInvoice[0]->limit != -1)
-            {
-                $settings->invoices[$resultInvoice[1]]->limit--;
-                //file_put_contents(SettingsFilePath, json_encode($settings));
-            }
-            else if ($resultInvoice[0]->limit != -1)
-            {
-                $Bot->SendMessage(LogsChatID, "Error, {$message->successful_payment->invoice_payload} was sold out over the limit", 0, $contact_the_dev);
+                if (false)
+                {
+                    # Nothing here...
+                }
             }
             
-            $floatTotalAmount = $message->successful_payment->total_amount / 100;
-            $info = "<b>Successful payment info 😃:</b>
-
-    <b>User info:</b>
+            $senderChat = $message->from;
+            if (property_exists($message, 'text'))
+            {    
+                if ($message->text[0] === '/')
+                {
+                    return $this->CommandsHandler($message, $settings);
+                }
+            }
+            else if (property_exists($message, 'successful_payment'))
+            {
+                $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $settings, true);
+                $Bot->SendMessage(LogsChatID, "JSON for resultInvoice is: <code>" . json_encode($resultInvoice) . '</code>');
+                $successedInvoice = $resultInvoice[0];
+                # Handle limits
+                if ($resultInvoice[0]->limit > 0 && $resultInvoice[0]->limit != -1)
+                {
+                    $settings->invoices[$resultInvoice[1]]->limit--;
+                    //file_put_contents(SettingsFilePath, json_encode($settings));
+                }
+                else if ($resultInvoice[0]->limit != -1)
+                {
+                    $Bot->SendMessage(LogsChatID, "Error, {$message->successful_payment->invoice_payload} was sold out over the limit", 0, $contact_the_dev);
+                }
+                
+                $floatTotalAmount = $message->successful_payment->total_amount / 100;
+                $info = "<b>Successful payment info 😃:</b>
+                
+<b>User info:</b>
     Telegram User: {$message->from->first_name} @{$message->from->username} (<code>{$message->from->id}</code>).
     Name: {$message->successful_payment->order_info->name}
     Phone number: {$message->successful_payment->order_info->phone_number}
     Email: {$message->successful_payment->order_info->email}
-
-
-    <b>Shipping:</b>
+                
+                
+<b>Shipping:</b>
     Shipping option: <code>{$message->successful_payment->shipping_option_id}</code>.
     Shipping address:
-        Country code: {$message->successful_payment->order_info->shipping_address->country_code}.
-        State: {$message->successful_payment->order_info->shipping_address->state}.
-        City: {$message->successful_payment->order_info->shipping_address->city}.
-        Street line 1: {$message->successful_payment->order_info->shipping_address->street_line1}.
-        Street line 2: {$message->successful_payment->order_info->shipping_address->street_line2}.
-        Post code: {$message->successful_payment->order_info->shipping_address->post_code}.
-
-    <b>Invoice result</b>
-    Invoice payload: <code>{$message->successful_payment->invoice_payload}</code>.    
-    Total amount: {$floatTotalAmount} {$message->successful_payment->currency}.";
-
-            $Bot->SendMessage(LogsChatID, $info);
+    Country code: {$message->successful_payment->order_info->shipping_address->country_code}.
+    State: {$message->successful_payment->order_info->shipping_address->state}.
+    City: {$message->successful_payment->order_info->shipping_address->city}.
+    Street line 1: {$message->successful_payment->order_info->shipping_address->street_line1}.
+    Street line 2: {$message->successful_payment->order_info->shipping_address->street_line2}.
+    Post code: {$message->successful_payment->order_info->shipping_address->post_code}.
                 
-            $Bot->SendMessage($senderChat->id, $settings->successful_payment_message, $message->message_id);
+<b>Invoice result</b>
+    Invoice payload: <code>{$message->successful_payment->invoice_payload}</code>.    
+    Total amount: {$floatTotalAmount} {$message->successful_payment->currency}.
+    Telegram payment ID: {$message->successful_payment->telegram_payment_charge_id}.
+    Provider payment ID: {$message->successful_payment->provider_payment_charge_id}";
+                
+                $Bot->SendMessage(LogsChatID, $info);
+                
+                $Bot->SendMessage($senderChat->id, $settings->successful_payment_message, $message->message_id);
+            }
         }
-        return true;
+        catch (BotAPIException $ex)
+        {
+            // Log error in logs channel
+            return false;
+        }
     }
-
-    function CommandsHandler($message, $settings)
+        
+    private function CommandsHandler(object $message, object $settings) : bool
     {
         global $contact_the_dev;
         global $Bot;
 
         $senderChat = $message->chat;
 
-        if ($message->text === '/start')
-        {      
-            $Bot->SendMessage($message->chat->id, $settings->start_message, $message->message_id);
-        }
-        else if ($message->text === '/project' || $message->text === '/start project')
+        try
         {
-            $Bot->SendMessage($message->chat->id, $settings->project_message, $message->message_id);
-        }
-        else if ($message->text === '/help' || $message->text === '/start help')
-        {
-            $Bot->SendMessage($message->chat->id, $settings->help_message, $message->message_id);
-        }
-        else if ($message->text === '/inline' || $message->text === '/start inline')
-        {
-            $inlineQueryKeyboard =
-            [
-                'inline_keyboard' =>
-                [
-                    [[
-                        'text' => $settings->inline_chat_button,
-                        'switch_inline_query' => 'payment'
-                    ]],
-                    [[
-                        'text' => $settings->inline_current_chat_button,
-                        'switch_inline_query_current_chat' => 'payment'
-                    ]]
-                ]
-            ];
-            $Bot->SendMessage($message->chat->id, $settings->inline_message, $message->message_id, json_encode($inlineQueryKeyboard));
-        }
-        else if ($message->text === '/invoice' || $message->text === '/start invoice')
-        {   
+
             
-                
-                
-            $providerData =
-            [
-                'payload' => $settings->invoices[0]->payload,
-                'user_id' => $senderChat->id,
-                'prices' => $settings->invoices[0]->prices
-            ];
-            
-                
-            # $invoice Should be Message object, If an error occurd 
-            $photoWidth = $settings->invoices[0]->photo_width;
-            $photoHeight = $settings->invoices[0]->photo_height;
-            $Bot->SendMessage($senderChat->id, $settings->warning_message);
-            
-            $mainInvoice = $Bot->SendInvoice($senderChat->id, $settings->invoices[0]->title, $settings->invoices[0]->description, $settings->invoices[0]->payload,
-                                ProviderToken, $settings->invoices[0]->currency, json_encode($settings->invoices[0]->prices), $settings->invoices[0]->max_tip_amount,
-                                json_encode($settings->invoices[0]->suggested_tip_amounts), $settings->invoices[0]->start_param, json_encode($providerData), $settings->invoices[0]->photo_url, 
-                                $photoWidth * $photoHeight, $photoWidth, $photoHeight, $settings->invoices[0]->need_name, $settings->invoices[0]->need_phone_number,
-                                $settings->invoices[0]->need_email, $settings->invoices[0]->need_shipping_address, $settings->invoices[0]->send_phone_number_to_provider,
-                                $settings->invoices[0]->send_email_to_provider, $settings->invoices[0]->is_flexible);
-                
-                
-                
-            # Logging
-            $newInvoiceRequestText = "New invoice request 📲:
-    First name: {$senderChat->first_name}.
-    Last name: {$senderChat->last_name}.
-    Username: @{$senderChat->username} ({$senderChat->id}).
-    Language (null if not available): {$senderChat->language_code}.
-    Which command was used: {$message->text}.";
-                    
-            $newInvoiceLogMsg = $Bot->SendMessage(LogsChatID, $newInvoiceRequestText);
-                
-            if ($mainInvoice->ok === false)
+            switch ($message->text)
             {
-                $errorStr =
-    "<code>SendInvoice</code> error.
-    Error code: <code>{$mainInvoice->error_code}</code>.
-    Error description: {$mainInvoice->description}.";
-                # Log error
-                $Bot->SendMessage(LogsChatID, $errorStr, $newInvoiceLogMsg->message_id, $contact_the_dev);
-            }
-        }
-        else
-        {
-            for ($i = 0; $i < count($settings->invoices); $i++)
-            {
-                if ($message->text === "/start {$settings->invoices[$i]->start_param}")
-                {
+                
+            
+                case '/start':
+                    $Bot->SendMessage($message->chat->id, $settings->start_message, $message->message_id);
+                    break;
+
+                case '/project' || '/start project':
+                    $Bot->SendMessage($message->chat->id, $settings->project_message, $message->message_id);
+                    break;
+
+                case '/help' || '/start help':
+                    $Bot->SendMessage($message->chat->id, $settings->help_message, $message->message_id);
+                    break;
+                
+                case '/inline' || '/start inline':
+                    $inlineQueryKeyboard =
+                    [
+                        'inline_keyboard' =>
+                        [
+                            [[
+                                'text' => $settings->inline_chat_button,
+                                'switch_inline_query' => 'payment'
+                            ]],
+                            [[
+                                'text' => $settings->inline_current_chat_button,
+                                'switch_inline_query_current_chat' => 'payment'
+                            ]]
+                        ]
+                    ];
+                    $Bot->SendMessage($message->chat->id, $settings->inline_message, $message->message_id, json_encode($inlineQueryKeyboard));
+                            
+                case '/invoice' || '/start invoice':
                     $providerData =
                     [
-                        'user_id' => $message->from->id,
-                        'prices' => $settings->invoices[$i]->prices,
-                        'payload' => $settings->invoices[$i]->payload
+                        'payload' => $settings->invoices[0]->payload,
+                        'user_id' => $senderChat->id,
+                        'prices' => $settings->invoices[0]->prices
                     ];
-                            
-                    $photoWidth = $settings->invoices[$i]->photo_width;
-                    $photoHeight = $settings->invoices[$i]->photo_height;
-                    $inlineInvoice = $Bot->SendInvoice($message->chat->id, $settings->invoices[$i]->title, $settings->invoices[$i]->description, $settings->invoices[$i]->payload,
-                                    ProviderToken, $settings->invoices[$i]->currency, json_encode($settings->invoices[$i]->prices),
-                                    $settings->invoices[$i]->max_tip_amount, json_encode($settings->invoices[$i]->suggested_tip_amounts), $settings->invoices[$i]->start_param,
-                                    json_encode($providerData), $settings->invoices[$i]->photo_url, $photoHeight * $photoWidth, $photoWidth, $photoHeight,
-                                    $settings->invoices[$i]->need_name, $settings->invoices[$i]->need_phone_number, $settings->invoices[$i]->need_email,
-                                    $settings->invoices[$i]->need_shipping_address, $settings->invoices[$i]->send_phone_number_to_provider,
-                                    $settings->invoices[$i]->send_email_to_provider, $settings->invoices[$i]->is_flexible);
-                            
+                    
+                    
+                    # $invoice Should be Message object, If an error occurd 
+                    $photoWidth = $settings->invoices[0]->photo_width;
+                    $photoHeight = $settings->invoices[0]->photo_height;
+                    $Bot->SendMessage($senderChat->id, $settings->warning_message);
+                    
+                    $mainInvoice = $Bot->SendInvoice($senderChat->id, $settings->invoices[0]->title, $settings->invoices[0]->description, $settings->invoices[0]->payload,
+                    ProviderToken, $settings->invoices[0]->currency, json_encode($settings->invoices[0]->prices), $settings->invoices[0]->max_tip_amount,
+                    json_encode($settings->invoices[0]->suggested_tip_amounts), $settings->invoices[0]->start_param, json_encode($providerData), $settings->invoices[0]->photo_url, 
+                    $photoWidth * $photoHeight, $photoWidth, $photoHeight, $settings->invoices[0]->need_name, $settings->invoices[0]->need_phone_number,
+                    $settings->invoices[0]->need_email, $settings->invoices[0]->need_shipping_address, $settings->invoices[0]->send_phone_number_to_provider,
+                    $settings->invoices[0]->send_email_to_provider, $settings->invoices[0]->is_flexible);
+                    
                     # Logging
                     $newInvoiceRequestText = "New invoice request 📲:
-    First name: {$senderChat->first_name}.
-    Last name: {$senderChat->last_name}.
-    Username: @{$senderChat->username} ({$senderChat->id}).
-    Language (null if not available): {$senderChat->language_code}.
-    Which command was used: {$message->text}.";
-                        
-                    $inlineInvoiceLogMsg = $Bot->$Bot->SendMessage(LogsChatID, $newInvoiceRequestText);
-                        
-                    if ($inlineInvoice->ok === false)
+                    First name: {$senderChat->first_name}.
+                    Last name: {$senderChat->last_name}.
+                    Username: @{$senderChat->username} ({$senderChat->id}).
+                    Language (null if not available): {$senderChat->language_code}.
+                    Which command was used: {$message->text}.";
+                    
+                    $newInvoiceLogMsg = $Bot->SendMessage(LogsChatID, $newInvoiceRequestText);
+                    
+                    if ($mainInvoice->ok === false)
                     {
                         $errorStr =
-    "<code>SendInvoice</code> error.
-    Error code: <code>{$inlineInvoice->error_code}</code>.
-    Error description: {$inlineInvoice->description}.
-
-    <b>Error parameters:</b>
-    Retry after: {$inlineInvoice->parameters->retry_after}.";
+                        "<code>SendInvoice</code> error.
+                        Error code: <code>{$mainInvoice->error_code}</code>.
+                        Error description: {$mainInvoice->description}.";
                         # Log error
-                        $Bot->SendMessage(LogsChatID, $errorStr, $inlineInvoiceLogMsg->message_id, $contact_the_dev);
+                        $Bot->SendMessage(LogsChatID, $errorStr, $newInvoiceLogMsg->message_id, $contact_the_dev);
+                    }
+                
+                default:
+                    for ($i = 0; $i < count($settings->invoices); $i++)
+                    {
+                        if ($message->text === "/start {$settings->invoices[$i]->start_param}")
+                        {
+                            $providerData =
+                            [
+                                'user_id' => $message->from->id,
+                                'prices' => $settings->invoices[$i]->prices,
+                                'payload' => $settings->invoices[$i]->payload
+                            ];
+                            
+                            $photoWidth = $settings->invoices[$i]->photo_width;
+                            $photoHeight = $settings->invoices[$i]->photo_height;
+                            $inlineInvoice = $Bot->SendInvoice($message->chat->id, $settings->invoices[$i]->title, $settings->invoices[$i]->description, $settings->invoices[$i]->payload,
+                            ProviderToken, $settings->invoices[$i]->currency, json_encode($settings->invoices[$i]->prices),
+                            $settings->invoices[$i]->max_tip_amount, json_encode($settings->invoices[$i]->suggested_tip_amounts), $settings->invoices[$i]->start_param,
+                            json_encode($providerData), $settings->invoices[$i]->photo_url, $photoHeight * $photoWidth, $photoWidth, $photoHeight,
+                            $settings->invoices[$i]->need_name, $settings->invoices[$i]->need_phone_number, $settings->invoices[$i]->need_email,
+                            $settings->invoices[$i]->need_shipping_address, $settings->invoices[$i]->send_phone_number_to_provider,
+                            $settings->invoices[$i]->send_email_to_provider, $settings->invoices[$i]->is_flexible);
+                            
+                            # Logging
+                            $newInvoiceRequestText = "New invoice request 📲:
+                            First name: {$senderChat->first_name}.
+                            Last name: {$senderChat->last_name}.
+                            Username: @{$senderChat->username} ({$senderChat->id}).
+                            Language (null if not available): {$senderChat->language_code}.
+                            Which command was used: {$message->text}.";
+                            
+                            $inlineInvoiceLogMsg = $Bot->$Bot->SendMessage(LogsChatID, $newInvoiceRequestText);
+                            
+                            // if ($inlineInvoice->ok === false)
+                            // {
+                            //     $errorStr =
+                            //     "<code>SendInvoice</code> error.
+                            //     Error code: <code>{$inlineInvoice->error_code}</code>.
+                            //     Error description: {$inlineInvoice->description}.
+                                
+                            //     <b>Error parameters:</b>
+                            //     Retry after: {$inlineInvoice->parameters->retry_after}.";
+                            //     # Log error
+                            //     $Bot->SendMessage(LogsChatID, $errorStr, $inlineInvoiceLogMsg->message_id, $contact_the_dev);
+                            // }
+                            break;
+                        }
                     }
                     break;
-                }
+            
             }
+
+        }
+        catch (BotAPIException $ex)
+        {
+            return false;
         }
         return true;
     }
