@@ -13,23 +13,22 @@ define('SettingsFilePath', __DIR__ . '/settings.json');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
 # A Telegram Bot library (Contains functions like SendMessage, SendInvoice, etc.)
-include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
-
 $Bot = new TelegramBot(Token);
-include __DIR__ . '/bot.php';
 
-$UpdatesHandler = new TestPaymentV2Bot();
-$Bot->SetUpdatesHandler($UpdatesHandler);
+include __DIR__ . '/bot.php';
+$BotUpdatesHandler = new TestPaymentV2Bot();
+
 
 # Reading the update
+$Bot->SetUpdatesHandler($BotUpdatesHandler);
 $update = json_decode(file_get_contents('php://input'));
 
 # Check auth
 define('BotDirectory', basename(__DIR__));
 if ($_GET['token'] != Token)
 {
-    include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-unauthorized.php';
+    var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-unauthorized.php');
     exit;
 }
 
@@ -39,5 +38,5 @@ if (!empty($update))
 }
 else
 {
-    include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php';
+    var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php');
 }

@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
+
 class TestPaymentV2Bot extends UpdatesHandler
 {
     # Functions
