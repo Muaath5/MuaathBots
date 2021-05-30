@@ -54,7 +54,7 @@ class TestPaymentV2Bot extends UpdatesHandler
         {    
             if ($message->text[0] === '/')
             {
-                CommandsHandler($message->text, $settings);
+                $this->CommandsHandler($message->text, $settings);
             }
         }
         else if (property_exists($message, 'successful_payment'))

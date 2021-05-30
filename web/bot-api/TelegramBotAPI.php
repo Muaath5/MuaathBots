@@ -1,7 +1,7 @@
 <?php
-    include './UpdatesHandler.php';
-    include './BotAPIException.php';
-    include './ErrorParameters.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/BotAPIException.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/ErrorParameters.php';
 
 
     class TelegramBot
