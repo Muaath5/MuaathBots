@@ -1,7 +1,8 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
-    include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/BotAPIException.php';
+
     include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/ErrorParameters.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/BotAPIException.php';
 
 
     class TelegramBot
@@ -45,6 +46,27 @@
 
                 case property_exists($update, 'inline_query'):
                     return $this->UpdatesHandler->InlineQueryHandler($update->message);
+
+                case property_exists($update, 'chosen_inline_query'):
+                    return $this->UpdatesHandler->ChosenInlineQueryHandler($update->chosen_inline_query);
+
+
+                case property_exists($update, 'callback_query'):
+                    return $this->UpdatesHandler->CallbackQueryHandler($update->callback_query);
+
+
+                case property_exists($update, 'my_chat_member'):
+                    return $this->UpdatesHandler->MyChatMemberHandler($update->my_chat_member);
+
+                case property_exists($update, 'chat_member'):
+                    return $this->UpdatesHandler->ChatMemberHandler($update->chat_member);
+
+
+                case property_exists($update, 'shipping_query'):
+                    return $this->UpdatesHandler->ShippingQueryHandler($update->shipping_query);
+
+                case property_exists($update, 'pre_checkout_query'):
+                    return $this->UpdatesHandler->PreCheckoutQueryHandler($update->pre_checkout_query);
 
                 default:
                     # Don't do anything, Only when Bot API version in later
@@ -190,7 +212,7 @@
             return $this->ProcessBotAPIMethod('answerCallbackQuery', $params);
         }
 
-        public function EditMessageText($chatId, int $messageId, string $inlineMessageId = '', string $text, string $parseMode = 'HTML', string $entities = '', bool $disableWebPagePreview = false, string $replyMarkup = '')
+        public function EditMessageText(int|string $chatId, int $messageId, string $inlineMessageId, string $text, string $parseMode = 'HTML', string $entities = '', bool $disableWebPagePreview = false, string $replyMarkup = '')
         {
             $params = 
             [

@@ -9,6 +9,32 @@
     
     "successful_payment_message": "Thank you for testing! 😌\n Don't worry! it wasn't real payment. It's a test 😅",
     
+    "responses":
+    {
+
+    },
+
+    "logs":
+    {
+        "answer_shipping_query_failed": "Failed: <code>answerShippingQuery</code> method, Contact the developer."
+    },
+
+    "commands":
+    {
+        "start": "Welcome 😄\nThis bot is created to test <i>Telegram payments</i>.\n<b>To test unreal payment, use the command: /invoice</b>\nUse /help to more info about the bot.",
+        "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, GitHub will be available soon... under MIT License",
+        "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
+        "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
+    },
+
+    "errors":
+    {
+        "country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
+        "city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
+        "product_sold_out": "Sorry, the product sold out",
+        "unknown_callback_query": "Sorry, Unknown button contact the developer"
+    },
+
     "error_country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
     "error_city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
     "error_product_sold_out": "Sorry, the product sold out",
