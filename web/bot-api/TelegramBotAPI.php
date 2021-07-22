@@ -32,7 +32,6 @@ class TelegramBot
         $this->UpdatesHandler = $updates_handler;
 
         $this->curl = curl_init();
-        curl_setopt($this->curl, CURLOPT_HTTPHEADER, ['Content-Type:multipart/form-data']);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curl, CURLOPT_TIMEOUT, $this::TIMEOUT); // botAPI might take 60s before returning error
     }
