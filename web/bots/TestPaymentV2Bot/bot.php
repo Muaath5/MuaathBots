@@ -134,11 +134,12 @@ class TestPaymentV2Bot extends UpdatesHandler
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->start_message,
-                        'parse_mode' => 'Markdown'
+                        'parse_mode' => 'HTML'
                     ]);
                     break;
 
-                case '/project' || '/start project':
+                case '/project':
+                case '/start project':
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->project_message,
@@ -146,7 +147,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                     ]);
                     break;
 
-                case '/help' || '/start help':
+                case '/help':
+                case '/start help':
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->help_message,
@@ -154,7 +156,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                     ]);
                     break;
                 
-                case '/inline' || '/start inline':
+                case '/inline':
+                case '/start inline':
                     $inlineQueryKeyboard = json_encode(
                     [
                         'inline_keyboard' =>
@@ -176,14 +179,14 @@ class TestPaymentV2Bot extends UpdatesHandler
                     ]);
                     break;
 
-                case '/invoice' || '/start invoice':
+                case '/invoice':
+                case '/start invoice':
                     $providerData =
                     [
                         'payload' => $settings->invoices[0]->payload,
                         'user_id' => $senderChat->id,
                         'prices' => $settings->invoices[0]->prices
                     ];
-                    
                     
                     # $invoice Should be Message object, If an error occurd 
                     $photoWidth = $settings->invoices[0]->photo_width;
