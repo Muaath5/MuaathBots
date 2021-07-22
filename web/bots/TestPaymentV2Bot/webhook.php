@@ -11,8 +11,8 @@ define('SettingsFilePath', __DIR__ . '/settings');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
 # A Telegram Bot library
-include __DIR__ . '/bot';
-include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI';
+include __DIR__ . '/bot.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
 
 // Create new bot with token
 $Bot = new TelegramBot($token);
@@ -27,6 +27,7 @@ $update = json_decode(file_get_contents('php://input'));
 
 # Check auth
 define('BotDirectory', basename(__DIR__));
+define('Token', $token);
 if ($_GET['token'] != $token)
 {
     var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-unauthorized.php');

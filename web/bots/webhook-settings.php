@@ -49,15 +49,11 @@
                 $max_connections = $_GET['max_connections'];
             }
 
-            if (isset($_GET['ip_address']))
-            {
-                $max_connections = $_GET['ip_address'];
-            }
-
-
-
             echo '<h2><code>setWebhook</code> method called</h2>';
-            $webhookResult = $Bot->SetWebhook('https://muaath-bots.herokuapp.com/bots/' . BotDirectory . '/webhook.php?token=' . Token, '', $ip_address, $max_connections, $allowed_updates);
+            $webhookResult = $Bot->SetWebhook([
+                'url' => 'https://muaath-bots.herokuapp.com/bots/' . BotDirectory . '/webhook.php?token=' . Token,
+                'max_connections' => $max_connections,
+                'allowed_updates' => $allowed_updates]);
             if ($webhookResult == true)
             {
                 echo '<h1 class="success">Success</h1>';
