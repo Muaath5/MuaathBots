@@ -1,12 +1,7 @@
 <?php
-$test_channel_id = getenv('TEST_CHANNEL_ID');
-$test_supergroup_id = getenv('TEST_SUPERGROUP_ID');
-$test_group_id = getenv('TEST_GROUP_ID');
-$test_user_id = getenv('TEST_USER_ID');
-
 $update_channel_post = json_encode(
 [
-    'update_id' => 123,
+    'update_id' => -1,
     'channel_post' =>
     [
         'message_id' => 123,
@@ -22,8 +17,8 @@ $update_channel_post = json_encode(
 
 $update_message = json_decode(json_encode(
 [
-    'update_id' => 123,
-    'channel_post' =>
+    'update_id' => -1,
+    'message' =>
     [
         'message_id' => 123,
         'chat' =>
@@ -32,20 +27,46 @@ $update_message = json_decode(json_encode(
             'type' => 'channel',
             'title' => 'Muaath bots tests channel'
         ],
-        'text' => '/start',
+        'text' => '/invoice',
     ]
 ]));
 
-include '/bot-api/UpdatesHandler.php';
-include '/bot-api/TelegramBotAPI.php';
-include '/bots/TestPaymentV2Bot/bot.php';
-$Bot = new TelegramBot(getenv('TestPayment2Bot_Token'));
+$update_shipping_query = json_decode(json_encode(
+[
+    'update_id' => -1,
+    'shipping_query' =>
+    [
+        'id' => -1,
+        'payload' => 'PHP-Tests'
+    ]
+]));
+
+$update_pre_checkout_query - json_decode(json_encode(
+[
+    'update_id' => -1,
+    'pre_checkout_query' =>
+    [
+        'id' => -1,
+        'currency' => 'SAR',
+        'payload' => 'PHP-Tests',
+        'total_amount' => -1
+    ]
+]));
+
+include $_SERVER['DOCUMENT_ROOT'] . '/bots/TestPaymentV2Bot/bot.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
+
+$token = getenv('TestPayment2Bot_Token');
+$Bot = new TelegramBot($token);
+
 // Test methods, Should run and log in logs channel
-$PaymentHandler = new TestPaymentV2Bot();
+$PaymentHandler = new TestPaymentV2Bot($Bot, getenv('TestPayment2Bot_Token'), getenv('TestPayment2Bot_LogsChatID'));
+
 
 // Test a Telegram payment:
 // 1. Request invoice
 $PaymentHandler->MessageHandler($update_message);
 // 2. Send a shipping query
-
+$PaymentHandler->ShippingQueryHandler($update_shipping_query);
 // 3. Send a precheckout query
+$PaymentHandler->PreCheckoutQueryHandler($update_pre_checkout_query);

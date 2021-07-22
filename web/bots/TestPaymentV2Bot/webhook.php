@@ -2,39 +2,42 @@
 declare(strict_types=1);
 
 # Configurations
-define('Token', getenv('TestPayment2Bot_Token'));
-define('ProviderToken', getenv('TestPayment2Bot_ProviderToken'));
-define('LogsChatID', getenv('TestPayment2Bot_LogsChatID'));
+$token = getenv('TestPayment2Bot_Token');
 define('DevUsername', getenv('DevUsername'));
 $bot_admins = json_decode(getenv('TestPayment2Bot_Admins'));
 
 # Bot settings
-define('SettingsFilePath', __DIR__ . '/settings.json');
+define('SettingsFilePath', __DIR__ . '/settings');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
-# A Telegram Bot library (Contains functions like SendMessage, SendInvoice, etc.)
-include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
-$Bot = new TelegramBot(Token);
+# A Telegram Bot library
+include __DIR__ . '/bot';
+include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI';
 
-include __DIR__ . '/bot.php';
-$BotUpdatesHandler = new TestPaymentV2Bot();
+// Create new bot with token
+$Bot = new TelegramBot($token);
+// Create updates handler to receive updates
+$BotUpdatesHandler = new TestPaymentV2Bot($Bot, getenv('TestPayment2Bot_ProviderToken'), getenv('TestPayment2Bot_LogsChatID'));
+// Set it as this bot handler
+$Bot->SetUpdatesHandler($BotUpdatesHandler);
 
 
 # Reading the update
-$Bot->SetUpdatesHandler($BotUpdatesHandler);
 $update = json_decode(file_get_contents('php://input'));
 
 # Check auth
 define('BotDirectory', basename(__DIR__));
-if ($_GET['token'] != Token)
+if ($_GET['token'] != $token)
 {
     var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-unauthorized.php');
     exit;
 }
 
+unset($token);
+
 if (!empty($update))
 {
-    $Bot->OnUpdate($update);
+    var_dump($Bot->OnUpdate($update));
 }
 else
 {

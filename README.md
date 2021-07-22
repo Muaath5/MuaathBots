@@ -10,6 +10,9 @@
 - Configuration stored in environment variables (`.env` file)
 - All bots uses **Bot API 5.2** or earlier
 - Uses GitHub Actions
+- Custom & Simple Bot API library in PHP
+- Single file for webhool
+- Translations & Settings file in JSON.
 
 ## Bots
 **Avaliable bots:**  

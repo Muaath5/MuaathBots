@@ -1,10 +1,16 @@
 <?php
 /**
  * A class should be exists for each bot that processes all updates either webhook or long-polling.
- * @version Bot API 5.2
+ * @version Bot API 5.3
  */
 abstract class UpdatesHandler
 {
+    private TelegramBot $Bot;
+    public function __construct(TelegramBot $bot)
+    {
+        $this->Bot = $bot;
+    }
+
     abstract public function MessageHandler(object $message) : bool;
     abstract public function EditedMessageHandler(object $edited_message) : bool;
 
