@@ -106,9 +106,15 @@ class TestPaymentV2Bot extends UpdatesHandler
     Telegram payment ID: {$message->successful_payment->telegram_payment_charge_id}.
     Provider payment ID: {$message->successful_payment->provider_payment_charge_id}";
                 
-                $this->Bot->SendMessage($this->LogsChatID, $info);
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => $info
+                ]);
                 
-                $this->Bot->SendMessage($senderChat->id, $settings->successful_payment_message, $message->message_id);
+                $this->Bot->SendMessage([
+                    'chat_id' => $senderChat->id,
+                    'text' => $settings->successful_payment_message
+                ]);
             }
         }
         catch (TelegramException $ex)
