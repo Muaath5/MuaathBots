@@ -11,8 +11,8 @@ define('SettingsFilePath', __DIR__ . '/settings.json');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
 # A Telegram Bot library
-include __DIR__ . '/bot.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
+include __DIR__ . '/bot.php';
 
 // Create new bot with token
 $Bot = new TelegramBot($token);
