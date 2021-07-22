@@ -219,7 +219,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'need_shipping_address' => $mainInv->need_shipping_address,
                         'send_phone_number_to_provider' => $mainInv->send_phone_number_to_provider,
                         'send_email_to_provider' => $mainInv->send_email_to_provider,
-                        'is_flexible' => $mainInv->is_flexible]);
+                        'is_flexible' => $mainInv->is_flexible
+                    ]);
                     
                     # Logging
                     $newInvoiceRequestText = "New invoice request 📲:
@@ -229,7 +230,11 @@ class TestPaymentV2Bot extends UpdatesHandler
                     Language (null if not available): {$senderChat->language_code}.
                     Which command was used: {$message->text}.";
                     
-                    $this->Bot->SendMessage($this->LogsChatID, $newInvoiceRequestText);
+                    $this->Bot->SendMessage([
+                        'chat_id' => $this->LogsChatID,
+                        'text' => $newInvoiceRequestText
+                    ]);
+                        
 
                     break;
                     
@@ -296,7 +301,7 @@ class TestPaymentV2Bot extends UpdatesHandler
         {
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
-                'text' => $ex,
+                'text' => "<b>Error:</b>\n$ex",
                 'parse_mode' => 'HTML',
                 'reply_markup' => $contact_the_dev
             ]);
