@@ -67,17 +67,13 @@ class TestPaymentV2Bot extends UpdatesHandler
             else if (property_exists($message, 'successful_payment'))
             {
                 $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $settings, true);
-                $this->Bot->SendMessage($this->LogsChatID, "JSON for resultInvoice is: <code>" . json_encode($resultInvoice) . '</code>');
-                $successedInvoice = $resultInvoice[0];
+
                 # Handle limits
                 if ($resultInvoice[0]->limit > 0)
                 {
+                    # Write the new invoice limit to the file:
                     $settings->invoices[$resultInvoice[1]]->limit--;
-                    //file_put_contents(SettingsFilePath, json_encode($settings));
-                }
-                else if ($resultInvoice[0]->limit != -1)
-                {
-                    $this->Bot->SendMessage($this->LogsChatID, "Error, {$message->successful_payment->invoice_payload} was sold out over the limit", 0, $contact_the_dev);
+                    // file_put_contents(SettingsFilePath, json_encode($settings));
                 }
                 
                 $floatTotalAmount = $message->successful_payment->total_amount / 100;
@@ -108,19 +104,25 @@ class TestPaymentV2Bot extends UpdatesHandler
                 
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => $info
+                    'text' => $info,
+                    'parse_mode' => 'HTML'
                 ]);
                 
                 $this->Bot->SendMessage([
                     'chat_id' => $senderChat->id,
-                    'text' => $settings->successful_payment_message
+                    'text' => $settings->successful_payment_message,
+                    'parse_mode' => 'HTML'
                 ]);
             }
         }
-        catch (TelegramException $ex)
+        catch (Exception $ex)
         {
             // Log error in logs channel
-
+            $this->Bot->SendMessage([
+                'chat_id' => $this->LogsChatID,
+                'text' => "<b>Error:</b>\n$ex",
+                'parse_mode' => 'HTML'
+            ]);
             return false;
         }
         return true;
@@ -420,33 +422,55 @@ class TestPaymentV2Bot extends UpdatesHandler
         
         # If the invoice supports all countries || If the selected country is one of 
         $countryResult = array_search($shipping_query->shipping_address->country_code, $currentInvoice->supported_countries);
-        if (count($currentInvoice->supported_countries) === 0 || $countryResult !== false)
+        try
         {
-            # Do not care about character case, And support all countries if arrays is empty
-            if (count($currentInvoice->supported_cities) === 0 || in_array(strtolower($shipping_query->shipping_address->city), array_map('strtolower', $currentInvoice->supported_cities[$countryResult])))
+
+            if (count($currentInvoice->supported_countries) === 0 || $countryResult !== false)
             {
-                $shipping = $this->Bot->AnswerShippingQuery($shipping_query->id, true, json_encode($currentInvoice->shipping_options));
-                if ($shipping === false || $shipping->ok === false)
+                # Do not care about character case, And support all countries if arrays is empty
+                if (count($currentInvoice->supported_cities) === 0 || in_array(strtolower($shipping_query->shipping_address->city), array_map('strtolower', $currentInvoice->supported_cities[$countryResult])))
                 {
-                    # Logging
-                    $this->Bot->SendMessage($this->LogsChatID, str_replace('{json-error}', $settings->answer_shipping_query_failed_log, json_encode($shipping)), 0, $contact_the_dev);
+                    $this->Bot->AnswerShippingQuery([
+                        'shipping_query_id' => $shipping_query->id,
+                        'ok' => true,
+                        'shipping_options' => json_encode($currentInvoice->shipping_options)
+                    ]);
+                    
+                    
+                }
+                else
+                {
+                    $errorMsg = $settings->error_city_unavailable;
+                    $errorMsg = str_replace('{city}', $shipping_query->shipping_address->city, $errorMsg);
+                    $errorMsg = str_replace('{country}', $shipping_query->shipping_address->country_code, $errorMsg);
+                    $errorMsg = str_replace('{available_cities}', implode(', ', $currentInvoice->supported_cities[$countryResult]), $errorMsg);
+                    $this->Bot->AnswerShippingQuery([
+                        'shipping_query_id' => $shipping_query->id,
+                        'ok' => false,
+                        'error_message' => $errorMsg
+                    ]);
                 }
             }
-            else
+            else # Means country not supported, returns error
             {
-                $errorMsg = $settings->error_city_unavailable;
-                $errorMsg = str_replace('{city}', $shipping_query->shipping_address->city, $errorMsg);
+                $errorMsg = $settings->error_country_unavailable;
                 $errorMsg = str_replace('{country}', $shipping_query->shipping_address->country_code, $errorMsg);
-                $errorMsg = str_replace('{available_cities}', implode(', ', $currentInvoice->supported_cities[$countryResult]), $errorMsg);
-                $this->Bot->AnswerShippingQuery($shipping_query->id, false, '', $errorMsg);
+                $errorMsg = str_replace('{available_countries}', implode(', ', $currentInvoice->supported_countries), $errorMsg);
+                $this->Bot->AnswerShippingQuery([
+                    'shipping_query_id' => $shipping_query->id,
+                    'ok' => false, 
+                    'error_message' => $errorMsg
+                ]);
             }
         }
-        else # Means country not supported, returns error
+        catch (Exception $ex)
         {
-            $errorMsg = $settings->error_country_unavailable;
-            $errorMsg = str_replace('{country}', $shipping_query->shipping_address->country_code, $errorMsg);
-            $errorMsg = str_replace('{available_countries}', implode(', ', $currentInvoice->supported_countries), $errorMsg);
-            $this->Bot->AnswerShippingQuery($shipping_query->id, false, '', $errorMsg);
+            # Logging
+            $this->Bot->SendMessage([
+                'chat_id' => $this->LogsChatID,
+                'text' => str_replace('{json-error}', $settings->answer_shipping_query_failed_log, $ex->__toString()),
+                'reply_markup' => $contact_the_dev
+            ]);
         }
         return true;
     }
@@ -473,6 +497,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                 'pre_checkout_query_id' => $pre_checkout_query->id,
                 'ok' => true
             ]);
+            $currentInvoice->limit--;
+            
         }
         return true;
     }
@@ -485,18 +511,27 @@ class TestPaymentV2Bot extends UpdatesHandler
         {
             if ($my_chat_member->from->id === $my_chat_member->chat->id)
             {
-                $this->Bot->SendMessage($this->LogsChatID, "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Started conversion with the bot.");
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Started conversion with the bot."
+                ]);
             }
             else
             {
-                $this->Bot->SendMessage($this->LogsChatID, "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Added the bot to chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]");
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Added the bot to chat:
+    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
+                ]);
             }
         }
         else if ($my_chat_member->new_chat_member === 'kicked')
         {
-            $this->Bot->SendMessage($this->LogsChatID, "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Kicked the bot from chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]");
+            $this->Bot->SendMessage([
+                'chat_id' => $this->LogsChatID,
+                'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Kicked the bot from chat:
+    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
+            ]);
         }
         return true;
     }
@@ -531,7 +566,10 @@ class TestPaymentV2Bot extends UpdatesHandler
         }
         else
         {
-            $this->Bot->AnswerCallbackQuery($callback_query->id, $settings->error_unknown_callback_query);
+            $this->Bot->AnswerCallbackQuery([
+                'callback_query_id' => $callback_query->id,
+                'text' => $settings->errors->unknown_callback_query
+            ]);
         }
         return true;
     }
