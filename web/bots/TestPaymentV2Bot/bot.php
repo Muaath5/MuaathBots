@@ -174,7 +174,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'text' => $settings->inline_message,
                         'reply_markup' => $inlineQueryKeyboard
                     ]);
-                            
+                    break;
+
                 case '/invoice' || '/start invoice':
                     $providerData =
                     [
@@ -225,7 +226,9 @@ class TestPaymentV2Bot extends UpdatesHandler
                     Language (null if not available): {$senderChat->language_code}.
                     Which command was used: {$message->text}.";
                     
-                    $newInvoiceLogMsg = $this->Bot->SendMessage($this->LogsChatID, $newInvoiceRequestText);
+                    $this->Bot->SendMessage($this->LogsChatID, $newInvoiceRequestText);
+
+                    break;
                     
                 default:
                     for ($i = 0; $i < count($settings->invoices); $i++)
