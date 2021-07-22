@@ -7,7 +7,7 @@ define('DevUsername', getenv('DevUsername'));
 $bot_admins = json_decode(getenv('TestPayment2Bot_Admins'));
 
 # Bot settings
-define('SettingsFilePath', __DIR__ . '/settings');
+define('SettingsFilePath', __DIR__ . '/settings.json');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
 # A Telegram Bot library
