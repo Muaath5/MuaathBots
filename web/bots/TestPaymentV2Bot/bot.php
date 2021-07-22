@@ -117,6 +117,7 @@ class TestPaymentV2Bot extends UpdatesHandler
 
             return false;
         }
+        return true;
     }
         
     private function CommandsHandler(object $message, object $settings) : bool
@@ -133,7 +134,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->start_message,
-                        'pase_mode' => 'Markdown'
+                        'parse_mode' => 'Markdown'
                     ]);
                     break;
 
@@ -141,7 +142,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->project_message,
-                        'pase_mode' => 'Markdown'
+                        'parse_mode' => 'HTML'
                     ]);
                     break;
 
@@ -149,7 +150,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
                         'text' => $settings->help_message,
-                        'pase_mode' => 'Markdown'
+                        'parse_mode' => 'HTML'
                     ]);
                     break;
                 
@@ -186,7 +187,11 @@ class TestPaymentV2Bot extends UpdatesHandler
                     # $invoice Should be Message object, If an error occurd 
                     $photoWidth = $settings->invoices[0]->photo_width;
                     $photoHeight = $settings->invoices[0]->photo_height;
-                    $this->Bot->SendMessage($senderChat->id, $settings->warning_message);
+                    $this->Bot->SendMessage([
+                        'chat_id' => $senderChat->id,
+                        'text' => $settings->warning_message,
+                        'parse_mode' => 'HTML'
+                    ]);
                     $mainInv = $settings->invoices[0];
                     $this->Bot->SendInvoice([
                         'chat_id' => $senderChat->id,
@@ -286,7 +291,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
                 'text' => $ex,
-                'parse_mode' => 'Markdown',
+                'parse_mode' => 'HTML',
                 'reply_markup' => $contact_the_dev
             ]);
             return false;
@@ -380,7 +385,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     <i>{$ex}</i>
 
     You should send to the developer and forward this message to him",
-                'parse_mode' => 'Markdown',
+                'parse_mode' => 'HTML',
                 'reply_markup' => $contact_the_dev
             ]);
             return false;
