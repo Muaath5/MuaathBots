@@ -12,23 +12,23 @@ class TelegramBot
     public const TIMEOUT = 63;
 
     private string $Token = "";
-    private string $BotAPIUrl = "";
-    private string $BotAPIFileUrl = "";
+    private string $TelegramBotUrl = "";
+    private string $TelegramBotFileUrl = "";
     
     private $curl;
     private ?UpdatesHandler $UpdatesHandler = null;
 
     private ?int $LastUpdateID = null;
 
-    public function __construct(string $token, UpdatesHandler $updates_handler = null, string $api_host = 'https://api.telegram.org/')
+    public function __construct(string $token, UpdatesHandler $updates_handler = null, string $api_host = 'https://api.telegram.org')
     {
         if (preg_match('/^(\d+):[\w-]{30,}$/', $token, $matches) === 0) {
             throw new InvalidArgumentException('The supplied token does not look correct...');
         }
 
         $this->Token = $token;
-        $this->TelegramUrl = "{$api_host}/bot{$this->Token}/";
-        $this->TelegramFileUrl = "{$api_host}/file/bot{$this->Token}";
+        $this->TelegramBotUrl = "{$api_host}/bot{$this->Token}";
+        $this->TelegramBotFileUrl = "{$api_host}/file/bot{$this->Token}";
         $this->UpdatesHandler = $updates_handler;
 
         $this->curl = curl_init();
@@ -126,7 +126,7 @@ class TelegramBot
      * @throws TelegramException, RuntimeException
      */
     public function __call(string $method, array $params) {
-        curl_setopt($this->curl, CURLOPT_URL, "{$this->TelegramUrl}/$method");
+        curl_setopt($this->curl, CURLOPT_URL, "{$this->TelegramBotUrl}/$method");
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $params[0] ?? []);
 
         $result = curl_exec($this->curl);
