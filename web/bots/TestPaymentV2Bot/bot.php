@@ -4,6 +4,10 @@ declare(strict_types=1);
 include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/BotAPIExceptions.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
 
+/**
+ * Test bot for Telegram Payments 2.0, Can be used for real payments
+ * @version Bot API 5.3
+ */
 class TestPaymentV2Bot extends UpdatesHandler
 {
     private TelegramBot $Bot;
