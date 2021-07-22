@@ -68,7 +68,7 @@ class TelegramBot
 
 
             case property_exists($update, 'inline_query'):
-                return $this->UpdatesHandler->InlineQueryHandler($update->message);
+                return $this->UpdatesHandler->InlineQueryHandler($update->inline_query);
 
             case property_exists($update, 'chosen_inline_query'):
                 return $this->UpdatesHandler->ChosenInlineQueryHandler($update->chosen_inline_query);
