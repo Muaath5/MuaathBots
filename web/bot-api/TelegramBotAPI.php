@@ -27,7 +27,7 @@ class TelegramBot
         }
 
         $this->Token = $token;
-        $this->TelegramUrl = "{$api_host}/bot{$this->Token}";
+        $this->TelegramUrl = "{$api_host}/bot{$this->Token}/";
         $this->TelegramFileUrl = "{$api_host}/file/bot{$this->Token}";
         $this->UpdatesHandler = $updates_handler;
 
