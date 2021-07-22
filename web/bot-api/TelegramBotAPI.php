@@ -32,6 +32,8 @@ class TelegramBot
         $this->UpdatesHandler = $updates_handler;
 
         $this->curl = curl_init();
+        curl_setopt($this->curl, CURLOPT_POST, true);
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, ['Content-Type:multipart/form-data']);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curl, CURLOPT_TIMEOUT, $this::TIMEOUT); // botAPI might take 60s before returning error
     }
@@ -125,7 +127,7 @@ class TelegramBot
      */
     public function __call(string $method, array $params) {
         curl_setopt($this->curl, CURLOPT_URL, "{$this->TelegramUrl}/$method");
-        curl_setopt($this->curl, CURLOPT_POSTFIELDS, $params[0] ?? []);
+        curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($params[0], '&'));
 
         $result = curl_exec($this->curl);
         if (curl_errno($this->curl)) {
