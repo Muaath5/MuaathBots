@@ -13,7 +13,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     {
         $this->Bot = $bot;
         $this->ProviderToken = $provider_token;
-        $this->$this->LogsChatID = $logs_chat_id;
+        $this->LogsChatID = $logs_chat_id;
     }
 
     # Functions
