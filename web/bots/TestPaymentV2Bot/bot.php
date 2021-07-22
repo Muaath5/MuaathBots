@@ -455,11 +455,18 @@ class TestPaymentV2Bot extends UpdatesHandler
         # Check the limit of the product
         if ($currentInvoice->limit === 0)
         {
-            $this->Bot->AnswerPreCheckoutQuery($pre_checkout_query->id, false, $settings->error_product_sold_out);
+            $this->Bot->AnswerPreCheckoutQuery([
+                'pre_checkout_query_id' => $pre_checkout_query->id,
+                'ok' => false,
+                'error_message' => $settings->error_product_sold_out
+            ]);
         }
         else
         {
-            $this->Bot->AnswerPreCheckoutQuery($pre_checkout_query->id, true);
+            $this->Bot->AnswerPreCheckoutQuery([
+                'pre_checkout_query_id' => $pre_checkout_query->id,
+                'ok' => true
+            ]);
         }
         return true;
     }
