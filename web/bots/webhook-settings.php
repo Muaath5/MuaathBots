@@ -49,18 +49,19 @@
                 $max_connections = $_GET['max_connections'];
             }
 
-            echo '<h2><code>setWebhook</code> method called</h2>';
+            echo '<h2><code>setWebhook</code> method was called';
             $webhookResult = $Bot->SetWebhook([
                 'url' => 'https://muaath-bots.herokuapp.com/bots/' . BotDirectory . '/webhook.php?token=' . Token,
                 'max_connections' => $max_connections,
-                'allowed_updates' => $allowed_updates]);
+                'allowed_updates' => $allowed_updates
+            ]);
             if ($webhookResult == true)
             {
-                echo '<h1 class="success">Success</h1>';
+                echo 'Sucessfully</h2>';
             }
             else
             {
-                echo "<h2><code>Error {$webhookResult->error_code}</code>:</h2>";
+                echo "With error: <code>Error {$webhookResult->error_code}</code>:</h2>";
                 echo '<pre>' . $webhookResult->description . '</pre>';
                 echo '<br><br>';
                 echo 'JSON is: <pre>' . json_encode($webhookResult) . '</pre>';
@@ -76,8 +77,12 @@
             {
                 $drop_pending_update = $_GET['drop_pending_update'];
             }
-            $Bot->DeleteWebhook($drop_pending_update);
+            $Bot->DeleteWebhook([
+                'drop_pending_updates' => $drop_pending_update
+            ]);
         }
+
+        # Webhook info
         echo '<hr>';
         $getWhInfo = $Bot->GetWebhookInfo();
         echo '<h3>Webhook info</h3>';
@@ -91,7 +96,7 @@
         {
             echo '<h3>Last error info:</h3>';
             echo "<h4>Last error:</h4> <h4 class=\"error\"><code>{$getWhInfo->last_error_message}</code></h4>";
-            $lastErrorDateStr = '';
+            $lastErrorDateStr = date('YYYY-m-d g:i:s a', $getWhInfo->last_error_date);
             echo "<h4>Last error date:</h4> <h4 class=\"date-time\">$lastErrorDateStr</h4>";
         }
         echo "<h3>Pending update count: <code>{$getWhInfo->pending_update_count}</code></h3>";
@@ -100,10 +105,6 @@
         echo "<h3>Allowed updates: {$getWhInfo->allowed_updates}</h3>";
         ?>
     </main>
-
-    <footer>
-        <a href="mailto:muaath1428@hotmail.com">Contact us</a>
-    </footer>
 </body>
 
 </html>
