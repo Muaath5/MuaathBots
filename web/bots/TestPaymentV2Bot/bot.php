@@ -1,6 +1,13 @@
 <?php
 declare(strict_types=1);
 
+namespace MuaathBots;
+
+include_once 'vendor/autoload.php';
+
+use SimpleBotAPI\TelegramBot;
+use SimpleBotAPI\UpdatesHandler;
+
 /**
  * Test bot for Telegram Payments 2.0, Can be used for real payments
  * @version Bot API 5.3
@@ -112,7 +119,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 ]);
             }
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             // Log error in logs channel
             $this->Bot->SendMessage([
@@ -302,7 +309,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             }
 
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
@@ -383,7 +390,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 'switch_pm_parameter' => 'invoice'
             ]);    
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             # Logging error
             $this->Bot->SendMessage([
@@ -460,7 +467,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 ]);
             }
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             # Logging
             $this->Bot->SendMessage([

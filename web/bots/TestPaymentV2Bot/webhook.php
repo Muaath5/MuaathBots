@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+namespace MuaathBots;
+
+include_once 'vendor/autoload.php';
+
+use SimpleBotAPI\TelegramBot;
+
 # Configurations
 $token = getenv('TestPayment2Bot_Token');
 define('DevUsername', getenv('DevUsername'));
