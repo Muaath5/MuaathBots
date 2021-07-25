@@ -1,7 +1,7 @@
 {
   "name": "muaath5/muaath-bots",
   "description": "A Telegram bots in PHP uploaded on Heroku",
-  "type": "project",
+  "type": "web-app",
   "homepage": "https://muaath-bots.herokuapp.com/",  
   "keywords": [
     "php",
@@ -29,8 +29,11 @@
     "issues": "https://github.com/Muaath5/MuaathBots/issues"
   },
   "license": "GPL-3.0-only",
-  "require": {},
+  "require": {
+    "muaath5/simple-bot-api": "dev-main"
+  },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
-  }
+  },
+  "minimum-stability": "dev"
 }
