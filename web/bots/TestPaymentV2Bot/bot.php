@@ -1,9 +1,6 @@
 <?php
 declare(strict_types=1);
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/bot-api/BotAPIExceptions.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/bot-api/UpdatesHandler.php';
-
 /**
  * Test bot for Telegram Payments 2.0, Can be used for real payments
  * @version Bot API 5.3

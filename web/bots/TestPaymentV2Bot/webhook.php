@@ -11,14 +11,14 @@ define('SettingsFilePath', __DIR__ . '/settings.json');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
 # A Telegram Bot library
-include $_SERVER['DOCUMENT_ROOT'] . '/bot-api/TelegramBotAPI.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/SimpleBotAPI/TelegramBotAPI.php';
 include __DIR__ . '/bot.php';
 
-// Create new bot with token
+# Create new bot with token
 $Bot = new TelegramBot($token);
-// Create updates handler to receive updates
+# Create updates handler to receive updates
 $BotUpdatesHandler = new TestPaymentV2Bot($Bot, getenv('TestPayment2Bot_ProviderToken'), getenv('TestPayment2Bot_LogsChatID'));
-// Set it as this bot handler
+# Set it as this bot handler
 $Bot->SetUpdatesHandler($BotUpdatesHandler);
 
 
@@ -38,9 +38,11 @@ unset($token);
 
 if (!empty($update))
 {
-    var_dump($Bot->OnUpdate($update));
+    # Process the update from webhook
+    $Bot->OnUpdate($update);
 }
 else
 {
-    var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php');
+    # Show the admin settings of the webhook, Contains: Webhook info, Delete webhook, Set webhook
+    include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php';
 }

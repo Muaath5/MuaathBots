@@ -1,6 +1,7 @@
 # Muaath Bots
 [![Licence: GPL v3.0](https://img.shields.io/badge/Licence-GPL%20v3.0-dodgerblue)](LICENCE)
-[![Bot API Version: 5.2](https://img.shields.io/badge/Bot%20API%20Version-5.2-dodgerblue)](https://core.telegram.org/bots/api#april-26-2021)
+[![Bot API Version: 5.3](https://img.shields.io/badge/Bot%20API%20Version-5.3-dodgerblue)](https://core.telegram.org/bots/api#april-26-2021)
+
 **Muaath Bots** is some PHP Telegram bots that can be recreated by everyone.
 
 ## Features
@@ -8,11 +9,11 @@
 - Open source and uses `git`
 - Can be hosted in Heroku free
 - Configuration stored in environment variables (`.env` file)
-- All bots uses **Bot API 5.2** or earlier
+- All bots uses **Bot API 5.3** or earlier
 - Uses GitHub Actions
-- Custom & Simple Bot API library in PHP
+- Bots uses [Simple Bot API Library](https://github.com/Muaath5/SimpleBotAPI)
 - Single file for webhool
-- Translations & Settings file in JSON.
+- Translations & Settings stored in JSON file, And can be customized.
 
 ## Bots
 **Avaliable bots:**  
@@ -22,11 +23,12 @@
 - getChat method bot | [@getChatMethodBot](https://t.me/getChatMethodBot).
 
 ## FAQ
-| Question                                | Answer                                                                                                                   |
-|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| What's minimum version of bots?         | Bot API 5.2                                                                                                              |
-| Why Muaath bots doesn't uses databases? | To make it free hosted in Heroku, Also because this project doesn't get money to buy good hosting offers good databases. |
-| Is there any idea to pay for bots?      | Currently, No. Because this project hasn't any money source like some bots.                                              |
+| Question                                   | Answer                                                                                                                   |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| What's minimum version of bots?            | Bot API 5.3                                                                                                              |
+| Why Muaath bots doesn't uses databases?    | To make it free hosted in Heroku, Also because this project doesn't get money to buy good hosting offers good databases. |
+| Is there any idea to pay for hosting bots? | Currently, No. Because this project hasn't any money source like some bots.                                              |
+| Why not all the bots has multi-language?   | Because commands like `/start` Or `/help` Doesn't come with `language_code`, So it should uses database.                 |
 
 ## Issues, Pull requests, And Questions
 Please read [**Contributing guidelines**](CONTRIBUTING.md)
@@ -38,7 +40,7 @@ Please read [**Contributing guidelines**](CONTRIBUTING.md)
 
 **Import project now:**
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Muaath5/MuaathBots)
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Muaath5/MuaathBots)
 
 **(Optional) And if you want to edit on the code, Complete these instructions:**
 - Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) And [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
