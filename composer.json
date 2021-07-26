@@ -29,9 +29,6 @@
     "issues": "https://github.com/Muaath5/MuaathBots/issues"
   },
   "license": "GPL-3.0-only",
-  "require": {
-    "muaath5/simple-bot-api": "dev-main"
-  },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
   },
