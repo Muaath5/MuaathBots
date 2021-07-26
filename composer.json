@@ -32,5 +32,8 @@
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "require": {
+    "muaath5/simple-bot-api": "dev-main"
+  }
 }

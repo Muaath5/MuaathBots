@@ -4,8 +4,43 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77681f18f04099507f90e87f707b0a20",
-    "packages": [],
+    "content-hash": "4a0808d49506d3ad82467bb8eb1e3d92",
+    "packages": [
+        {
+            "name": "muaath5/simple-bot-api",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Muaath5/SimpleBotAPI.git",
+                "reference": "73338871704db8a9b00f8ed7407f33d27a327e4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/73338871704db8a9b00f8ed7407f33d27a327e4e",
+                "reference": "73338871704db8a9b00f8ed7407f33d27a327e4e",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Muaath Alqarni",
+                    "email": "muaath1428@hotmail.com"
+                }
+            ],
+            "description": "Simple & Easy Telegram Bot API in PHP",
+            "support": {
+                "email": "muaath1428@hotmail.com",
+                "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
+                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/main"
+            },
+            "time": "2021-07-26T12:44:01+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
@@ -56,7 +91,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "muaath5/simple-bot-api": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
