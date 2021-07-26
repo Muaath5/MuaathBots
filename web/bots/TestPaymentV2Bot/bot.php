@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-include_once 'vendor/autoload.php';
+require('../../../vendor/autoload.php');
 
 use SimpleBotAPI\TelegramBot;
 use SimpleBotAPI\UpdatesHandler;
@@ -17,12 +17,14 @@ class TestPaymentV2Bot extends UpdatesHandler
     private TelegramBot $Bot;
     private string $ProviderToken;
     private int|string $LogsChatID;
+    public $Settings;
 
     public function __construct(TelegramBot $bot, string $provider_token, float|string $logs_chat_id)
     {
         $this->Bot = $bot;
         $this->ProviderToken = $provider_token;
         $this->LogsChatID = $logs_chat_id;
+        $this->Settings = json_decode(file_get_contents(__DIR__ . '/settings.json'));
     }
 
     # Functions

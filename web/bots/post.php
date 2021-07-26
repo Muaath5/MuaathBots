@@ -24,18 +24,18 @@ try
 }
 catch (PDOException $ex)
 {
-    $code = $ex->getCode();
-    $description = $ex->getMessage();
-    echo "<h1 class=\"error\">Error $code:</h1>";
-    echo "<h2>$description</h2>";
+    echo "<h1 class=\"error\">Error {$ex->getCode()}:</h1>";
+    echo "<h2>{$ex->getMessage()}</h2>";
     exit;
 }
 
 try
 {
-    $db->query("SELECT $column_name FROM $table_name");
+    $result = $db->query("SELECT $column_name FROM $table_name");
 }
-catch (PDOException)
+catch (PDOException $ex)
 {
-
+    echo "<h1 class=\"error\">Error {$ex->getCode()}:</h1>";
+    echo "<h2>{$ex->getMessage()}</h2>";
+    exit;
 }

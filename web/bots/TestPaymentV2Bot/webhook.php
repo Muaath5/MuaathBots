@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-include_once 'vendor/autoload.php';
+require('../../../vendor/autoload.php');
 
 use SimpleBotAPI\TelegramBot;
+use MuaathBots\TestPaymentV2Bot;
 
 # Configurations
 $token = getenv('TestPayment2Bot_Token');
@@ -16,39 +17,29 @@ $bot_admins = json_decode(getenv('TestPayment2Bot_Admins'));
 define('SettingsFilePath', __DIR__ . '/settings.json');
 $settings = json_decode(file_get_contents(SettingsFilePath));
 
-# A Telegram Bot library
-include $_SERVER['DOCUMENT_ROOT'] . '/SimpleBotAPI/TelegramBotAPI.php';
-include __DIR__ . '/bot.php';
-
-# Create new bot with token
+# Create the Bot API
 $Bot = new TelegramBot($token);
-# Create updates handler to receive updates
-$BotUpdatesHandler = new TestPaymentV2Bot($Bot, getenv('TestPayment2Bot_ProviderToken'), getenv('TestPayment2Bot_LogsChatID'));
-# Set it as this bot handler
-$Bot->SetUpdatesHandler($BotUpdatesHandler);
+$Bot->SetUpdatesHandler(new TestPaymentV2Bot($Bot, getenv('TestPayment2Bot_ProviderToken'), getenv('TestPayment2Bot_LogsChatID')));
 
 
 # Reading the update
-$update = json_decode(file_get_contents('php://input'));
+$Update = json_decode(file_get_contents('php://input'));
 
 # Check auth
-define('BotDirectory', basename(__DIR__));
-define('Token', $token);
+$BotDir = basename(__DIR__);
 if ($_GET['token'] != $token)
 {
-    var_dump(include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-unauthorized.php');
+    include $_SERVER['DOCUMENT_ROOT'] . "/bots/webhook-unauthorized.php?bot={$BotDir}";
     exit;
 }
 
-unset($token);
-
-if (!empty($update))
+if (!empty($Update))
 {
     # Process the update from webhook
-    $Bot->OnUpdate($update);
+    $Bot->OnUpdate($Update);
 }
 else
 {
     # Show the admin settings of the webhook, Contains: Webhook info, Delete webhook, Set webhook
-    include $_SERVER['DOCUMENT_ROOT'] . '/bots/webhook-settings.php';
+    include $_SERVER['DOCUMENT_ROOT'] . "/bots/webhook-settings.php?token={$token}&bot={$BotDir}";
 }

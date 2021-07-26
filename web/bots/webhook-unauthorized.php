@@ -8,7 +8,7 @@
         <h1 class="http-error center">Error 403 - Unauthorized</h1>
         <h2 class="error-missed-parameter">The GET paramter: <code>token</code> is missed</h2>
         <h3><a href="https://t.me/<?php if (isset($_ENV['BotChannel'])) {echo getenv('BotChannel');} else { echo "MuaathBots"; }?>">Bot Channel</a></h3>
-        <form method="GET" action="./<?php echo BotDirectory;?>/webhook.php">
+        <form method="GET" action="./<?php echo $_GET['bot'];?>/webhook.php">
             <input name="token" type="password" placeholder="Bot token obtained from @BotFather">
             <button type="submit">Authenticate</button>
         </form>
