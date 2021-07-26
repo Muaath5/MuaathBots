@@ -23,7 +23,7 @@ $Update = json_decode(file_get_contents('php://input'));
 if (!empty($Update))
 {
     # Create the Bot
-    $Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'));
+    $Bot = new \SimpleBotAPI\TelegramBot(getenv('PAYMENT_BOT_TOKEN'));
     $Bot->SetUpdatesHandler(new TestPaymentV2Bot($Bot, getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
 
     # Process the update from webhook

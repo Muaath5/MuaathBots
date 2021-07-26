@@ -1,0 +1,41 @@
+[33mcommit ef5b95351ef5cabf1860fdbced6b9330b55ee8e6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31mgithub/main[m[33m)[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Mon Jul 26 16:46:19 2021 +0300
+
+    Remove unused file
+
+[33mcommit 474f40b61feaf173e678e48e7a69e937a53da938[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Mon Jul 26 16:38:41 2021 +0300
+
+    Rename env variables, Use Class variables instead of global variables, Remove define
+
+[33mcommit 83fff33964f461debc8f672a7892af6f73bf68c1[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Mon Jul 26 15:46:19 2021 +0300
+
+    Update the library
+
+[33mcommit 5d8d145abf4d583712bcdb6b80367191b25a176a[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Mon Jul 26 15:19:38 2021 +0300
+
+    Fix autoload.php
+
+[33mcommit d15d28b7eb5008ca17ab79dd1fda05ad692a304a[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Sun Jul 25 19:54:03 2021 +0300
+
+    Use namespaces, autoload, And new library
+
+[33mcommit 5f8017ff47ee0f506f666446d51528ad0d046460[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Sun Jul 25 19:43:34 2021 +0300
+
+    Add the library via composer
+
+[33mcommit e347893da3d75708a29e2444dd0381a0f3eb7b24[m
+Author: Muaath Alqarni <muaath1428@hotmail.com>
+Date:   Sun Jul 25 14:36:36 2021 +0300
+
+    Returing to the old style
