@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-require('../../../vendor/autoload.php');
+include 'app/vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
@@ -13,7 +13,7 @@ $BotDir = basename(__DIR__);
 # Check auth
 if ($_GET['token'] != getenv('PAYMENT_BOT_TOKEN'))
 {
-    include "../webhook-unauthorized.php?bot={$BotDir}";
+    include $_SERVER['DOCUMENT_ROOT'] . "/bots/webhook-unauthorized.php?bot={$BotDir}";
     exit;
 }
 
