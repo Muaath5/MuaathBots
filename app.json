@@ -12,11 +12,9 @@
     "php",
     "muaath",
     "muaath-bots",
-    "5.2",
+    "5.3",
     "payments 2.0",
-    "tgbot",
-    "contact-bot",
-    "contact-channel"
+    "tgbot"
   ],
   "env":
   {
