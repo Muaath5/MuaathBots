@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-include 'app/vendor/autoload.php';
+include __DIR__ . '../../../vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
