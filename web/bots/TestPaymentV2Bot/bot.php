@@ -24,23 +24,23 @@ class TestPaymentV2Bot extends UpdatesHandler
         $this->Bot = $bot;
         $this->ProviderToken = $provider_token;
         $this->LogsChatID = $logs_chat_id;
-        $this->Settings = json_decode(file_get_contents(__DIR__ . '/settings.json'));
+        $this->Settings = json_decode(file_get_contents(__DIR__ . '/$this->Settings.json'));
     }
 
     # Functions
-    private function GetInvoiceByPayload(string $payload, $settings, bool $returnIndexInArray = false) : array|object
+    private function GetInvoiceByPayload(string $payload, bool $returnIndexInArray = false) : array|object
     {
-        for ($i = 0; $i < count($settings->invoices); $i++)
+        for ($i = 0; $i < count($this->Settings->invoices); $i++)
         {
-            if ($payload === $settings->invoices[$i]->payload)
+            if ($payload === $this->Settings->invoices[$i]->payload)
             {
                 if ($returnIndexInArray)
                 {
-                    return array($settings->invoices[$i], $i);
+                    return array($this->Settings->invoices[$i], $i);
                 }
                 else
                 {
-                    return $settings->invoices[$i];
+                    return $this->Settings->invoices[$i];
                 }
             }
         }
@@ -50,14 +50,10 @@ class TestPaymentV2Bot extends UpdatesHandler
     # Update handlers
     public function MessageHandler($message) : bool
     {
-        global $settings;
-        global $contact_the_dev;
-        global $bot_admins;
-
         try
         {
 
-            if (in_array($message->from->id, $bot_admins))
+            if (in_array($message->from->id, $this->Settings->bot_admins))
             {
                 # Nothing here now..
             }
@@ -67,19 +63,19 @@ class TestPaymentV2Bot extends UpdatesHandler
             {    
                 if ($message->text[0] === '/')
                 {
-                    return $this->CommandsHandler($message, $settings);
+                    return $this->CommandsHandler($message, $this->Settings);
                 }
             }
             else if (property_exists($message, 'successful_payment'))
             {
-                $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $settings, true);
+                $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $this->Settings, true);
 
                 # Handle limits
                 if ($resultInvoice[0]->limit > 0)
                 {
                     # Write the new invoice limit to the file:
-                    $settings->invoices[$resultInvoice[1]]->limit--;
-                    // file_put_contents(SettingsFilePath, json_encode($settings));
+                    $this->Settings->invoices[$resultInvoice[1]]->limit--;
+                    // file_put_contents(SettingsFilePath, json_encode($this->Settings));
                 }
                 
                 $floatTotalAmount = $message->successful_payment->total_amount / 100;
@@ -116,7 +112,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 
                 $this->Bot->SendMessage([
                     'chat_id' => $senderChat->id,
-                    'text' => $settings->successful_payment_message,
+                    'text' => $this->Settings->successful_payment_message,
                     'parse_mode' => 'HTML'
                 ]);
             }
@@ -134,9 +130,8 @@ class TestPaymentV2Bot extends UpdatesHandler
         return true;
     }
         
-    private function CommandsHandler(object $message, object $settings) : bool
+    private function CommandsHandler(object $message) : bool
     {
-        global $contact_the_dev;
 
         $senderChat = $message->chat;
 
@@ -147,8 +142,11 @@ class TestPaymentV2Bot extends UpdatesHandler
                 case '/start':
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
-                        'text' => $settings->start_message,
-                        'parse_mode' => 'HTML'
+                        'text' => $this->Settings->start_message,
+                        'parse_mode' => 'HTML',
+                        'reply_markup' => json_encode(['inline_keyboard' => [[
+                            []
+                        ]]])
                     ]);
                     break;
 
@@ -156,7 +154,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 case '/start project':
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
-                        'text' => $settings->project_message,
+                        'text' => $this->Settings->project_message,
                         'parse_mode' => 'HTML'
                     ]);
                     break;
@@ -165,7 +163,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 case '/start help':
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
-                        'text' => $settings->help_message,
+                        'text' => $this->Settings->help_message,
                         'parse_mode' => 'HTML'
                     ]);
                     break;
@@ -177,18 +175,18 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'inline_keyboard' =>
                         [
                             [[
-                                'text' => $settings->inline_chat_button,
+                                'text' => $this->Settings->inline_chat_button,
                                 'switch_inline_query' => 'payment'
                             ]],
                             [[
-                                'text' => $settings->inline_current_chat_button,
+                                'text' => $this->Settings->inline_current_chat_button,
                                 'switch_inline_query_current_chat' => 'payment'
                             ]]
                         ]
                     ]);
                     $this->Bot->SendMessage([
                         'chat_id' => $message->chat->id,
-                        'text' => $settings->inline_message,
+                        'text' => $this->Settings->inline_message,
                         'reply_markup' => $inlineQueryKeyboard
                     ]);
                     break;
@@ -197,20 +195,20 @@ class TestPaymentV2Bot extends UpdatesHandler
                 case '/start invoice':
                     $providerData =
                     [
-                        'payload' => $settings->invoices[0]->payload,
+                        'payload' => $this->Settings->invoices[0]->payload,
                         'user_id' => $senderChat->id,
-                        'prices' => $settings->invoices[0]->prices
+                        'prices' => $this->Settings->invoices[0]->prices
                     ];
                     
                     # $invoice Should be Message object, If an error occurd 
-                    $photoWidth = $settings->invoices[0]->photo_width;
-                    $photoHeight = $settings->invoices[0]->photo_height;
+                    $photoWidth = $this->Settings->invoices[0]->photo_width;
+                    $photoHeight = $this->Settings->invoices[0]->photo_height;
                     $this->Bot->SendMessage([
                         'chat_id' => $senderChat->id,
-                        'text' => $settings->warning_message,
+                        'text' => $this->Settings->warning_message,
                         'parse_mode' => 'HTML'
                     ]);
-                    $mainInv = $settings->invoices[0];
+                    $mainInv = $this->Settings->invoices[0];
                     $this->Bot->SendInvoice([
                         'chat_id' => $senderChat->id,
                         'title' => $mainInv->title,
@@ -253,42 +251,42 @@ class TestPaymentV2Bot extends UpdatesHandler
                     break;
                     
                 default:
-                    for ($i = 0; $i < count($settings->invoices); $i++)
+                    for ($i = 0; $i < count($this->Settings->invoices); $i++)
                     {
-                        if ($message->text === "/start {$settings->invoices[$i]->start_param}")
+                        if ($message->text === "/start {$this->Settings->invoices[$i]->start_param}")
                         {
                             $providerData =
                             [
                                 'user_id' => $message->from->id,
-                                'prices' => $settings->invoices[$i]->prices,
-                                'payload' => $settings->invoices[$i]->payload
+                                'prices' => $this->Settings->invoices[$i]->prices,
+                                'payload' => $this->Settings->invoices[$i]->payload
                             ];
                             
-                            $photoWidth = $settings->invoices[$i]->photo_width;
-                            $photoHeight = $settings->invoices[$i]->photo_height;
+                            $photoWidth = $this->Settings->invoices[$i]->photo_width;
+                            $photoHeight = $this->Settings->invoices[$i]->photo_height;
                             $this->Bot->SendInvoice([
                                 'chat_id' => $senderChat->id,
-                                'title' => $settings->invoices[$i]->title,
-                                'description' => $settings->invoices[$i]->description,
-                                'payload' => $settings->invoices[$i]->payload,
+                                'title' => $this->Settings->invoices[$i]->title,
+                                'description' => $this->Settings->invoices[$i]->description,
+                                'payload' => $this->Settings->invoices[$i]->payload,
                                 'provider_token' => $this->ProviderToken,
-                                'currency' => $settings->invoices[$i]->currency,
-                                'prices' => json_encode($settings->invoices[$i]->prices),
-                                'max_tip_amount' => $settings->invoices[$i]->max_tip_amount,
-                                'suggested_tip_amounts' => json_encode($settings->invoices[$i]->suggested_tip_amounts),
-                                'start_param' => $settings->invoices[$i]->start_param,
+                                'currency' => $this->Settings->invoices[$i]->currency,
+                                'prices' => json_encode($this->Settings->invoices[$i]->prices),
+                                'max_tip_amount' => $this->Settings->invoices[$i]->max_tip_amount,
+                                'suggested_tip_amounts' => json_encode($this->Settings->invoices[$i]->suggested_tip_amounts),
+                                'start_param' => $this->Settings->invoices[$i]->start_param,
                                 'provider_data' => json_encode($providerData),
-                                'photo_url' => $settings->invoices[$i]->photo_url, 
+                                'photo_url' => $this->Settings->invoices[$i]->photo_url, 
                                 'photo_size' => $photoWidth * $photoHeight,
                                 'photo_width' => $photoWidth,
                                 'photo_height' => $photoHeight,
-                                'need_name' => $settings->invoices[$i]->need_name,
-                                'need_phone_number' => $settings->invoices[$i]->need_phone_number,
-                                'need_email' => $settings->invoices[$i]->need_email,
-                                'need_shipping_address' => $settings->invoices[$i]->need_shipping_address,
-                                'send_phone_number_to_provider' => $settings->invoices[$i]->send_phone_number_to_provider,
-                                'send_email_to_provider' => $settings->invoices[$i]->send_email_to_provider,
-                                'is_flexible' => $settings->invoices[$i]->is_flexible]);
+                                'need_name' => $this->Settings->invoices[$i]->need_name,
+                                'need_phone_number' => $this->Settings->invoices[$i]->need_phone_number,
+                                'need_email' => $this->Settings->invoices[$i]->need_email,
+                                'need_shipping_address' => $this->Settings->invoices[$i]->need_shipping_address,
+                                'send_phone_number_to_provider' => $this->Settings->invoices[$i]->send_phone_number_to_provider,
+                                'send_email_to_provider' => $this->Settings->invoices[$i]->send_email_to_provider,
+                                'is_flexible' => $this->Settings->invoices[$i]->is_flexible]);
                             
                             # Logging
                             $newInvoiceRequestText = "New invoice request 📲:
@@ -316,8 +314,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
                 'text' => "<b>Error:</b>\n$ex",
-                'parse_mode' => 'HTML',
-                'reply_markup' => $contact_the_dev
+                'parse_mode' => 'HTML'
             ]);
             return false;
         }
@@ -335,48 +332,45 @@ class TestPaymentV2Bot extends UpdatesHandler
     }
 
     public function InlineQueryHandler($inline_query) : bool
-    {
-        global $settings;
-        global $contact_the_dev;
-        
+    {   
         $results = [];
-        for ($i = 0; $i < count($settings->invoices); $i++)
+        for ($i = 0; $i < count($this->Settings->invoices); $i++)
         {   
             array_push($results, 
             [
                 'type' => 'article',
-                'id' => $settings->invoices[$i]->payload,
-                'title' => $settings->invoices[$i]->title,
-                'description' => $settings->invoices[$i]->description,
-                'thumb_url' => $settings->invoices[$i]->photo_url,
-                'thumb_width' => $settings->invoices[$i]->photo_width,
-                'thumb_height' => $settings->invoices[$i]->photo_height,
+                'id' => $this->Settings->invoices[$i]->payload,
+                'title' => $this->Settings->invoices[$i]->title,
+                'description' => $this->Settings->invoices[$i]->description,
+                'thumb_url' => $this->Settings->invoices[$i]->photo_url,
+                'thumb_width' => $this->Settings->invoices[$i]->photo_width,
+                'thumb_height' => $this->Settings->invoices[$i]->photo_height,
                 'input_message_content' =>
                 [
-                    'title' => $settings->invoices[$i]->title,
-                    'description' => $settings->invoices[$i]->description,
-                    'payload' => $settings->invoices[$i]->payload,
+                    'title' => $this->Settings->invoices[$i]->title,
+                    'description' => $this->Settings->invoices[$i]->description,
+                    'payload' => $this->Settings->invoices[$i]->payload,
                     'provider_token' => $this->ProviderToken,
-                    'currency' => $settings->invoices[$i]->currency,
-                    'prices' => $settings->invoices[$i]->prices,
-                    'photo_url' => $settings->invoices[$i]->photo_url,
-                    'photo_width' => $settings->invoices[$i]->photo_width,
-                    'photo_height' => $settings->invoices[$i]->photo_height,
-                    'photo_size' => $settings->invoices[$i]->photo_width * $settings->invoices[$i]->photo_height,
-                    'max_tip_amount' => $settings->invoices[$i]->max_tip_amount,
-                    'suggested_tip_amounts' => $settings->invoices[$i]->suggested_tip_amounts,
+                    'currency' => $this->Settings->invoices[$i]->currency,
+                    'prices' => $this->Settings->invoices[$i]->prices,
+                    'photo_url' => $this->Settings->invoices[$i]->photo_url,
+                    'photo_width' => $this->Settings->invoices[$i]->photo_width,
+                    'photo_height' => $this->Settings->invoices[$i]->photo_height,
+                    'photo_size' => $this->Settings->invoices[$i]->photo_width * $this->Settings->invoices[$i]->photo_height,
+                    'max_tip_amount' => $this->Settings->invoices[$i]->max_tip_amount,
+                    'suggested_tip_amounts' => $this->Settings->invoices[$i]->suggested_tip_amounts,
                     'provider_data' => json_encode(
                     [
                         'sender_user_id' => $inline_query->from->id,
                         'chat_type' => $inline_query->chat_type,
                         'query' => $inline_query->query,
-                        'payload' => $settings->invoices[$i]->payload
+                        'payload' => $this->Settings->invoices[$i]->payload
                     ]),
-                    'need_name' => $settings->invoices[$i]->need_name,
-                    'need_phone_number' => $settings->invoices[$i]->need_phone_number,
-                    'need_email' => $settings->invoices[$i]->need_email,
-                    'need_shipping_address' => $settings->invoices[$i]->need_shipping_address,
-                    'is_flexible' => $settings->invoices[$i]->is_flexible
+                    'need_name' => $this->Settings->invoices[$i]->need_name,
+                    'need_phone_number' => $this->Settings->invoices[$i]->need_phone_number,
+                    'need_email' => $this->Settings->invoices[$i]->need_email,
+                    'need_shipping_address' => $this->Settings->invoices[$i]->need_shipping_address,
+                    'is_flexible' => $this->Settings->invoices[$i]->is_flexible
                 ]
             ]);
         }
@@ -410,8 +404,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     <i>{$ex}</i>
 
     You should send to the developer and forward this message to him",
-                'parse_mode' => 'HTML',
-                'reply_markup' => $contact_the_dev
+                'parse_mode' => 'HTML'
             ]);
             return false;
         }
@@ -421,10 +414,8 @@ class TestPaymentV2Bot extends UpdatesHandler
 
     public function ShippingQueryHandler($shipping_query) : bool
     {  
-        global $settings;
-        global $contact_the_dev;
 
-        $currentInvoice = $this->GetInvoiceByPayload($shipping_query->invoice_payload, $settings);
+        $currentInvoice = $this->GetInvoiceByPayload($shipping_query->invoice_payload, $this->Settings);
         
         # If the invoice supports all countries || If the selected country is one of 
         $countryResult = array_search($shipping_query->shipping_address->country_code, $currentInvoice->supported_countries);
@@ -446,7 +437,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 }
                 else
                 {
-                    $errorMsg = $settings->error_city_unavailable;
+                    $errorMsg = $this->Settings->error_city_unavailable;
                     $errorMsg = str_replace('{city}', $shipping_query->shipping_address->city, $errorMsg);
                     $errorMsg = str_replace('{country}', $shipping_query->shipping_address->country_code, $errorMsg);
                     $errorMsg = str_replace('{available_cities}', implode(', ', $currentInvoice->supported_cities[$countryResult]), $errorMsg);
@@ -459,7 +450,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             }
             else # Means country not supported, returns error
             {
-                $errorMsg = $settings->error_country_unavailable;
+                $errorMsg = $this->Settings->error_country_unavailable;
                 $errorMsg = str_replace('{country}', $shipping_query->shipping_address->country_code, $errorMsg);
                 $errorMsg = str_replace('{available_countries}', implode(', ', $currentInvoice->supported_countries), $errorMsg);
                 $this->Bot->AnswerShippingQuery([
@@ -474,8 +465,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             # Logging
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
-                'text' => str_replace('{json-error}', $settings->answer_shipping_query_failed_log, $ex->__toString()),
-                'reply_markup' => $contact_the_dev
+                'text' => str_replace('{json-error}', $this->Settings->answer_shipping_query_failed_log, $ex->__toString()),
             ]);
         }
         return true;
@@ -484,9 +474,7 @@ class TestPaymentV2Bot extends UpdatesHandler
 
     public function PreCheckoutQueryHandler(object $pre_checkout_query) : bool
     {
-        global $settings;
-
-        $currentInvoice = $this->GetInvoiceByPayload($pre_checkout_query->invoice_payload, $settings);
+        $currentInvoice = $this->GetInvoiceByPayload($pre_checkout_query->invoice_payload, $this->Settings);
         
         # Check the limit of the product
         if ($currentInvoice->limit === 0)
@@ -494,7 +482,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             $this->Bot->AnswerPreCheckoutQuery([
                 'pre_checkout_query_id' => $pre_checkout_query->id,
                 'ok' => false,
-                'error_message' => $settings->error_product_sold_out
+                'error_message' => $this->Settings->error_product_sold_out
             ]);
         }
         else
@@ -511,7 +499,7 @@ class TestPaymentV2Bot extends UpdatesHandler
 
     public function MyChatMemberHandler(object $my_chat_member) : bool
     {
-        //global $settings;
+        //global $this->Settings;
 
         if ($my_chat_member->new_chat_member === 'member')
         {
@@ -543,9 +531,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     }
         
     public function CallbackQueryHandler(object $callback_query) : bool
-    {
-        global $settings;
-        
+    {        
         # Only buttons callbacks are in this style: "Invoice_{$invoice->payload}"
         if ($this->StartsWith($callback_query->data, 'Invoice_'))
         {
@@ -555,7 +541,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 'callback_query' => $callback_query->data
             ];
 
-            $requestedInvoice = $this->GetInvoiceByPayload(substr($callback_query->data, 9, strlen($callback_query->data)), $settings);
+            $requestedInvoice = $this->GetInvoiceByPayload(substr($callback_query->data, 9, strlen($callback_query->data)), $this->Settings);
 
             $photoHeight = $requestedInvoice->photo_height;
             $photoWidth = $requestedInvoice->photo_width;
@@ -568,13 +554,13 @@ class TestPaymentV2Bot extends UpdatesHandler
                                     $requestedInvoice->need_shipping_address, $requestedInvoice->send_phone_number_to_provider,
                                     $requestedInvoice->send_email_to_provider, $requestedInvoice->is_flexible);
 
-            $this->Bot->AnswerCallbackQuery($callback_query->id, $settings->succesed);
+            $this->Bot->AnswerCallbackQuery($callback_query->id, $this->Settings->succesed);
         }
         else
         {
             $this->Bot->AnswerCallbackQuery([
                 'callback_query_id' => $callback_query->id,
-                'text' => $settings->errors->unknown_callback_query
+                'text' => $this->Settings->errors->unknown_callback_query
             ]);
         }
         return true;
