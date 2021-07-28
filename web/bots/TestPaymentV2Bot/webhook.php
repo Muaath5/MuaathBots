@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-require '../../../vendor/autoload.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
@@ -23,10 +23,10 @@ $Update = json_decode(file_get_contents('php://input'));
 if (!empty($Update))
 {
     # Create the Bot
-    $Bot = new \SimpleBotAPI\TelegramBot(getenv('PAYMENT_BOT_TOKEN'));
+    $Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'));
     $Bot->SetUpdatesHandler(new TestPaymentV2Bot($Bot, getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
 
-    # Process the update from webhook
+    # Process the update
     $Bot->OnUpdate($Update);
 }
 else

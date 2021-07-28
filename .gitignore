@@ -1,7 +1,7 @@
-vendor/
 .env
 private/
 uncompleted/
 .vs/
 admin/
 ContactChannelBot/
+vendor/
