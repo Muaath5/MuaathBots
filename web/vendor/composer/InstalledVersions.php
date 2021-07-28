@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9473f981c770b82f276490849be7ee5b1978af04',
+    'reference' => '172ebc767c8c91180a8e293e97e674bc24758003',
     'name' => 'muaath5/muaath-bots',
   ),
   'versions' => 
@@ -54,7 +54,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9473f981c770b82f276490849be7ee5b1978af04',
+      'reference' => '172ebc767c8c91180a8e293e97e674bc24758003',
     ),
     'muaath5/simple-bot-api' => 
     array (
