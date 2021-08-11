@@ -33,9 +33,7 @@
     "heroku/heroku-buildpack-php": "*"
   },
   "minimum-stability": "dev",
-  "autoload": {
-    "psr-4": {
-      "SimpleBotAPI\\": "web/SimpleBotAPI"
-    }
+  "require": {
+    "muaath5/simple-bot-api": "dev-main"
   }
 }
