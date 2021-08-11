@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-require '/vendor/autoload.php';
+require '/app/vendor/autoload.php';
 
 use SimpleBotAPI\TelegramBot;
 use SimpleBotAPI\UpdatesHandler;
