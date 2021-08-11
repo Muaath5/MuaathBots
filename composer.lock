@@ -12,16 +12,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muaath5/SimpleBotAPI.git",
-                "reference": "17a13493621f13e396bdcf5d22c5ce52f2459dc0"
+                "reference": "0560797704725e0313602a96b326c337b26a914b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/17a13493621f13e396bdcf5d22c5ce52f2459dc0",
-                "reference": "17a13493621f13e396bdcf5d22c5ce52f2459dc0",
+                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/0560797704725e0313602a96b326c337b26a914b",
+                "reference": "0560797704725e0313602a96b326c337b26a914b",
                 "shasum": ""
             },
             "default-branch": true,
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleBotAPI\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-only"
@@ -38,7 +43,7 @@
                 "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
                 "source": "https://github.com/Muaath5/SimpleBotAPI/tree/main"
             },
-            "time": "2021-08-11T17:31:38+00:00"
+            "time": "2021-08-11T18:09:49+00:00"
         }
     ],
     "packages-dev": [
