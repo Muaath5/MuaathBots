@@ -34,7 +34,7 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "muaath5/simple-bot-api": "dev-main"
+    "muaath5/simple-bot-api": "^5.3"
   },
   "autoload": {
     "psr-4": {

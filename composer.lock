@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a0808d49506d3ad82467bb8eb1e3d92",
+    "content-hash": "7b672ebaf5254e4f7faeb15bbe843098",
     "packages": [
         {
             "name": "muaath5/simple-bot-api",
-            "version": "dev-main",
+            "version": "5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muaath5/SimpleBotAPI.git",
@@ -20,7 +20,6 @@
                 "reference": "2f3232ee16fea79648f4b6f62f49f6d46baeb714",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -41,7 +40,7 @@
             "support": {
                 "email": "muaath1428@hotmail.com",
                 "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
-                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/main"
+                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/5.3"
             },
             "time": "2021-08-11T18:25:44+00:00"
         }
@@ -96,9 +95,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "muaath5/simple-bot-api": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

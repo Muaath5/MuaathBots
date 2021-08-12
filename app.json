@@ -18,34 +18,34 @@
   ],
   "env":
   {
-    "TestPaymentV2Bot_Token":
+    "PAYMENT_BOT_TOKEN":
     {
       "description": "Bot token obtained via https://t.me/BotFather",
       "required": true
     },
-    "TestPaymentV2Bot_ProviderToken":
+    "PAYMENT_BOT_PROVIDER_TOKEN":
     {
       "description": "Telegram payment provider token obtained via https://t.me/BotFather",
       "required": true
     },
-    "TestPaymentV2Bot_LogsChatID":
+    "PAYMENT_BOT_LOGS_CHAT_ID":
     {
       "description": "The username of public group/channel, Otherwise ID of private chat/group/channel.",
       "required": true
     },
-    "DevUsername":
+    "DEV_USERNAME":
     {
       "value": "Muaath_5",
-      "description": "The username of the creator or main editor of the bots, Without @ in the start",
+      "description": "The username of the creator or main editor of the bots, Not owner, Without @ in the start",
       "required": true
     },
-    "BotChannel":
+    "BOTS_CHANNEL":
     {
       "value": "MuaathBots",
       "description": "The username of Bot channel in Telegram, Don't add @ in the start",
       "required": true
     },
-    "BotGroup":
+    "BOTS_GROUP":
     {
       "value": "MuaathBotsChat",
       "description": "The username of Bot channel in Telegram, Don't add @ in the start",

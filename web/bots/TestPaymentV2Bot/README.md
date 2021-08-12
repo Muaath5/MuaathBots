@@ -1,6 +1,9 @@
 # TestPaymentV2Bot
+[![Bot API Version: 5.3](https://img.shields.io/badge/Bot%20API%20Version-5.3-dodgerblue)](https://core.telegram.org/bots/api#april-26-2021)
+
+
 Test payments 2.0 - [@TestPaymentsV2Bot](https://t.me/TestPaymentV2Bot), By [Muaath Alqarni](https://t.me/Muaath_5).
-This bot uses **Bot API 5.2**, Supports _Telegram Payments 2.0_.
+This bot supports _Telegram Payments 2.0_.
 
 ## Bot settings
 | Setting                | Value    |

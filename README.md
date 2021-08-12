@@ -13,14 +13,15 @@
 - Uses GitHub Actions
 - Bots uses [Simple Bot API Library](https://github.com/Muaath5/SimpleBotAPI)
 - Single file for webhool
-- Translations & Settings stored in JSON file, And can be customized.
+- Supports Translations.
 
 ## Bots
 **Avaliable bots:**  
-- Test payment 2.0 bot | [@TestPaymentV2Bot](https://t.me/TestPaymentV2Bot).
+- Test payment 2.0 Bot | [@TestPaymentV2Bot](https://t.me/TestPaymentV2Bot).
 
 **Coming soon:**
-- getChat method bot | [@getChatMethodBot](https://t.me/getChatMethodBot).
+- Remove Inline Buttons Bot | [@RemoveInlineButtonsBot](https://t.me/RemoveInlineButtonsBot).
+- getChat method Bot | [@getChatMethodBot](https://t.me/getChatMethodBot).
 
 ## FAQ
 | Question                                   | Answer                                                                                                                   |
