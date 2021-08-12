@@ -34,15 +34,16 @@ if (isset($_GET['m']))
         {
             $max_connections = $_GET['max_connections'];
         }
+
+        $webhookResult = $Bot->SetWebhook([
+            'url' => 'https://muaath-bots.herokuapp.com/bots/' . $BotDir . '/webhook.php?token=' . $Token,
+            'max_connections' => $max_connections,
+            'allowed_updates' => $allowed_updates
+        ]);
         
         echo '<h2><code>setWebhook</code> method was called';
         if ($webhookResult == true)
         {
-            $webhookResult = $Bot->SetWebhook([
-                'url' => 'https://muaath-bots.herokuapp.com/bots/' . $_GET['bot'] . '/webhook.php?token=' . $_GET['token'],
-                'max_connections' => $max_connections,
-                'allowed_updates' => $allowed_updates
-            ]);
             echo 'Sucessfully</h2>';
         }
         else
@@ -100,7 +101,7 @@ $getWhInfo = $Bot->GetWebhookInfo();
                 Maybe it'll be added soon..
                 <input type="text" name="allowed_updates" placeholder="Allowed updates (in JSON)"   >
                 -->
-                <button type="submit">Set this page as webhook</button>
+                <button type="submit">Set Bot Webhook</button>
             </form>
 
             <form method="GET" action="./webhook-settings.php?m=deleteWebhook">
