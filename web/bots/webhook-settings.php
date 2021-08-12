@@ -8,11 +8,11 @@ use SimpleBotAPI\TelegramFloodWait;
 use SimpleBotAPI\TelegramChatMigrated;
 use SimpleBotAPI\UpdatesHandler;
 
-$BotDir = $_GET['bot'];
+$BotDir = $_REQUEST['bot'];
 
-if (isset($_GET['token']))
+if (isset($_REQUEST['token']))
 {
-    $Token = $_GET['token'];
+    $Token = $_REQUEST['token'];
 }
 else
 {
@@ -21,18 +21,18 @@ else
 
 $Bot = new TelegramBot($Token);
 
-if (isset($_GET['m']))
+if (isset($_REQUEST['m']))
 {
 
-    if ($_GET['m'] === 'setWebhook')
+    if ($_REQUEST['m'] === 'setWebhook')
     {
         $max_connections = 40;
         $ip_address = '';
         $allowed_updates = ['channel_post', 'message', 'my_chat_member', 'inline_query', 'callback_query'];
         
-        if (isset($_GET['max_connections']))
+        if (isset($_REQUEST['max_connections']))
         {
-            $max_connections = $_GET['max_connections'];
+            $max_connections = $_REQUEST['max_connections'];
         }
 
         $webhookResult = $Bot->SetWebhook([
@@ -57,12 +57,12 @@ if (isset($_GET['m']))
             var_dump($bot_include_result);
         }
     }
-    else if ($_GET['m'] === 'deleteWebhook')
+    else if ($_REQUEST['m'] === 'deleteWebhook')
     {
         $drop_pending_update = false;
-        if (isset($_GET['drop_pending_update']))
+        if (isset($_REQUEST['drop_pending_update']))
         {
-            $drop_pending_update = $_GET['drop_pending_update'];
+            $drop_pending_update = $_REQUEST['drop_pending_update'];
         }
         $Bot->DeleteWebhook([
             'drop_pending_updates' => $drop_pending_update
@@ -86,10 +86,11 @@ $getWhInfo = $Bot->GetWebhookInfo();
 
     <main style="padding: 10px">
         <section>
-            <form method="GET" action="./webhook-settings.php?m=setWebhook">
+            <form method="POST" action="./webhook-settings.php">
 
                 <input type="hidden" name="token" value="<?php echo $Token ?>">
                 <input type="hidden" name="bot" value="<?php echo $BotDir ?>">
+                <input type="hidden" name="m" value="setWebhook">
 
                 <label for="max_connections">Max connections</label>
                 <input id="max_connections" type="number" name="max_connections" placeholder="Max connections" value="40" min="1" max="100"><br>
@@ -104,10 +105,11 @@ $getWhInfo = $Bot->GetWebhookInfo();
                 <button type="submit">Set Bot Webhook</button>
             </form>
 
-            <form method="GET" action="./webhook-settings.php?m=deleteWebhook">
+            <form method="GET" action="./webhook-settings.php">
 
                 <input type="hidden" name="token" value="<?php echo $Token ?>">
                 <input type="hidden" name="bot" value="<?php echo $BotDir ?>">
+                <input type="hidden" name="m" value="deleteWebhook">
 
                 <label for="drop_pending_updates">Drop pending updates</label>
                 <select id="drop_pending_updates" name="drop_pending_updates">
@@ -140,7 +142,7 @@ $getWhInfo = $Bot->GetWebhookInfo();
         echo "<h3>Max connections: {$getWhInfo->max_connections}</h3>";
         echo "<h3>Allowed updates: {$getWhInfo->allowed_updates}</h3>";
 
-        var_dump($getWhInfo);
+        #var_dump($getWhInfo);
         ?>
     </main>
 </body>
