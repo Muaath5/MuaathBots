@@ -53,6 +53,8 @@
     "add_invoice_creator_keyboard_command": "Add invoice 🛒",
     "delete_invoice_creator_keyboard_command": "Delete an invoice 🧨",
     
+    "bot_admins": [1265170068, 739752266],
+
     "invoices": 
     [
         {
