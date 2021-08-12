@@ -1,47 +1,61 @@
 <?php
-if ($_GET['m'] === 'setWebhook')
+
+require '/app/vendor/autoload.php';
+
+use SimpleBotAPI\TelegramBot;
+use SimpleBotAPI\TelegramException;
+use SimpleBotAPI\TelegramFloodWait;
+use SimpleBotAPI\TelegramChatMigrated;
+use SimpleBotAPI\UpdatesHandler;
+
+if (isset($_GET['m']))
 {
-    $max_connections = 40;
-    $ip_address = '';
-    $allowed_updates = ['channel_post', 'message', 'my_chat_member', 'inline_query', 'callback_query'];
 
-    if (isset($_GET['max_connections']))
+    if ($_GET['m'] === 'setWebhook')
     {
-        $max_connections = $_GET['max_connections'];
+        $max_connections = 40;
+        $ip_address = '';
+        $allowed_updates = ['channel_post', 'message', 'my_chat_member', 'inline_query', 'callback_query'];
+        
+        if (isset($_GET['max_connections']))
+        {
+            $max_connections = $_GET['max_connections'];
+        }
+        
+        echo '<h2><code>setWebhook</code> method was called';
+        if ($webhookResult == true)
+        {
+            $webhookResult = $Bot->SetWebhook([
+                'url' => 'https://muaath-bots.herokuapp.com/bots/' . $_GET['bot'] . '/webhook.php?token=' . $_GET['token'],
+                'max_connections' => $max_connections,
+                'allowed_updates' => $allowed_updates
+            ]);
+            echo 'Sucessfully</h2>';
+        }
+        else
+        {
+            echo "With error: <code>Error {$webhookResult->error_code}</code>:</h2>";
+            echo "<pre>{$webhookResult->description}</pre>";
+            echo '<br><br>';
+            echo 'JSON is: <pre>' . json_encode($webhookResult) . '</pre>';
+            echo '<br><br>';
+            echo 'Include bot.php is:';
+            var_dump($bot_include_result);
+        }
     }
-
-    echo '<h2><code>setWebhook</code> method was called';
-    if ($webhookResult == true)
+    else if ($_GET['m'] === 'deleteWebhook')
     {
-    $webhookResult = $Bot->SetWebhook([
-        'url' => 'https://muaath-bots.herokuapp.com/bots/' . $_GET['bot'] . '/webhook.php?token=' . $_GET['token'],
-        'max_connections' => $max_connections,
-        'allowed_updates' => $allowed_updates
-    ]);
-        echo 'Sucessfully</h2>';
-    }
-    else
-    {
-        echo "With error: <code>Error {$webhookResult->error_code}</code>:</h2>";
-        echo "<pre>{$webhookResult->description}</pre>";
-        echo '<br><br>';
-        echo 'JSON is: <pre>' . json_encode($webhookResult) . '</pre>';
-        echo '<br><br>';
-        echo 'Include bot.php is:';
-        var_dump($bot_include_result);
+        $drop_pending_update = false;
+        if (isset($_GET['drop_pending_update']))
+        {
+            $drop_pending_update = $_GET['drop_pending_update'];
+        }
+        $Bot->DeleteWebhook([
+            'drop_pending_updates' => $drop_pending_update
+        ]);
     }
 }
-else if ($_GET['m'] === 'deleteWebhook')
-{
-    $drop_pending_update = false;
-    if (isset($_GET['drop_pending_update']))
-    {
-        $drop_pending_update = $_GET['drop_pending_update'];
-    }
-    $Bot->DeleteWebhook([
-        'drop_pending_updates' => $drop_pending_update
-    ]);
-}
+
 $getWhInfo = $Bot->GetWebhookInfo();
 ?>
 <html lang="en" dir="ltr">
