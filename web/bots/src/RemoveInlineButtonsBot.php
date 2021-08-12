@@ -158,7 +158,11 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 }
                 else
                 {
-
+                    $this->Bot->SendMessage([
+                        'chat_id' => $this->LogsChatID,
+                        'text' => "<b>Error:</b>\n$tgex",
+                        'parse_mode' => 'HTML'
+                    ]);
                 }
             }
             catch (\Exception $ex)
