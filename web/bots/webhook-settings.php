@@ -139,6 +139,8 @@ $getWhInfo = $Bot->GetWebhookInfo();
         echo '<hr>';
         echo "<h3>Max connections: {$getWhInfo->max_connections}</h3>";
         echo "<h3>Allowed updates: {$getWhInfo->allowed_updates}</h3>";
+
+        var_dump($getWhInfo);
         ?>
     </main>
 </body>
