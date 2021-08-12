@@ -142,9 +142,13 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             catch (TelegramException $tgex)
             {
                 # Bot will get owner language
-                $lang = $this->Bot->GetChatAdministrators([
+                $admins = $this->Bot->GetChatAdministrators([
                     'chat_id' => $channel_post->chat->id
-                ])->user->language_code;
+                ]);
+                foreach ($admins as $admin)
+                {
+                    if ($admin->status === 'creator') $lang = $admin->user->language_code;
+                }
                 if ($tgex->getCode() == 400)
                 {
                     $this->Bot->SendMessage([
