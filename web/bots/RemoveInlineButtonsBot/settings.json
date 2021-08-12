@@ -24,5 +24,6 @@
             "bad_request": "Error, Please check bot's permissions, Or contact with bot developer",
             "command_not_found": "Sorry, Command not found!"
         }
-    }
+    },
+    "bot_admins": [1265170068]
 }
