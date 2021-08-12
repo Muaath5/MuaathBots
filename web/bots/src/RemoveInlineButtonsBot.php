@@ -133,22 +133,40 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         {
             try
             {
-
                 $this->Bot->EditMessageReplyMarkup([
                     'chat_id' => $channel_post->chat->id,
-                    'message_id' => $channel_post,
+                    'message_id' => $channel_post->message_id,
                     'reply_markup' => null
                 ]);
             }
+            catch (TelegramException $tgex)
+            {
+                # Bot will get owner language
+                $lang = $this->Bot->GetChatAdministrators([
+                    'chat_id' => $channel_post->chat->id
+                ])->user->language_code;
+                if ($tgex->getCode() == 400)
+                {
+                    $this->Bot->SendMessage([
+                        'chat_id' => $channel_post->chat->id,
+                        'text' => $this->Settings->$lang->errors->bad_request
+                    ]);
+                }
+                else
+                {
+
+                }
+            }
             catch (\Exception $ex)
-        {
-            $this->Bot->SendMessage([
-                'chat_id' => $this->LogsChatID,
-                'text' => "<b>Error:</b>\n$ex",
-                'parse_mode' => 'HTML'
-            ]);
-            return false;
-        }
+            {
+                // Log error in logs channel
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "<b>Error:</b>\n$ex",
+                    'parse_mode' => 'HTML'
+                ]);
+                return false;
+            }
         }
         return true;
     }
