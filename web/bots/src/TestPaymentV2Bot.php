@@ -24,7 +24,7 @@ class TestPaymentV2Bot extends UpdatesHandler
         $this->Bot = $bot;
         $this->ProviderToken = $provider_token;
         $this->LogsChatID = $logs_chat_id;
-        $this->Settings = json_decode(file_get_contents(__DIR__ . '/$this->Settings.json'));
+        $this->Settings = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/bots/' . get_class($this) . '/settings.json'));
     }
 
     # Functions
