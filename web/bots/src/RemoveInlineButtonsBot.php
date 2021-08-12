@@ -133,10 +133,9 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         {
             try
             {
-                $this->Bot->EditMessageReplyMarkup([
+                $this->Bot->DeleteMessage([
                     'chat_id' => $channel_post->chat->id,
-                    'message_id' => $channel_post->message_id,
-                    'reply_markup' => null
+                    'message_id' => $channel_post->message_id
                 ]);
             }
             catch (TelegramException $tgex)
@@ -237,7 +236,58 @@ class RemoveInlineButtonsBot extends UpdatesHandler
 
     public function EditedChannelPostHandler(object $edited_channel_post): bool
     {
-        return false;   
+        if (property_exists($edited_channel_post, 'reply_markup'))
+        {
+            try
+            {
+                $this->Bot->DeleteMessage([
+                    'chat_id' => $edited_channel_post->chat->id,
+                    'message_id' => $edited_channel_post->message_id
+                ]);
+            }
+            catch (TelegramException $tgex)
+            {
+                # Bot will get owner language
+                $admins = $this->Bot->GetChatAdministrators([
+                    'chat_id' => $edited_channel_post->chat->id
+                ]);
+                foreach ($admins as $admin)
+                {
+                    if ($admin->status === 'creator') $lang = $admin->user->language_code;
+                }
+                if ($tgex->getCode() == 400)
+                {
+                    $this->Bot->SendMessage([
+                        'chat_id' => $edited_channel_post->chat->id,
+                        'text' => $this->Settings->$lang->errors->bad_request
+                    ]);
+                    $this->Bot->SendMessage([
+                        'chat_id' => $this->LogsChatID,
+                        'text' => "<b>Error:</b>\n$tgex",
+                        'parse_mode' => 'HTML'
+                    ]);
+                }
+                else
+                {
+                    $this->Bot->SendMessage([
+                        'chat_id' => $this->LogsChatID,
+                        'text' => "<b>Error:</b>\n$tgex",
+                        'parse_mode' => 'HTML'
+                    ]);
+                }
+            }
+            catch (\Exception $ex)
+            {
+                // Log error in logs channel
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "<b>Error:</b>\n$ex",
+                    'parse_mode' => 'HTML'
+                ]);
+                return false;
+            }
+        }
+        return true;   
     }
 
     public function EditedMessageHandler(object $edited_message) : bool
