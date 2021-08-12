@@ -78,15 +78,20 @@ $getWhInfo = $Bot->GetWebhookInfo();
     <title>Webhook settings</title>
 </header>
 
-<body>
+<body style="margin: 0px; padding: 0px">
     <header style="background-color: deepskyblue; color: white; padding: 20px;">
         <h1>Admin webhook page</h1>
     </header>
 
-    <main>
+    <main style="padding: 10px">
         <section>
             <form method="GET" action="./webhook-settings.php?m=setWebhook">
-                <input type="number" name="max_connections" placeholder="Max connections" value="40" min="1" max="100"><br>
+
+                <input type="hidden" name="token" value="<?php echo $Token ?>">
+                <input type="hidden" name="bot" value="<?php echo $BotDir ?>">
+
+                <label for="max_connections">Max connections</label>
+                <input id="max_connections" type="number" name="max_connections" placeholder="Max connections" value="40" min="1" max="100"><br>
                 <!--
                 Hide IP address because Heroku url is better.
                 <input type="text" name="ip_address" placeholder="IP Address">
@@ -99,12 +104,16 @@ $getWhInfo = $Bot->GetWebhookInfo();
             </form>
 
             <form method="GET" action="./webhook-settings.php?m=deleteWebhook">
-                <label for="drop_pending_updates">Drop pending updates:</label>
+
+                <input type="hidden" name="token" value="<?php echo $Token ?>">
+                <input type="hidden" name="bot" value="<?php echo $BotDir ?>">
+
+                <label for="drop_pending_updates">Drop pending updates</label>
                 <select id="drop_pending_updates" name="drop_pending_updates">
                     <option value="false" selected>No</option>
                     <option value="true">Yes</option>
                 </select>
-                <br>
+                <br><br>
                 <button type="submit">Delete webhook</button>
             </form>
         </section>
