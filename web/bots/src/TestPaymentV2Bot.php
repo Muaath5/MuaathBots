@@ -7,6 +7,9 @@ require '/app/vendor/autoload.php';
 
 use SimpleBotAPI\TelegramBot;
 use SimpleBotAPI\UpdatesHandler;
+use SimpleBotAPI\TelegramException;
+use SimpleBotAPI\TelegramChatMigrated;
+use SimpleBotAPI\TelegramFloodWait;
 
 /**
  * Test bot for Telegram Payments 2.0, Can be used for real payments
@@ -147,9 +150,9 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'chat_id' => $message->chat->id,
                         'text' => $this->Settings->start_message,
                         'parse_mode' => 'HTML',
-                        'reply_markup' => json_encode(['inline_keyboard' => [[
+                        /*'reply_markup' => json_encode(['inline_keyboard' => [[
                             []
-                        ]]])
+                        ]]])*/
                     ]);
                     break;
 
