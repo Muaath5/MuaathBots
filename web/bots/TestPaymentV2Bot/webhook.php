@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-require '/home/muaath/websites/muaath-bots/vendor/autoload.php';
+require '/app/vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
