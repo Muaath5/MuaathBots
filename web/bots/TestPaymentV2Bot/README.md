@@ -17,13 +17,13 @@ This bot supports _Telegram Payments 2.0_.
 | Allow groups           | Yes      |
 
 ## Features
-* Supports inline queries
-* Supports (User/Admin) modes
-* Supports multiple invoices
-* Supports deep linking
-* Supports Reply keyboards
-* Supports Payments 2.0
-* Has logs channel for errors & payments
+- Supports inline queries
+- Supports (User/Admin) modes
+- Supports multiple invoices
+- Supports deep linking
+- Supports Reply keyboards
+- Supports Payments 2.0
+- Has logs channel for errors & payments
 <!--
 * Can delete and add invocies via bot
 * Can has limits on selling the products

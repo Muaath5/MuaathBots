@@ -7,10 +7,15 @@ This Bot will delete or edit any message contains Inline Buttons
 ## Bot settings
 | Setting                | Value    |
 |------------------------|----------|
-| Supports Inline query  | Yes      |
+| Supports Inline query  | No       |
 | Inline query feedback  | No       |
 | Inline query location  | No       |
 | Linked website         | No       |
-| Payments               | Yes      |
+| Payments               | No       |
 | Group privacy          | No       |
 | Allow groups           | Yes      |
+
+# Features
+- Supports Groups & Channels
+- Multilanguage commands & messages
+- Not delete messages on channels, Only edit it
