@@ -8,6 +8,19 @@ use SimpleBotAPI\TelegramFloodWait;
 use SimpleBotAPI\TelegramChatMigrated;
 use SimpleBotAPI\UpdatesHandler;
 
+$BotDir = $_GET['bot'];
+
+if (isset($_GET['token']))
+{
+    $Token = $_GET['token'];
+}
+else
+{
+    header('Location: ' . "https://muaath-bots.herokuapp.com/bots/webhook-unauthorized.php?bot={$BotDir}");
+}
+
+$Bot = new TelegramBot($Token);
+
 if (isset($_GET['m']))
 {
 
