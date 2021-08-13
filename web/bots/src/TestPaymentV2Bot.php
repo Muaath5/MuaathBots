@@ -74,7 +74,7 @@ class TestPaymentV2Bot extends UpdatesHandler
             }
             else if (property_exists($message, 'successful_payment'))
             {
-                $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, $this->Settings, true);
+                $resultInvoice = $this->GetInvoiceByPayload($message->successful_payment->invoice_payload, true);
 
                 # Handle limits
                 if ($resultInvoice[0]->limit > 0)
@@ -421,7 +421,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     public function ShippingQueryHandler($shipping_query) : bool
     {  
 
-        $currentInvoice = $this->GetInvoiceByPayload($shipping_query->invoice_payload, $this->Settings);
+        $currentInvoice = $this->GetInvoiceByPayload($shipping_query->invoice_payload, false);
         
         # If the invoice supports all countries || If the selected country is one of 
         $countryResult = array_search($shipping_query->shipping_address->country_code, $currentInvoice->supported_countries);
@@ -480,7 +480,7 @@ class TestPaymentV2Bot extends UpdatesHandler
 
     public function PreCheckoutQueryHandler(object $pre_checkout_query) : bool
     {
-        $currentInvoice = $this->GetInvoiceByPayload($pre_checkout_query->invoice_payload, $this->Settings);
+        $currentInvoice = $this->GetInvoiceByPayload($pre_checkout_query->invoice_payload, false);
         
         # Check the limit of the product
         if ($currentInvoice->limit === 0)
@@ -497,8 +497,6 @@ class TestPaymentV2Bot extends UpdatesHandler
                 'pre_checkout_query_id' => $pre_checkout_query->id,
                 'ok' => true
             ]);
-            $currentInvoice->limit--;
-            
         }
         return true;
     }
@@ -547,7 +545,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                 'callback_query' => $callback_query->data
             ];
 
-            $requestedInvoice = $this->GetInvoiceByPayload(substr($callback_query->data, 9, strlen($callback_query->data)), $this->Settings);
+            $requestedInvoice = $this->GetInvoiceByPayload(substr($callback_query->data, 9, strlen($callback_query->data)), false);
 
             $photoHeight = $requestedInvoice->photo_height;
             $photoWidth = $requestedInvoice->photo_width;
