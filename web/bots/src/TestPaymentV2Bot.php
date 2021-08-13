@@ -17,6 +17,7 @@ use SimpleBotAPI\TelegramFloodWait;
  */
 class TestPaymentV2Bot extends UpdatesHandler
 {
+    private ?TelegramBot $Bot;
     private string $ProviderToken;
     private int|string $LogsChatID;
     public $Settings;

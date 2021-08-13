@@ -17,6 +17,7 @@ use SimpleBotAPI\TelegramFloodWait;
  */
 class RemoveInlineButtonsBot extends UpdatesHandler
 {
+    private ?TelegramBot $Bot;
     private int|string $LogsChatID;
     public $Settings;
 
