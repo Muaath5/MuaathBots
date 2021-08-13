@@ -18,20 +18,9 @@ if ($Token != getenv('REMOVE_INLINE_BUTTONS_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot($Token);
+$Bot = new TelegramBot($Token, new RemoveInlineButtonsBot(getenv('REMOVE_INLINE_BUTTONS_BOT_LOGS_CHAT_ID')));
 
-# Reading the update from Telegram to the webhook
-$Update = json_decode(file_get_contents('php://input'));
-
-if (!empty($Update))
-{
-    # Set UpdatesHandler for the bot
-    $Bot->SetUpdatesHandler(new RemoveInlineButtonsBot($Bot, getenv('REMOVE_INLINE_BUTTONS_BOT_LOGS_CHAT_ID')));
-
-    # Process the update
-    $Bot->OnUpdate($Update);
-}
-else
+if (!$Bot->OnWebhookUpdate())
 {
     # Show the admin settings of the webhook, Contains: Webhook info, Delete webhook, Set webhook
     header('Location: ' . "https://muaath-bots.herokuapp.com/bots/webhook-settings.php?token={$Token}&bot={$BotDir}");

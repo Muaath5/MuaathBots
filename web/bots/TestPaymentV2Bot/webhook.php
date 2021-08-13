@@ -9,7 +9,7 @@ use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
 
 $BotDir = basename(__DIR__);
-$_GET['token'];
+$Token = $_GET['token'];
 
 # Check auth
 if ($Token != getenv('PAYMENT_BOT_TOKEN'))
@@ -18,7 +18,7 @@ if ($Token != getenv('PAYMENT_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot($Bot, getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
+$Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot(getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
 
 
 if (!$Bot->OnWebhookUpdate())

@@ -17,14 +17,12 @@ use SimpleBotAPI\TelegramFloodWait;
  */
 class TestPaymentV2Bot extends UpdatesHandler
 {
-    private TelegramBot $Bot;
     private string $ProviderToken;
     private int|string $LogsChatID;
     public $Settings;
 
-    public function __construct(TelegramBot $bot, string $provider_token, float|string $logs_chat_id)
+    public function __construct(string $provider_token, float|string $logs_chat_id)
     {
-        $this->Bot = $bot;
         $this->ProviderToken = $provider_token;
         $this->LogsChatID = $logs_chat_id;
 
@@ -579,36 +577,6 @@ class TestPaymentV2Bot extends UpdatesHandler
             return true;
         }
             
-        return false;
-    }
-
-    public function EditedChannelPostHandler(object $edited_channel_post): bool
-    {
-        return false;   
-    }
-
-    public function EditedMessageHandler(object $edited_message) : bool
-    {
-        return false;
-    }
-
-    public function ChosenInlineQueryHandler(object $chosen_inline_query): bool
-    {
-        return false;
-    }
-
-    public function PollHandler(object $poll_answer): bool
-    {
-        return false;
-    }
-
-    public function PollAnswerHandler(object $poll_answer): bool
-    {
-        return false;
-    }
-
-    public function ChatMemberHandler(object $chat_member): bool
-    {
         return false;
     }
 }
