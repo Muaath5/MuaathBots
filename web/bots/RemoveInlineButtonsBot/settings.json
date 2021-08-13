@@ -4,7 +4,7 @@
         "commands":
         {
             "start": "مرحبًا بك في هذا الآلي، هذا الآلي يقوم بحذف جميع أنواع الأزرار الشفافة من القنوات والمجموعات\n\n<b>طريقة استخدام الآلي:</b>\n1. أضف الآلي إلى قناة أو مجموعة\n2. رقِّ الآلي إلى مشرف وأعطه الآلي هذه الصلاحيات: حذف الرسائل، تعديل الرسائل\n3. الآلي سيعمل بنجاح!",
-            "project": "هذا المشروع مفتوح المصدر على GitHub، صنعه @Muaath_5"
+            "project": "هذا المشروع <a href=\"https://github.com/Muaath5/MuaathBots\">مفتوح المصدر على GitHub</a>، صنعه @Muaath_5"
         },
         "errors":
         {
@@ -16,8 +16,8 @@
     {
         "commands":
         {
-            "start": "Welcome to this bot, This bot deletes all types of inline buttons\n\n<b>How to use the Bot?</b>\n1. Add the Bot to a group or a channel.\n2. Promote the bot as admin, And give him this permissions: Delete messages, Edit messages of others.\n3. The Bot will work successfully!",
-            "project": "This project is open source on GitHub, By @Muaath_5"
+            "start": "Welcome to this bot, This bot deletes all types of inline buttons\n\n<b>How to use the Bot?</b>\n1. Add the Bot to a group or a channel.\n2. Promote the bot as admin, And give him this permissions: Delete messages.\n3. The Bot will work successfully!",
+            "project": "This project is an <a href=\"https://github.com/Muaath5/MuaathBots\">Open Source Project</a> on GitHub, By @Muaath_5"
         },
         "errors":
         {
