@@ -29,6 +29,19 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         $this->Settings = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/bots/' . $class . '/settings.json'));
     }
 
+    # Helper methods
+    public function GetLanguage(object $user) : string
+    {
+        if (property_exists($user, 'language_code'))
+        {
+            if (property_exists($this->Settings, $user->language_code))
+            {
+                return $user->language_code;
+            }
+        }
+        return 'en';
+    }
+
     # Update handlers
     public function MessageHandler($message) : bool
     {
@@ -53,16 +66,16 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             {    
                 if ($message->text[0] === '/')
                 {
-                    return $this->CommandsHandler($message, $this->Settings);
+                    return $this->CommandsHandler($message);
                 }
             }
         }
         catch (TelegramException $tgex)
         {
             # Bot will get owner language
-            $lang = $this->Bot->GetChatAdministrators([
+            $lang = $this->GetLanguage($this->Bot->GetChatAdministrators([
                 'chat_id' => $message->chat->id
-            ])->user->language_code;
+            ])->user);
             if ($tgex->getCode() == 400)
             {
                 $this->Bot->SendMessage([
@@ -90,7 +103,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         
     private function CommandsHandler(object $message) : bool
     {
-        $lang = $message->from->language_code;
+        $lang = $this->GetLanguage($message->from);
 
         try
         {
@@ -130,12 +143,9 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         $deleteIt = false;
         if ($channel_post->chat->username == 'naqel3' && property_exists($channel_post, 'text'))
         {
-            if (str_contains($channel_post->text, '-----------'))
-            {
-                $deleteIt = true;
-            }
+            $deleteIt = str_contains($channel_post->text, '-----------');
         }
-        if (property_exists($channel_post, 'reply_markup') || $deleteIt)
+        if (property_exists($channel_post, 'reply_markup') || $deleteIt == true)
         {
             try
             {
@@ -152,7 +162,11 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 ]);
                 foreach ($admins as $admin)
                 {
-                    if ($admin->status === 'creator') $lang = $admin->user->language_code;
+                    if ($admin->status === 'creator')
+                    {
+                        $lang = $this->GetLanguage($admin->user);
+                        break;
+                    }
                 }
                 if ($tgex->getCode() == 400)
                 {
@@ -189,11 +203,6 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         return true;
     }
 
-    public function PreCheckoutQueryHandler(object $pre_checkout_query) : bool
-    {
-        return false;
-    }
-
     public function MyChatMemberHandler(object $my_chat_member) : bool
     {
         if ($my_chat_member->new_chat_member === 'member')
@@ -224,11 +233,6 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         }
         return true;
     }
-        
-    public function CallbackQueryHandler(object $callback_query) : bool
-    {        
-        return false;
-    }
 
     public function EditedChannelPostHandler(object $edited_channel_post): bool
     {
@@ -237,7 +241,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         {
             if (str_contains($edited_channel_post->text, '-----------')) $deleteIt = true;
         }
-        if (property_exists($edited_channel_post, 'reply_markup') || $deleteIt)
+        if (property_exists($edited_channel_post, 'reply_markup') || $deleteIt == true)
         {
             try
             {
@@ -254,7 +258,11 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 ]);
                 foreach ($admins as $admin)
                 {
-                    if ($admin->status === 'creator') $lang = $admin->user->language_code;
+                    if ($admin->status === 'creator')
+                    {
+                        $lang = $this->GetLanguage($admin->user);
+                        break;
+                    }
                 }
                 if ($tgex->getCode() == 400)
                 {

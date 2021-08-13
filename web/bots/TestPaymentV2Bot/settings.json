@@ -1,166 +1,285 @@
-{   
-    "warning_message": "Hi! Use the test card number : <code>4242 4242 4242 4242</code>\n<b>⚠ WARNING ⚠: DON'T add any real payment info</b>\nThe bot will store User data And shipping data.\n\n<b>NOTE: THE BOT HAS'T ACCESS TO ANY BANK DATA</b>.",
-    "start_message": "Welcome 😄\nThis bot is created to test <i>Telegram payments</i>.\n<b>To test unreal payment, use the command: /invoice</b>\nUse /help to more info about the bot.",
-    "project_message": "This project was created by @Muaath_5 😏\n\n<a href=\"https://github.com/Muaath5/MuaathBots\">Project Source Code On GitHub</a>",
-    "inline_message": "You can use send invoices via this bot in inline query 😍! Just use the button below",
-    "help_message": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺.",
-    
-    "answer_shipping_query_failed_log": "Failed: <code>answerShippingQuery</code> method, Contact the developer.",
-    
-    "successful_payment_message": "Thank you for testing! 😌\n Don't worry! it wasn't real payment. It's a test 😅",
-    
-    "responses":
+{
+    "ar":
     {
-
-    },
-
-    "logs":
-    {
-        "answer_shipping_query_failed": "Failed: <code>answerShippingQuery</code> method, Contact the developer."
-    },
-
-    "commands":
-    {
-        "start": "Welcome 😄\nThis bot is created to test <i>Telegram payments</i>.\n<b>To test unreal payment, use the command: /invoice</b>\nUse /help to more info about the bot.",
-        "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, GitHub will be available soon... under MIT License",
-        "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
-        "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
-    },
-
-    "errors":
-    {
-        "country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
-        "city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
-        "product_sold_out": "Sorry, the product sold out",
-        "unknown_callback_query": "Sorry, Unknown button contact the developer"
-    },
-
-    "error_country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
-    "error_city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
-    "error_product_sold_out": "Sorry, the product sold out",
-    "error_unknown_callback_query": "Sorry, Unknown button contact the developer",
-
-    "inline_chat_button": "Try inline in other chat 🤩",
-    "inline_current_chat_button": "Try inline here first 😁",
-
-    "help_keyboard_command": "Get Help 🚒",
-    "all_invoices_keyboard_command": "Get all invoices 🤑",
-    
-    "json_invoices_admin_keyboard_command": "All invoices as JSON ⚠",
-    "bot_settings_and_translations_keyboard_command": "Get all bot settings 🎈",
-    "go_to_start_keyboard_admin_keyboard_command": "Go back 👉🏼",
-
-    "add_invoice_creator_keyboard_command": "Add invoice 🛒",
-    "delete_invoice_creator_keyboard_command": "Delete an invoice 🧨",
-    
-    "bot_admins": [1265170068, 739752266],
-
-    "invoices": 
-    [
+        "responses":
         {
-            "title": "Coffee invoice (Test)",
-            "description": "Buy a coffee! (Not real).\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
-            "payload": "TestCoffeeInvoice",
-            "currency": "USD",
-            "start_param": "TestCoffeeInvoice",
-    
-            "photo_url": "https://media3.s-nbcnews.com/j/newscms/2019_33/2203981/171026-better-coffee-boost-se-329p_67dfb6820f7d3898b5486975903c2e51.fit-1240w.jpg",
-            "photo_width": 1240,
-            "photo_height": 825,
-            
-            "is_flexible": true,
-            "need_shipping_address": true,
-    
-            "need_name": true,
-            "need_phone_number": true,
-            "need_email": true,
-    
-            "send_phone_number_to_provider": true,
-            "send_email_to_provider": true,
-            
-            "supported_countries": ["US"],
-            "supported_cities": [["NewYork", "Atlanta"]],
-            "limit": 1000,
-    
-            "suggested_tip_amounts": [100, 200, 400, 800],
-            "max_tip_amount": 5000,
-    
-            "shipping_options":
-            [
-                {
-                    "id": "Free",
-                    "title": "Free shipping",
-                    "prices":
-                    [
-                        {
-                            "label": "Free shipping",
-                            "amount": 0
-                        }
-                    ]
-                }
-            ],
-    
-            "prices":
-            [
-                {
-                    "label": "A cup of coffee",
-                    "amount": 700
-                },
-                {
-                    "label": "A delicious chocolate",
-                    "amount": 500
-                },
-                {
-                    "label": "A bottle of water",
-                    "amount": 100
-                }
-            ]
+            "successful_payment": "Thank you for testing! 😌\n Don't worry! it wasn't real payment. It's a test 😅",
+            "payment_warning": "Hi! Use the test card number : <code>4242 4242 4242 4242</code>\n<b>⚠ WARNING ⚠: DON'T add any real payment info</b>\nThe bot will store User data And shipping data.\n\n<b>NOTE: THE BOT HAS'T ACCESS TO ANY BANK DATA</b>."
         },
+
+        "logs":
         {
-            "title": "A Telegram bot source code",
-            "description": "Buy a Telegram bot source code! (Not real)\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
-            "payload": "TestSourceCodeInvoice",
-            "currency": "USD",
-            "start_param": "TestSourceCodeInvoice",
-    
-            "photo_url": "https://itsourcecode.com/wp-content/uploads/2019/09/PHP-Projects-With-Source-Code-Free-Downloads.png",
-            "photo_width": 1055,
-            "photo_height": 627,
-            
-            "is_flexible": false,
-            "need_shipping_address": false,
-    
-            "need_name": true,
-            "need_phone_number": true,
-            "need_email": true,
-    
-            "send_phone_number_to_provider": true,
-            "send_email_to_provider": true,
-            
-            "supported_countries": [],
-            "supported_cities": [],
-            "limit": -1,
-            
-            "suggested_tip_amounts": [1000, 2000, 3000],
-            "max_tip_amount": 10000,
-    
-            "shipping_options": [],
-    
-            "prices":
-            [
-                {
-                    "label": "DLL libraries",
-                    "amount": 10000
-                },
-                {
-                    "label": "Source code",
-                    "amount": 50000
-                },
-                {
-                    "label": "Documentation",
-                    "amount": 20000
-                }
-            ]
-        }
-    ]
+            "answer_shipping_query_failed": "Failed: <code>answerShippingQuery</code> method, Contact the developer."
+        },
+
+        "commands":
+        {
+            "start": "مرحبًا 😄\nصنع هذا الآلي لتجربة <i>نظام مدفوعات تيليجرام</i>.\n<b>لتجربة عملية دفع غير حقيقية، استخدم الأمر: /invoice</b>\nاستخدم الأمر /help لمعرفة المزيد عن الآلي.",
+            "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, https://github.com/Muaath5/MuaathBots",
+            "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
+            "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
+        },
+
+        "errors":
+        {
+            "country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
+            "city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
+            "product_sold_out": "Sorry, the product sold out",
+            "unknown_callback_query": "Sorry, Unknown button contact the developer"
+        },
+
+        "inline_chat_button": "Try inline in other chat 🤩",
+        "inline_current_chat_button": "Try inline here first 😁",
+        
+        "invoices": 
+        [
+            {
+                "title": "Coffee invoice (Test)",
+                "description": "Buy a coffee! (Not real).\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
+                "payload": "TestCoffeeInvoice",
+                "currency": "USD",
+                "start_param": "TestCoffeeInvoice",
+        
+                "photo_url": "https://media3.s-nbcnews.com/j/newscms/2019_33/2203981/171026-better-coffee-boost-se-329p_67dfb6820f7d3898b5486975903c2e51.fit-1240w.jpg",
+                "photo_width": 1240,
+                "photo_height": 825,
+                
+                "is_flexible": true,
+                "need_shipping_address": true,
+        
+                "need_name": true,
+                "need_phone_number": true,
+                "need_email": true,
+        
+                "send_phone_number_to_provider": true,
+                "send_email_to_provider": true,
+                
+                "supported_countries": ["US"],
+                "supported_cities": [["NewYork", "Atlanta"]],
+                "limit": 1000,
+        
+                "suggested_tip_amounts": [100, 200, 400, 800],
+                "max_tip_amount": 5000,
+        
+                "shipping_options":
+                [
+                    {
+                        "id": "Free",
+                        "title": "Free shipping",
+                        "prices":
+                        [
+                            {
+                                "label": "Free shipping",
+                                "amount": 0
+                            }
+                        ]
+                    }
+                ],
+        
+                "prices":
+                [
+                    {
+                        "label": "A cup of coffee",
+                        "amount": 700
+                    },
+                    {
+                        "label": "A delicious chocolate",
+                        "amount": 500
+                    },
+                    {
+                        "label": "A bottle of water",
+                        "amount": 100
+                    }
+                ]
+            },
+            {
+                "title": "A Telegram bot source code",
+                "description": "Buy a Telegram bot source code! (Not real)\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
+                "payload": "TestSourceCodeInvoice",
+                "currency": "USD",
+                "start_param": "TestSourceCodeInvoice",
+        
+                "photo_url": "https://itsourcecode.com/wp-content/uploads/2019/09/PHP-Projects-With-Source-Code-Free-Downloads.png",
+                "photo_width": 1055,
+                "photo_height": 627,
+                
+                "is_flexible": false,
+                "need_shipping_address": false,
+        
+                "need_name": true,
+                "need_phone_number": true,
+                "need_email": true,
+        
+                "send_phone_number_to_provider": true,
+                "send_email_to_provider": true,
+                
+                "supported_countries": [],
+                "supported_cities": [],
+                "limit": -1,
+                
+                "suggested_tip_amounts": [1000, 2000, 3000],
+                "max_tip_amount": 10000,
+        
+                "shipping_options": [],
+        
+                "prices":
+                [
+                    {
+                        "label": "DLL libraries",
+                        "amount": 10000
+                    },
+                    {
+                        "label": "Source code",
+                        "amount": 50000
+                    },
+                    {
+                        "label": "Documentation",
+                        "amount": 20000
+                    }
+                ]
+            }
+        ]
+    },
+    "en":
+    {          
+        "responses":
+        {
+            "successful_payment": "Thank you for testing! 😌\n Don't worry! it wasn't real payment. It's a test 😅",
+            "payment_warning": "Hi! Use the test card number : <code>4242 4242 4242 4242</code>\n<b>⚠ WARNING ⚠: DON'T add any real payment info</b>\nThe bot will store User data And shipping data.\n\n<b>NOTE: THE BOT HAS'T ACCESS TO ANY BANK DATA</b>."
+        },
+
+        "logs":
+        {
+            "answer_shipping_query_failed": "Failed: <code>answerShippingQuery</code> method, Contact the developer."
+        },
+
+        "commands":
+        {
+            "start": "Welcome 😄\nThis bot is created to test <i>Telegram payments</i>.\n<b>To test unreal payment, use the command: /invoice</b>\nUse /help to more info about the bot.",
+            "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, GitHub will be available soon... under MIT License",
+            "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
+            "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
+        },
+
+        "errors":
+        {
+            "country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
+            "city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
+            "product_sold_out": "Sorry, the product sold out",
+            "unknown_callback_query": "Sorry, Unknown button contact the developer"
+        },
+
+        "inline_chat_button": "Try inline in other chat 🤩",
+        "inline_current_chat_button": "Try inline here first 😁",
+        
+        "invoices": 
+        [
+            {
+                "title": "Coffee invoice (Test)",
+                "description": "Buy a coffee! (Not real).\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
+                "payload": "TestCoffeeInvoice",
+                "currency": "USD",
+                "start_param": "TestCoffeeInvoice",
+        
+                "photo_url": "https://media3.s-nbcnews.com/j/newscms/2019_33/2203981/171026-better-coffee-boost-se-329p_67dfb6820f7d3898b5486975903c2e51.fit-1240w.jpg",
+                "photo_width": 1240,
+                "photo_height": 825,
+                
+                "is_flexible": true,
+                "need_shipping_address": true,
+        
+                "need_name": true,
+                "need_phone_number": true,
+                "need_email": true,
+        
+                "send_phone_number_to_provider": true,
+                "send_email_to_provider": true,
+                
+                "supported_countries": ["US"],
+                "supported_cities": [["NewYork", "Atlanta"]],
+                "limit": 1000,
+        
+                "suggested_tip_amounts": [100, 200, 400, 800],
+                "max_tip_amount": 5000,
+        
+                "shipping_options":
+                [
+                    {
+                        "id": "Free",
+                        "title": "Free shipping",
+                        "prices":
+                        [
+                            {
+                                "label": "Free shipping",
+                                "amount": 0
+                            }
+                        ]
+                    }
+                ],
+        
+                "prices":
+                [
+                    {
+                        "label": "A cup of coffee",
+                        "amount": 700
+                    },
+                    {
+                        "label": "A delicious chocolate",
+                        "amount": 500
+                    },
+                    {
+                        "label": "A bottle of water",
+                        "amount": 100
+                    }
+                ]
+            },
+            {
+                "title": "A Telegram bot source code",
+                "description": "Buy a Telegram bot source code! (Not real)\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
+                "payload": "TestSourceCodeInvoice",
+                "currency": "USD",
+                "start_param": "TestSourceCodeInvoice",
+        
+                "photo_url": "https://itsourcecode.com/wp-content/uploads/2019/09/PHP-Projects-With-Source-Code-Free-Downloads.png",
+                "photo_width": 1055,
+                "photo_height": 627,
+                
+                "is_flexible": false,
+                "need_shipping_address": false,
+        
+                "need_name": true,
+                "need_phone_number": true,
+                "need_email": true,
+        
+                "send_phone_number_to_provider": true,
+                "send_email_to_provider": true,
+                
+                "supported_countries": [],
+                "supported_cities": [],
+                "limit": -1,
+                
+                "suggested_tip_amounts": [1000, 2000, 3000],
+                "max_tip_amount": 10000,
+        
+                "shipping_options": [],
+        
+                "prices":
+                [
+                    {
+                        "label": "DLL libraries",
+                        "amount": 10000
+                    },
+                    {
+                        "label": "Source code",
+                        "amount": 50000
+                    },
+                    {
+                        "label": "Documentation",
+                        "amount": 20000
+                    }
+                ]
+            }
+        ]
+    },
+    "bot_admins": [1265170068, 739752266]
 }
