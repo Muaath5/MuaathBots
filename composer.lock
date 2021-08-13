@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b672ebaf5254e4f7faeb15bbe843098",
+    "content-hash": "e14d1c283885c897b55ff8cf4a7dc13b",
     "packages": [
         {
             "name": "muaath5/simple-bot-api",
@@ -48,7 +48,7 @@
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "dev-main",
+            "version": "v196",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
@@ -60,7 +60,6 @@
                 "reference": "0ade6e8c8bcdcfa7b193d5c2e341aa681fe4e2a1",
                 "shasum": ""
             },
-            "default-branch": true,
             "bin": [
                 "bin/heroku-php-apache2",
                 "bin/heroku-php-nginx"
@@ -94,8 +93,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": [],
+    "minimum-stability": "beta",
+    "stability-flags": {
+        "muaath5/simple-bot-api": 5
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

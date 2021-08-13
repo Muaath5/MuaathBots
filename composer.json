@@ -32,13 +32,13 @@
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
   },
-  "minimum-stability": "dev",
-  "require": {
-    "muaath5/simple-bot-api": "^5.3"
-  },
+  "minimum-stability": "beta",
   "autoload": {
     "psr-4": {
       "MuaathBots\\": "web/bots/src/"
     }
+  },
+  "require": {
+    "muaath5/simple-bot-api": "^5.3@RC"
   }
 }
