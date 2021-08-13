@@ -17,13 +17,11 @@ use SimpleBotAPI\TelegramFloodWait;
  */
 class RemoveInlineButtonsBot extends UpdatesHandler
 {
-    private TelegramBot $Bot;
     private int|string $LogsChatID;
     public $Settings;
 
-    public function __construct(TelegramBot $bot, float|string $logs_chat_id)
+    public function __construct(float|string $logs_chat_id)
     {
-        $this->Bot = $bot;
         $this->LogsChatID = $logs_chat_id;
 
         $class = explode('\\', get_class($this));
@@ -132,7 +130,10 @@ class RemoveInlineButtonsBot extends UpdatesHandler
         $deleteIt = false;
         if ($channel_post->chat->username == 'naqel3' && property_exists($channel_post, 'text'))
         {
-            if (str_contains($channel_post->text, '-----------')) $deleteIt = true;
+            if (str_contains($channel_post->text, '-----------'))
+            {
+                $deleteIt = true;
+            }
         }
         if (property_exists($channel_post, 'reply_markup') || $deleteIt)
         {
@@ -186,16 +187,6 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             }
         }
         return true;
-    }
-
-    public function InlineQueryHandler($inline_query) : bool
-    {   
-        return false;
-    }
-
-    public function ShippingQueryHandler($shipping_query) : bool
-    {  
-        return false;
     }
 
     public function PreCheckoutQueryHandler(object $pre_checkout_query) : bool
@@ -298,30 +289,5 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             }
         }
         return true;   
-    }
-
-    public function EditedMessageHandler(object $edited_message) : bool
-    {
-        return false;
-    }
-
-    public function ChosenInlineQueryHandler(object $chosen_inline_query): bool
-    {
-        return false;
-    }
-
-    public function PollHandler(object $poll_answer): bool
-    {
-        return false;
-    }
-
-    public function PollAnswerHandler(object $poll_answer): bool
-    {
-        return false;
-    }
-
-    public function ChatMemberHandler(object $chat_member): bool
-    {
-        return false;
     }
 }

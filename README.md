@@ -1,5 +1,5 @@
 # Muaath Bots
-[![Licence: GPL v3.0](https://img.shields.io/badge/Licence-GPL%20v3.0-dodgerblue)](LICENCE)
+[![Licence: GPL v3.0](https://img.shields.io/badge/Licence-GPL%20v3.0-green)](LICENCE)
 [![Bot API Version: 5.3](https://img.shields.io/badge/Bot%20API%20Version-5.3-dodgerblue)](https://core.telegram.org/bots/api#april-26-2021)
 
 **Muaath Bots** is some PHP Telegram bots that can be recreated by everyone.
@@ -29,7 +29,6 @@
 | What's minimum version of bots?            | Bot API 5.3                                                                                                              |
 | Why Muaath bots doesn't uses databases?    | To make it free hosted in Heroku, Also because this project doesn't get money to buy good hosting offers good databases. |
 | Is there any idea to pay for hosting bots? | Currently, No. Because this project hasn't any money source like some bots.                                              |
-| Why not all the bots has multi-language?   | Because commands like `/start` Or `/help` Doesn't come with `language_code`, So it should uses database.                 |
 
 ## Issues, Pull requests, And Questions
 Please read [**Contributing guidelines**](CONTRIBUTING.md)

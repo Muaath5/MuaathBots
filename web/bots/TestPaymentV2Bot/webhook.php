@@ -9,7 +9,7 @@ use MuaathBots\TestPaymentV2Bot;
 use SimpleBotAPI\TelegramBot;
 
 $BotDir = basename(__DIR__);
-$Token = $_GET['token'];
+$_GET['token'];
 
 # Check auth
 if ($Token != getenv('PAYMENT_BOT_TOKEN'))
@@ -18,20 +18,10 @@ if ($Token != getenv('PAYMENT_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'));
+$Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot($Bot, getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
 
-# Reading the update from Telegram to the webhook
-$Update = json_decode(file_get_contents('php://input'));
 
-if (!empty($Update))
-{
-    # Set UpdatesHandler for the bot
-    $Bot->SetUpdatesHandler(new TestPaymentV2Bot($Bot, getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
-
-    # Process the update
-    $Bot->OnUpdate($Update);
-}
-else
+if (!$Bot->OnWebhookUpdate())
 {
     # Show the admin settings of the webhook, Contains: Webhook info, Delete webhook, Set webhook
     header('Location: ' . "https://muaath-bots.herokuapp.com/bots/webhook-settings.php?token={$Token}&bot={$BotDir}");

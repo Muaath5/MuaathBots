@@ -12,7 +12,7 @@ All feature requests should be in [issues tab](https://github.com/Muaath5/Muaath
 And follow these instructions:
 - Don't request feature was requested before.
 - Dont send a single comment contains "+1" Or "👍", Use GitHub reactions instead.
-- Don't suggest adding language, Because adding language needs a database.
+- You can suggest adding a new language via Add [language issue templete]().
 - You can suggest a **new bot**, But it should follow [new bot requests instructions](#new-bot-requests-instructions)
     
 - Don't suggesta new bot contains a translation of existing bot.
