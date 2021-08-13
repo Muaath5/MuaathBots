@@ -19,7 +19,7 @@ if ($Token != getenv('REMOVE_INLINE_BUTTONS_BOT_TOKEN'))
 }
 
 $Bot = new TelegramBot($Token, new RemoveInlineButtonsBot(getenv('REMOVE_INLINE_BUTTONS_BOT_LOGS_CHAT_ID')));
-$Bot->OnWebhookUpdate();
+$Bot->OnWebhookUpdate(file_get_contents('php://input'));
 
 if (isset($_REQUEST['s']))
 {

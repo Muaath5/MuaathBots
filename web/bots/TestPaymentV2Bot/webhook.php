@@ -19,7 +19,7 @@ if ($Token != getenv('PAYMENT_BOT_TOKEN'))
 }
 
 $Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot(getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
-$Bot->OnWebhookUpdate();
+$Bot->OnWebhookUpdate(file_get_contents('php://input'));
 
 if (isset($_REQUEST['s']))
 {

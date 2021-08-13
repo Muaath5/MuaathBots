@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "muaath5/simple-bot-api",
-            "version": "5.3-RC",
+            "version": "5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muaath5/SimpleBotAPI.git",
-                "reference": "f8beac883317d4440f02c37dd8991fa5033f84cb"
+                "reference": "92591f686e54381a701cb30ab890714084f1333b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/f8beac883317d4440f02c37dd8991fa5033f84cb",
-                "reference": "f8beac883317d4440f02c37dd8991fa5033f84cb",
+                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/92591f686e54381a701cb30ab890714084f1333b",
+                "reference": "92591f686e54381a701cb30ab890714084f1333b",
                 "shasum": ""
             },
             "type": "library",
@@ -40,9 +40,9 @@
             "support": {
                 "email": "muaath1428@hotmail.com",
                 "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
-                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/5.3-RC"
+                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/5.3"
             },
-            "time": "2021-08-13T16:27:15+00:00"
+            "time": "2021-08-13T18:53:28+00:00"
         }
     ],
     "packages-dev": [
