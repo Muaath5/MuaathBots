@@ -22,22 +22,22 @@
 
         "errors":
         {
-            "country_unavailable": "Sorry, shipping to \"{country}\" is unavailable.\nAvailable countries is: ({available_countries})",
-            "city_unavailable": "Sorry, shipping to \"{city}\" is unavailable.\nAvailable cities in {country} is: ({available_cities})",
-            "product_sold_out": "Sorry, the product sold out",
-            "unknown_callback_query": "Sorry, Unknown button contact the developer"
+            "country_unavailable": "عذرًا، الشحن لدولة \"{country}\" غير متوفر.\nالدول المتوفرة هي: ({available_countries})",
+            "city_unavailable": "عذرًا، الشحن لمدينة \"{city}\" غير متوفر.\nالمدن المتوفرة في ذولة {country} هي: ({available_cities})",
+            "product_sold_out": "عذرًا، تم بيع المنتج",
+            "unknown_callback_query": "عذرًا، هذا الزر غير معروف، تواصل مع المطور"
         },
 
-        "inline_chat_button": "Try inline in other chat 🤩",
-        "inline_current_chat_button": "Try inline here first 😁",
+        "inline_chat_button": "جرب الوضع الضمني 🤩",
+        "inline_current_chat_button": "جرب الوضع الضمني هنا أولًا 😁",
         
         "invoices": 
         [
             {
-                "title": "Coffee invoice (Test)",
+                "title": "فاتورة قهوة (Test)",
                 "description": "Buy a coffee! (Not real).\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
                 "payload": "TestCoffeeInvoice",
-                "currency": "USD",
+                "currency": "SAR",
                 "start_param": "TestCoffeeInvoice",
         
                 "photo_url": "https://media3.s-nbcnews.com/j/newscms/2019_33/2203981/171026-better-coffee-boost-se-329p_67dfb6820f7d3898b5486975903c2e51.fit-1240w.jpg",
@@ -54,8 +54,8 @@
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
                 
-                "supported_countries": ["US", "MY"],
-                "supported_cities": [["NewYork", "Atlanta"], ["Colalambur"]],
+                "supported_countries": ["SA", "MY"],
+                "supported_cities": [["بيشة", "الرياض", "سبت العلاية", "أبها"], ["Colalambur"]],
                 "limit": 1000,
         
                 "suggested_tip_amounts": [100, 200, 400, 800],
@@ -65,7 +65,7 @@
                 [
                     {
                         "id": "Free",
-                        "title": "Free shipping",
+                        "title": "الشحن المجاني",
                         "prices":
                         [
                             {
@@ -79,15 +79,15 @@
                 "prices":
                 [
                     {
-                        "label": "A cup of coffee",
+                        "label": "كوب قهوة",
                         "amount": 700
                     },
                     {
-                        "label": "A delicious chocolate",
+                        "label": "شوكولاطة لذيذة",
                         "amount": 500
                     },
                     {
-                        "label": "A bottle of water",
+                        "label": "قارورة ماء",
                         "amount": 100
                     }
                 ]
