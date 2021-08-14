@@ -3,8 +3,8 @@
     {
         "responses":
         {
-            "successful_payment": "Thank you for testing! 😌\n Don't worry! it wasn't real payment. It's a test 😅",
-            "payment_warning": "Hi! Use the test card number : <code>4242 4242 4242 4242</code>\n<b>⚠ WARNING ⚠: DON'T add any real payment info</b>\nThe bot will store User data And shipping data.\n\n<b>NOTE: THE BOT HAS'T ACCESS TO ANY BANK DATA</b>."
+            "successful_payment": "شكرًا لك على تجربتك! 😌\n لا تقلق! ليست عملية دفع حقيقية. مجرد تجربة 😅",
+            "payment_warning": "مرحبًا! استخدم رقم البطاقة التجريبي: <code>4242 4242 4242 4242</code>\n<b>⚠ تحذير ⚠: لا تقم بإذخل أي بيانات دفع حقيقية!</b>\nالآلي سيحفظ بيانات المستخدم وبيانات الشحن.\n\n<b>ملاحظة: الآلي لا يملك أي صلاحيات للوصول للمعلومات البنكية</b>."
         },
 
         "logs":
@@ -15,9 +15,9 @@
         "commands":
         {
             "start": "مرحبًا 😄\nصنع هذا الآلي لتجربة <i>نظام مدفوعات تيليجرام</i>.\n<b>لتجربة عملية دفع غير حقيقية، استخدم الأمر: /invoice</b>\nاستخدم الأمر /help لمعرفة المزيد عن الآلي.",
-            "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, https://github.com/Muaath5/MuaathBots",
+            "project": "صنع هذا الآلي @Muaath_5 😏\nهذا المشروع <a href=\"https://github.com/Muaath5/MuaathBots\">مفتوح المصدر على GitHub</a>",
             "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
-            "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
+            "help": "استخدم /start لمعرفة معلومات بسيطة عن الآلي.\nاستخدم الأمر /invoice للحصول على فاتورة غير حقيقية, لا تقلق, مجرد تجريبية.\nاستخدم الأمر /inline للحصول على معلومات بشأن الوضع الضمني.\nاستخدم الأمر /project لمعرفة معلومات عن هذا المشروع.\nاستخدم الأمر /help للحصول على هذه الرسالة مجددًا ☺."
         },
 
         "errors":
@@ -54,8 +54,8 @@
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
                 
-                "supported_countries": ["US"],
-                "supported_cities": [["NewYork", "Atlanta"]],
+                "supported_countries": ["US", "MY"],
+                "supported_cities": [["NewYork", "Atlanta"], ["Colalambur"]],
                 "limit": 1000,
         
                 "suggested_tip_amounts": [100, 200, 400, 800],
@@ -195,8 +195,8 @@
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
                 
-                "supported_countries": ["US"],
-                "supported_cities": [["NewYork", "Atlanta"]],
+                "supported_countries": ["US", "MY"],
+                "supported_cities": [["NewYork", "Atlanta"], ["Colalambur"]],
                 "limit": 1000,
         
                 "suggested_tip_amounts": [100, 200, 400, 800],
