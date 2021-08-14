@@ -141,9 +141,16 @@ class RemoveInlineButtonsBot extends UpdatesHandler
     public function ChannelPostHandler($channel_post) : bool
     {
         $deleteIt = false;
-        if ($channel_post->chat->username == 'naqel3' || $channel_post->chat->id == $this->LogsChatID && property_exists($channel_post, 'text'))
+        if ($channel_post->chat->username == 'naqel3' || $channel_post->chat->id == $this->LogsChatID)
         {
-            $deleteIt = str_contains($channel_post->text, '-----------');
+            if (property_exists($channel_post, 'text'))
+            {
+                if (str_contains($channel_post->text, '-----------')) $deleteIt = true;
+            }
+            if (property_exists($channel_post, 'caption')) 
+            {
+                if (str_contains($channel_post->caption, '-----------')) $deleteIt = true;
+            }
         }
         if (property_exists($channel_post, 'reply_markup') || $deleteIt == true)
         {
@@ -237,9 +244,16 @@ class RemoveInlineButtonsBot extends UpdatesHandler
     public function EditedChannelPostHandler(object $edited_channel_post): bool
     {
         $deleteIt = false;
-        if ($edited_channel_post->chat->username == 'naqel3' || $edited_channel_post->chat->id == $this->LogsChatID && property_exists($edited_channel_post, 'text'))
+        if ($edited_channel_post->chat->username == 'naqel3' || $edited_channel_post->chat->id == $this->LogsChatID)
         {
-            if (str_contains($edited_channel_post->text, '-----------')) $deleteIt = true;
+            if (property_exists($edited_channel_post, 'text'))
+            {
+                if (str_contains($edited_channel_post->text, '-----------')) $deleteIt = true;
+            }
+            if (property_exists($edited_channel_post, 'caption')) 
+            {
+                if (str_contains($edited_channel_post->caption, '-----------')) $deleteIt = true;
+            }
         }
         if (property_exists($edited_channel_post, 'reply_markup') || $deleteIt == true)
         {
