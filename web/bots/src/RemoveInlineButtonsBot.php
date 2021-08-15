@@ -152,7 +152,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 if (str_contains($channel_post->caption, '-----------')) $deleteIt = true;
             }
         }
-        if (property_exists($channel_post, 'reply_markup') || $deleteIt == true)
+        if (property_exists($channel_post, 'reply_markup') || ($deleteIt == true && !property_exists($channel_post, 'media_group_id')))
         {
             try
             {
@@ -255,7 +255,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 if (str_contains($edited_channel_post->caption, '-----------')) $deleteIt = true;
             }
         }
-        if (property_exists($edited_channel_post, 'reply_markup') || $deleteIt == true)
+        if (property_exists($edited_channel_post, 'reply_markup') || ($deleteIt == true && !property_exists($edited_channel_post, 'media_group_id')))
         {
             try
             {
