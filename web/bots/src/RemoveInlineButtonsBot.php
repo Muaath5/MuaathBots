@@ -114,7 +114,10 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 $this->Bot->SendMessage([
                     'chat_id' => $message->chat->id,
                     'text' => $this->Settings->$lang->commands->$sent_command,
-                    'parse_mode' => 'HTML'
+                    'parse_mode' => 'HTML',
+                    'reply_markup' => json_encode(['inline_keyboard' => [[
+                        ['text' => 'Subscribe on Bot channel', 'url' => 'https://t.me/MuaathBots']
+                    ]]])
                 ]);
             }
             else

@@ -160,9 +160,9 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'chat_id' => $message->chat->id,
                         'text' => $this->Settings->$lang->commands->start,
                         'parse_mode' => 'HTML',
-                        /*'reply_markup' => json_encode(['inline_keyboard' => [[
-                            []
-                        ]]])*/
+                        'reply_markup' => json_encode(['inline_keyboard' => [[
+                            ['text' => 'Subscribe on Bot channel', 'url' => 'https://t.me/MuaathBots']
+                        ]]])
                     ]);
                     break;
 
