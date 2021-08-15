@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e14d1c283885c897b55ff8cf4a7dc13b",
+    "content-hash": "32a050805e5d550de4a77eb059a8e2e5",
     "packages": [
         {
             "name": "muaath5/simple-bot-api",
@@ -12,13 +12,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muaath5/SimpleBotAPI.git",
-                "reference": "8e9b955683c9a562e1560e07d66d96a9824dcb47"
+                "reference": "dc47cd2f8ae3b48d0c9a3e87b3c7b109b5f8d927"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/8e9b955683c9a562e1560e07d66d96a9824dcb47",
-                "reference": "8e9b955683c9a562e1560e07d66d96a9824dcb47",
+                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/dc47cd2f8ae3b48d0c9a3e87b3c7b109b5f8d927",
+                "reference": "dc47cd2f8ae3b48d0c9a3e87b3c7b109b5f8d927",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -42,7 +48,7 @@
                 "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
                 "source": "https://github.com/Muaath5/SimpleBotAPI/tree/5.3"
             },
-            "time": "2021-08-13T19:51:50+00:00"
+            "time": "2021-08-15T07:41:34+00:00"
         }
     ],
     "packages-dev": [
@@ -94,9 +100,7 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "muaath5/simple-bot-api": 5
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

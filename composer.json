@@ -39,6 +39,6 @@
     }
   },
   "require": {
-    "muaath5/simple-bot-api": "^5.3@RC"
+    "muaath5/simple-bot-api": "^5.3"
   }
 }
