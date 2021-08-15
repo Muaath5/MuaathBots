@@ -23,7 +23,7 @@
         "errors":
         {
             "country_unavailable": "عذرًا، الشحن لدولة \"{country}\" غير متوفر.\nالدول المتوفرة هي: ({available_countries})",
-            "city_unavailable": "عذرًا، الشحن لمدينة \"{city}\" غير متوفر.\nالمدن المتوفرة في ذولة {country} هي: ({available_cities})",
+            "city_unavailable": "عذرًا، الشحن لمدينة \"{city}\" غير متوفر.\nالمدن المتوفرة في دولة {country} هي: ({available_cities})",
             "product_sold_out": "عذرًا، تم بيع المنتج",
             "unknown_callback_query": "عذرًا، هذا الزر غير معروف، تواصل مع المطور"
         },
@@ -35,7 +35,7 @@
         [
             {
                 "title": "فاتورة قهوة (Test)",
-                "description": "Buy a coffee! (Not real).\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
+                "description": "اشتر قهوة! (تجريبي).\nفاتورة تجريبية من Stripe.\nاستخدم رقم البطاقة التجريبي: 4242 4242 4242 4242",
                 "payload": "TestCoffeeInvoice",
                 "currency": "SAR",
                 "start_param": "TestCoffeeInvoice",
@@ -54,8 +54,8 @@
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
                 
-                "supported_countries": ["SA", "MY"],
-                "supported_cities": [["بيشة", "الرياض", "سبت العلاية", "أبها"], ["Colalambur"]],
+                "supported_countries": ["SA"],
+                "supported_cities": [["بيشة", "الرياض", "سبت العلاية", "أبها"]],
                 "limit": 1000,
         
                 "suggested_tip_amounts": [100, 200, 400, 800],
@@ -69,7 +69,7 @@
                         "prices":
                         [
                             {
-                                "label": "Free shipping",
+                                "label": "الشحن المجاني",
                                 "amount": 0
                             }
                         ]
@@ -93,18 +93,18 @@
                 ]
             },
             {
-                "title": "A Telegram bot source code",
-                "description": "Buy a Telegram bot source code! (Not real)\nA stripe test invoice.\nUse test card number: 4242 4242 4242 4242",
-                "payload": "TestSourceCodeInvoice",
-                "currency": "USD",
-                "start_param": "TestSourceCodeInvoice",
+                "title": "بيت باربي",
+                "description": "اشتر بيت باربي! (تجريبي)\nفاتورة تجريبية من Stripe.\nاستخدم رقم البطاقة التجريبي: 4242 4242 4242 4242",
+                "payload": "TestHouseGameInvoice",
+                "currency": "SAR",
+                "start_param": "TestHouseGameInvoice",
         
-                "photo_url": "https://itsourcecode.com/wp-content/uploads/2019/09/PHP-Projects-With-Source-Code-Free-Downloads.png",
+                "photo_url": "https://m.media-amazon.com/images/I/81YUU5C1i5L.jpg",
                 "photo_width": 1055,
                 "photo_height": 627,
                 
-                "is_flexible": false,
-                "need_shipping_address": false,
+                "is_flexible": true,
+                "need_shipping_address": true,
         
                 "need_name": true,
                 "need_phone_number": true,
@@ -113,28 +113,56 @@
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
                 
-                "supported_countries": [],
-                "supported_cities": [],
+                "supported_countries": ["SA"],
+                "supported_cities": [["الرياض", "جدة", "الدمام", "بريدة", "أبها", "مكة", "المدينة المنورة"]],
                 "limit": -1,
                 
                 "suggested_tip_amounts": [1000, 2000, 3000],
                 "max_tip_amount": 10000,
         
-                "shipping_options": [],
+                "shipping_options":
+                [
+                    {
+                        "id": "Free",
+                        "title": "الشحن المجاني (شهر بحد أقصى)",
+                        "prices":
+                        [
+                            {
+                                "label": "الشحن المجاني",
+                                "amount": 0
+                            }
+                        ]
+                    },
+                    {
+                        "title": "الشحن السريع (أسبوع بحد أقصى)",
+                        "id": "Fast",
+                        "prices":
+                        [
+                            {
+                                "label": "الشحن السريع",
+                                "amount": 5000
+                            }
+                        ]
+                    }
+                ],
         
                 "prices":
                 [
                     {
-                        "label": "DLL libraries",
-                        "amount": 10000
-                    },
-                    {
-                        "label": "Source code",
-                        "amount": 50000
-                    },
-                    {
-                        "label": "Documentation",
+                        "label": "بيت باربي",
                         "amount": 20000
+                    },
+                    {
+                        "label": "سيارة باربي",
+                        "amount": 3500
+                    },
+                    {
+                        "label": "القطع والأدوات الصغيرة",
+                        "amount": 2500
+                    },
+                    {
+                        "label": "العرائس",
+                        "amount": 8300
                     }
                 ]
             }
