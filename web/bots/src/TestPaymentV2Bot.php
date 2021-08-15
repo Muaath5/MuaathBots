@@ -221,7 +221,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                     $photoHeight = $this->Settings->$lang->invoices[0]->photo_height;
                     $this->Bot->SendMessage([
                         'chat_id' => $senderChat->id,
-                        'text' => $this->Settings->responses->payment_warning,
+                        'text' => $this->Settings->$lang->responses->payment_warning,
                         'parse_mode' => 'HTML'
                     ]);
                     $mainInv = $this->Settings->$lang->invoices[0];
