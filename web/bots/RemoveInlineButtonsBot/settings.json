@@ -10,6 +10,10 @@
         {
             "bad_request": "خطأ، فضلًا تأكد من صلاحيات الآلي، أو تواصل مع مطور البوت",
             "command_not_found": "عذرًا، الأمر غير موجود!"
+        },
+        "buttons":
+        {
+            "subscribe_bot_channel": "اشترك في قناة الآلي"
         }
     },
     "en":
@@ -23,6 +27,10 @@
         {
             "bad_request": "Error, Please check bot's permissions, Or contact with bot developer",
             "command_not_found": "Sorry, Command not found!"
+        },
+        "buttons":
+        {
+            "subscribe_bot_channel": "Subscribe on bot's channel"
         }
     },
     "bot_admins": [1265170068]

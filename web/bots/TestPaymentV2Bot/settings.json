@@ -15,7 +15,7 @@
         "commands":
         {
             "start": "مرحبًا 😄\nصنع هذا الآلي لتجربة <i>نظام مدفوعات تيليجرام</i>.\n<b>لتجربة عملية دفع غير حقيقية، استخدم الأمر:\n/invoice</b>\nاستخدم الأمر /help لمعرفة المزيد عن الآلي.",
-            "project": "صنع هذا الآلي @Muaath_5 😏\nهذا المشروع <a href=\"https://github.com/Muaath5/MuaathBots\">مفتوح المصدر على GitHub</a>",
+            "project": "صنع هذا الآلي @Muaath_5 😏\nهذا المشروع <a href=\"https://github.com/Muaath5/MuaathBots\">مفتوح المصدر على GitHub</a>\n\nللمساهمة بترجمة الآلي، تواصل مع @Muaath_5 بالعربية أو بالإنجليزية",
             "inline": "بإمكانك إرسال الفواتير عن طريق الوضع الضمني 😍! فقط استخدم الأزرار في الأسفل.",
             "help": "استخدم /start لمعرفة معلومات بسيطة عن الآلي.\nاستخدم الأمر /invoice للحصول على فاتورة غير حقيقية, لا تقلق, مجرد تجريبية.\nاستخدم الأمر /inline للحصول على معلومات بشأن الوضع الضمني.\nاستخدم الأمر /project لمعرفة معلومات عن هذا المشروع.\nاستخدم الأمر /help للحصول على هذه الرسالة مجددًا ☺."
         },
@@ -28,9 +28,13 @@
             "unknown_callback_query": "عذرًا، هذا الزر غير معروف، تواصل مع المطور"
         },
 
-        "inline_chat_button": "جرب الوضع الضمني 🤩",
-        "inline_current_chat_button": "جرب الوضع الضمني هنا أولًا 😁",
-        
+        "buttons":
+        {
+            "try_inline_chat": "جرب الوضع الضمني 🤩",
+            "try_inline_current_chat": "جرب الوضع الضمني هنا أولًا 😁",
+            "subscribe_bot_channel": "اشترك في قناة الآلي"
+        },
+
         "invoices": 
         [
             {
@@ -49,7 +53,7 @@
         
                 "need_name": true,
                 "need_phone_number": true,
-                "need_email": true,
+                "need_email": false,
         
                 "send_phone_number_to_provider": true,
                 "send_email_to_provider": true,
@@ -184,7 +188,7 @@
         "commands":
         {
             "start": "Welcome 😄\nThis bot is created to test <i>Telegram payments</i>.\n<b>To test unreal payment, use the command: /invoice</b>\nUse /help to more info about the bot.",
-            "project": "This project was created by @Muaath_5 😏\nThis project is an open source project, GitHub will be available soon... under MIT License",
+            "project": "This project was created by @Muaath_5 😏\nThis project is an <a href=\"https://github.com/Muaath5/MuaathBots\">open source project on GitHub</a> under GPL 3.0 License\n\nFor helping on translating this bot to your language, Contact with @Muaath_5",
             "inline": "You can use send invoices via this bot in inline query 😍! Just use the button below",
             "help": "Use /start to get a little info about the bot.\nUse /invoice to get a Test invoice, Don't worry, it's a test.\nUse /inline to get info about inline queries.\nUse /project to get the project source and can help in the project.\nUse /help to get this menu again ☺."
         },
