@@ -161,7 +161,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'text' => $this->Settings->$lang->commands->start,
                         'parse_mode' => 'HTML',
                         'reply_markup' => json_encode(['inline_keyboard' => [[
-                            ['text' => 'Subscribe on Bot channel', 'url' => 'https://t.me/MuaathBots']
+                            ['text' => $this->Settings->$lang->buttons->subscribe_bot_channel, 'url' => 'https://t.me/MuaathBots']
                         ]]])
                     ]);
                     break;
@@ -191,11 +191,11 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'inline_keyboard' =>
                         [
                             [[
-                                'text' => $this->Settings->$lang->inline_chat_button,
+                                'text' => $this->Settings->$lang->buttons->inline_chat_button,
                                 'switch_inline_query' => 'payment'
                             ]],
                             [[
-                                'text' => $this->Settings->$lang->inline_current_chat_button,
+                                'text' => $this->Settings->$lang->buttons->inline_current_chat,
                                 'switch_inline_query_current_chat' => 'payment'
                             ]]
                         ]
