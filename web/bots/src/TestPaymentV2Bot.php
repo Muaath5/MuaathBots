@@ -191,11 +191,11 @@ class TestPaymentV2Bot extends UpdatesHandler
                         'inline_keyboard' =>
                         [
                             [[
-                                'text' => $this->Settings->$lang->buttons->inline_chat_button,
+                                'text' => $this->Settings->$lang->buttons->try_inline_chat,
                                 'switch_inline_query' => 'payment'
                             ]],
                             [[
-                                'text' => $this->Settings->$lang->buttons->inline_current_chat,
+                                'text' => $this->Settings->$lang->buttons->try_inline_current_chat,
                                 'switch_inline_query_current_chat' => 'payment'
                             ]]
                         ]
