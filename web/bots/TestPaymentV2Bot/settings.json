@@ -201,8 +201,11 @@
             "unknown_callback_query": "Sorry, Unknown button contact the developer"
         },
 
-        "inline_chat_button": "Try inline in other chat 🤩",
-        "inline_current_chat_button": "Try inline here first 😁",
+        "buttons":
+        {
+            "try_inline_chat": "Try inline in other chat 🤩",
+            "try_inline_current_chat": "Try inline here first 😁"
+        },
         
         "invoices": 
         [
