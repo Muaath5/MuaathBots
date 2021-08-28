@@ -6,6 +6,7 @@ namespace MuaathBots;
 require '/app/vendor/autoload.php';
 
 use MuaathBots\RemoveInlineButtonsBot;
+use SimpleBotAPI\BotSettings;
 use SimpleBotAPI\TelegramBot;
 
 $BotDir = basename(__DIR__);
@@ -18,8 +19,9 @@ if ($Token != getenv('REMOVE_INLINE_BUTTONS_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot($Token, new RemoveInlineButtonsBot(getenv('REMOVE_INLINE_BUTTONS_BOT_LOGS_CHAT_ID')));
+$Bot = new TelegramBot($Token, BotSettings::Import(__DIR__ . '/settings.json'));
 $Bot->OnWebhookUpdate(file_get_contents('php://input'));
+
 
 if (isset($_REQUEST['s']))
 {
