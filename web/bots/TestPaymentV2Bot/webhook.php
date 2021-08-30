@@ -6,6 +6,7 @@ namespace MuaathBots;
 require '/app/vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
+use SimpleBotAPI\BotSettings;
 use SimpleBotAPI\TelegramBot;
 
 $BotDir = basename(__DIR__);
@@ -18,7 +19,7 @@ if ($Token != getenv('PAYMENT_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot(getenv('PAYMENT_BOT_PROVIDER_TOKEN'), getenv('PAYMENT_BOT_LOGS_CHAT_ID')));
+$Bot = new TelegramBot($Token, BotSettings::Import(__DIR__ . '/settings.json'));
 $Bot->OnWebhookUpdate(file_get_contents('php://input'));
 
 if (isset($_REQUEST['s']))

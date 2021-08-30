@@ -21,14 +21,14 @@ class TestPaymentV2Bot extends UpdatesHandler
     private int|string $LogsChatID;
     public $Settings;
 
-    public function __construct(string $provider_token, float|string $logs_chat_id)
+    public function __construct(string $provider_token = null, int|float|string $logs_chat_id = null)
     {
-        $this->ProviderToken = $provider_token;
-        $this->LogsChatID = $logs_chat_id;
+        $this->ProviderToken = $provider_token ?? getenv('PAYMENT_BOT_PROVIDER_TOKEN');
+        $this->LogsChatID = $logs_chat_id ?? getenv('PAYMENT_BOT_LOGS_CHAT_ID');
 
         $class = explode('\\', get_class($this));
         $class = $class[count($class) - 1];
-        $this->Settings = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/bots/' . $class . '/settings.json'));
+        $this->Settings = json_decode(file_get_contents(dirname(__DIR__) . "/$class/translations.json"));
     }
 
     # Functions

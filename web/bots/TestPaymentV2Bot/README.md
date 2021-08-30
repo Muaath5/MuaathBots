@@ -17,8 +17,8 @@ This bot supports _Telegram Payments 2.0_.
 | Allow groups           | Yes      |
 
 ## Features
+- Multilanguage commands & messages
 - Supports inline queries
-- Supports (User/Admin) modes
 - Supports multiple invoices
 - Supports deep linking
 - Supports Reply keyboards
@@ -47,14 +47,14 @@ This bot supports _Telegram Payments 2.0_.
 
 
 ## Test payments 2.0 FAQ
-| Question                            | Answer                                                                |
-|-------------------------------------|-----------------------------------------------------------------------|
-| What's used Bot API version?        | Bot API 5.2                                                           |
-| Which payment provider is choosed?  | Stripe.                                                               |
-| Does it real payment?               | No, It's a test payment. See: Test payments in Stripe.                |
-| Can the Bot get the payment info?   | No, It's not accessed by Bot API. You can check the source code file. |
-| What's the data that bot collects?  | The bot collects User info, Shipping info, Invoice info.              |
-| Which place bot stores the data in? | The bots send logs & payments to selected Telegram chat               |
+| Question                            | Answer                                                                                                         |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| What's used Bot API version?        | Bot API 5.3                                                                                                    |
+| Which payment provider is choosed?  | Stripe.                                                                                                        |
+| Does it real payment?               | No, It's a test payment. See: Test payments in Stripe.                                                         |
+| Can the Bot get the card info?      | No, It's not accessed by Bot API. You can check the source code file.                                          |
+| What's the data that bot collects?  | The bot collects User info, Shipping info, Invoice info.                                                       |
+| Which place bot stores the data in? | The bots send logs & payments to selected Telegram chat, API data is stored as environment variables & on file |
 
 ## Issues
-If you find an issue about this bot: [Open issue for Test payments 2.0 bot]()
+Report to me [in Telegram](https://t.me/Muaath_5)

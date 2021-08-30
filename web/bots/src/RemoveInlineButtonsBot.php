@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MuaathBots;
 
-require '/app/vendor/autoload.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
 
 use SimpleBotAPI\TelegramBot;
 use SimpleBotAPI\UpdatesHandler;
@@ -17,16 +17,16 @@ use SimpleBotAPI\TelegramFloodWait;
  */
 class RemoveInlineButtonsBot extends UpdatesHandler
 {
-    private int|string $LogsChatID;
+    private float|int|string $LogsChatID;
     public $Settings;
 
-    public function __construct(float|string $logs_chat_id)
+    public function __construct(float|int|string $logs_chat_id = null)
     {
-        $this->LogsChatID = $logs_chat_id;
+        $this->LogsChatID = $logs_chat_id ?? getenv('REMOVE_INLINE_BUTTONS_BOT_LOGS_CHAT_ID');
 
         $class = explode('\\', get_class($this));
         $class = $class[count($class) - 1];
-        $this->Settings = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/bots/' . $class . '/settings.json'));
+        $this->Settings = json_decode(file_get_contents(dirname(__DIR__) . "/$class/translations.json"));
     }
 
     # Helper methods
