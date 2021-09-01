@@ -144,7 +144,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
     public function ChannelPostHandler($channel_post) : bool
     {
         $deleteIt = false;
-        if ($channel_post->chat->username == 'naqel3' || $channel_post->chat->id == $this->LogsChatID)
+        if ($channel_post->chat->username == 'Naqel6' || $channel_post->chat->id == $this->LogsChatID)
         {
             if (property_exists($channel_post, 'text'))
             {
