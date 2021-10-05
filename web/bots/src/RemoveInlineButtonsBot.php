@@ -5,11 +5,8 @@ namespace MuaathBots;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php';
 
-use SimpleBotAPI\TelegramBot;
 use SimpleBotAPI\UpdatesHandler;
-use SimpleBotAPI\TelegramException;
-use SimpleBotAPI\TelegramChatMigrated;
-use SimpleBotAPI\TelegramFloodWait;
+use SimpleBotAPI\Exceptions\TelegramException;
 
 /**
  * Test bot for Telegram Payments 2.0, Can be used for real payments
@@ -39,6 +36,8 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 return $user->language_code;
             }
         }
+
+        // Default language
         return 'en';
     }
 
