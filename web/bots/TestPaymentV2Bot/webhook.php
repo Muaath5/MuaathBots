@@ -19,12 +19,15 @@ if ($Token != getenv('PAYMENT_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot($Token, new TestPaymentV2Bot(), BotSettings::Import(__DIR__ . '/settings.json'));
-$Bot->OnWebhookUpdate(file_get_contents('php://input'));
-
 if (isset($_REQUEST['s']))
 {
     # Show the admin settings of the webhook, Contains: Webhook info, Delete webhook, Set webhook
     header('Location: ' . "https://muaath-bots.herokuapp.com/bots/webhook-settings.php?token={$Token}&bot={$BotDir}");
     exit;
+}
+
+$Bot = new TelegramBot($Token, new TestPaymentV2Bot(), BotSettings::Import(__DIR__ . '/settings.json'));
+if (!$Bot->OnWebhookUpdate())
+{
+    echo 'false';
 }

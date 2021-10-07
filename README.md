@@ -8,19 +8,19 @@
 - Doesn't use any databases
 - Open source and uses `git`
 - Can be hosted in Heroku free
-- Configuration stored in environment variables (`.env` file)
+- Configuration stored in environment variables
 - All bots uses **Bot API 5.3** or earlier
 - Uses GitHub Actions
 - Bots uses [Simple Bot API Library](https://github.com/Muaath5/SimpleBotAPI)
-- Single file for webhool
+- Single file for webhook
 - Supports Translations.
 
 ## Bots
 **Avaliable bots:**  
 - Test payment 2.0 Bot | [@TestPaymentV2Bot](https://t.me/TestPaymentV2Bot).
+- Remove Inline Buttons Bot | [@RemoveInlineButtonsBot](https://t.me/RemoveInlineButtonsBot).
 
 **Coming soon:**
-- Remove Inline Buttons Bot | [@RemoveInlineButtonsBot](https://t.me/RemoveInlineButtonsBot).
 - getChat method Bot | [@getChatMethodBot](https://t.me/getChatMethodBot).
 
 ## FAQ
