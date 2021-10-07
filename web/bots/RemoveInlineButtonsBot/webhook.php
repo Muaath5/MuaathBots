@@ -19,7 +19,7 @@ if ($Token != getenv('REMOVE_INLINE_BUTTONS_BOT_TOKEN'))
     exit;
 }
 
-$Bot = new TelegramBot($Token, BotSettings::Import(__DIR__ . '/settings.json'));
+$Bot = new TelegramBot($Token, new RemoveInlineButtonsBot(), BotSettings::Import(__DIR__ . '/settings.json'));
 $Bot->OnWebhookUpdate(file_get_contents('php://input'));
 
 
