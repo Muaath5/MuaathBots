@@ -1,6 +1,4 @@
 {
-    "Constructor": [],
-    "UpdatesHandler": "MuaathBots\\TestPaymentV2Bot",
     "ReceivingUpdatesType": "webhook",
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
@@ -17,5 +15,6 @@
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
-    "SaveFilePath": "\/app\/web\/bots\/RemoveInlineButtonsBot\/settings.json"
+    "SaveFilePath": "\/app\/web\/bots\/RemoveInlineButtonsBot\/settings.json",
+    "CheckUpdates": true
 }
