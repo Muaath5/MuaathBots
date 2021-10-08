@@ -6,7 +6,9 @@
         "edited_message",
         "channel_post",
         "edited_chanel_post",
-        "my_chat_member"
+        "my_chat_member",
+        "shipping_query",
+        "pre_checkout_query"
     ],
     "LastUpdateID": 0,
     "LastUpdateDate": 0,
