@@ -18,4 +18,3 @@ This Bot will delete or edit any message contains Inline Buttons
 # Features
 - Supports Groups & Channels
 - Multilanguage commands & messages
-- Has logs channel for errors & payments

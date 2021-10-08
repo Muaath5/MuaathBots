@@ -17,6 +17,6 @@
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
-    "SaveFilePath": "\/app\/web\/bots\/RemoveInlineButtonsBot\/settings.json",
+    "SaveFilePath": "\/app\/web\/bots\/TestPaymentV2Bot\/settings.json",
     "CheckUpdates": true
 }
