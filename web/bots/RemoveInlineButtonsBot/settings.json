@@ -8,7 +8,7 @@
         "edited_chanel_post",
         "my_chat_member"
     ],
-    "LastUpdateID": 0,
+    "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
     "AutoHandleDuplicateUpdates": true,

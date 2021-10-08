@@ -10,7 +10,7 @@
         "shipping_query",
         "pre_checkout_query"
     ],
-    "LastUpdateID": 0,
+    "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
     "AutoHandleDuplicateUpdates": true,
