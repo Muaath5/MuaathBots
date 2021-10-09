@@ -128,8 +128,24 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 ]);
             }
         }
+        catch (TelegramException $tgex)
+        {
+            if ($tgex->getCode() == 403)
+            {
+                http_response_code(200);
+                return true;
+            }
+
+            http_response_code(500);
+            $this->Bot->SendMessage([
+                'chat_id' => $this->LogsChatID,
+                'text' => "<b>Telegram Error[{$tgex->getCode()}]:</b>\n{$tgex->getMessage()}\n\nUser language: <code>{$lang}</code>\nUser ID: <code>{$message->from->id}</code>&{$message->from->username}",
+                'parse_mode' => 'HTML'
+            ]);
+        }
         catch (\Exception $ex)
         {
+            http_response_code(500);
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
                 'text' => "<b>Error:</b>\n$ex",
