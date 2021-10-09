@@ -230,7 +230,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
 
     public function MyChatMemberHandler(object $my_chat_member) : bool
     {
-        if ($my_chat_member->new_chat_member === 'member')
+        if ($my_chat_member->new_chat_member->status === 'member')
         {
             if ($my_chat_member->from->id === $my_chat_member->chat->id)
             {
@@ -248,7 +248,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 ]);
             }
         }
-        else if ($my_chat_member->new_chat_member === 'kicked')
+        else if ($my_chat_member->new_chat_member->status === 'kicked')
         {
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
@@ -304,7 +304,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                     ]);
                     $this->Bot->SendMessage([
                         'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Error:</b>\n$tgex",
+                        'text' => "<b>Telegram Error:</b>\n$tgex",
                         'parse_mode' => 'HTML'
                     ]);
                 }
@@ -312,7 +312,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 {
                     $this->Bot->SendMessage([
                         'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Error:</b>\n$tgex",
+                        'text' => "<b>Telegram Error:</b>\n$tgex",
                         'parse_mode' => 'HTML'
                     ]);
                 }
