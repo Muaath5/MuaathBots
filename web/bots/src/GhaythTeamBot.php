@@ -39,7 +39,9 @@ class GhaythTeamBot extends UpdatesHandler
                     case '/start@GhaythTeamBot':
                         $this->Bot->SendMessage([
                             'chat_id' => $message->chat->id,
-                            'text' => 'السلام عليكم، هذا بوت تواصل مع فريق غيث.\nأرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت',
+                            'text' => '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
+
+أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉',
                             'reply_to_message_id' => $message->message_id,
                             'reply_markup' => json_encode([
                                 'force_reply' => true,
@@ -53,7 +55,9 @@ class GhaythTeamBot extends UpdatesHandler
                     case '/help@GhaythTeamBot':
                         $this->Bot->SendMessage([
                             'chat_id' => $message->chat->id,
-                            'text' => 'فريق غيث',
+                            'text' => 'فريق غيث، هم مجموعة من طلاب جذور وغراس يقومون على عمل الملخصات والأسئلة الخاصة بجذور وغراس في أكاديمية الجيل الصاعد
+
+استخدم هذا البوت للتواصل معهم، في أمان الله :)',
                             'reply_to_message_id' => $message->message_id
                         ]);
                         return true;
@@ -93,13 +97,13 @@ class GhaythTeamBot extends UpdatesHandler
                 {
                     $this->Bot->SendMessage([
                         'chat_id' => $this->MessagesChatID,
-                        'text' => 'You should reply on on of the existing messages from users that <b>Contains</b> Buttons!',
+                        'text' => 'يجب الرد على رسالة من المستخدمين',
                         'parse_mode' => 'HTML'
                     ]);    
                 }
             }
         }
-        else if ($message->chat->id != $this->MessagesChatID)
+        else if ($message->chat->id == $this->MessagesChatID)
         {
             $this->Bot->SendMessage([
                 'chat_id' => $message->chat->id,
