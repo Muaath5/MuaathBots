@@ -22,13 +22,53 @@ class GhaythTeamBot extends UpdatesHandler
     public function MessageHandler(object $message): bool
     {
         # The bot class will be stored in $this->Bot
-        $is_admin = ($message->chat->type == 'channel' && $message->chat->id == $this->MessagesChatID);
         if (property_exists($message, 'from'))
         {
-            $is_admin = $is_admin || (in_array($message->from->id, $this->BotAdmins) && $message->chat->id == $this->MessagesChatID);
+            $is_admin = (in_array($message->from->id, $this->BotAdmins) && $message->chat->id == $this->MessagesChatID);
         }
         
-        # If admin
+        # First, Reply on commands
+        if (property_exists($message, 'text'))
+        {
+            # Commands
+            if ($message->text[0] == '/')
+            {
+                switch ($message->text)
+                {
+                    case '/start':
+                    case '/start@GhaythTeamBot':
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => 'السلام عليكم، هذا بوت تواصل مع فريق غيث.\nأرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت',
+                            'reply_to_message_id' => $message->message_id,
+                            'reply_markup' => json_encode([
+                                'force_reply' => true,
+                                'input_field_placeholder' => 'أرسل الرسالة :)',
+                                'selective' => true
+                            ])
+                        ]);
+                        return true;
+                    
+                    case '/help':
+                    case '/help@GhaythTeamBot':
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => 'فريق غيث',
+                            'reply_to_message_id' => $message->message_id
+                        ]);
+                        return true;
+
+                    default:
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => 'عذرًا، الأمر غير معروف'
+                        ]);
+                        return true;
+                }
+            }
+        }
+
+        # Check if it was an admin response
         if ($is_admin)
         {
             if (property_exists($message, 'reply_to_message'))
@@ -58,95 +98,57 @@ class GhaythTeamBot extends UpdatesHandler
                     ]);    
                 }
             }
-            else
-            {
-                $this->Bot->SendMessage([
-                    'chat_id' => $this->MessagesChatID,
-                    'text' => 'You should reply on on of the existing messages from users!'
-                ]);
-            }
         }
-
-        if (property_exists($message, 'text'))
+        else if ($message->chat->id != $this->MessagesChatID)
         {
-            # Commands
-            if ($message->text[0] == '/')
-            {
-                switch ($message->text)
-                {
-                    case '/start':
-                        $this->Bot->SendMessage([
-                            'chat_id' => $message->chat->id,
-                            'text' => 'السلام عليكم، هذا بوت تواصل مع فريق غيث.\nأرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت',
-                            'reply_to_message_id' => $message->message_id,
-                            'reply_markup' => json_encode([
-                                'force_reply' => true,
-                                'input_field_placeholder' => 'أرسل الرسالة :)',
-                                'selective' => true
-                            ])
-                        ]);
-                        break;
-                    
-                    case '/help':
-                        $this->Bot->SendMessage([
-                            'chat_id' => $message->chat->id,
-                            'text' => 'فريق غيث',
-                            'reply_to_message_id' => $message->message_id
-                        ]);
-                        break;
+            $this->Bot->SendMessage([
+                'chat_id' => $message->chat->id,
+                'text' => 'أنت لست مشرفًا لترد على الرسائل! تواصل مع @Muaath_5 ليضيفك كمشرف',
+                'reply_to_message_id' => $message->message_id,
+            ]);
+        }
+        else
+        {
+            # Copy message to the owner of the bot
+            $this->Bot->CopyMessage([
+                'chat_id' => $this->MessagesChatID,
+                'from_chat_id' => $message->chat->id,
+                'message_id' => $message->message_id,
 
-                    default:
-                        $this->Bot->SendMessage([
-                            'chat_id' => $message->chat->id,
-                            'text' => 'عذرًا، الأمر غير معروف'
-                        ]);
-                        break;
-                }
-            }
-            else if ($message->chat->id != $this->MessagesChatID)
-            {
-                
-                # Copy message to the owner of the bot
-                $this->Bot->CopyMessage([
-                    'chat_id' => $this->MessagesChatID,
-                    'from_chat_id' => $message->chat->id,
-                    'message_id' => $message->message_id,
-
-                    # The bot will store user Data on the buttons
-                    'reply_markup' => json_encode(['inline_keyboard' => [
+                # The bot will store user Data on the buttons
+                'reply_markup' => json_encode(['inline_keyboard' => [
+                    [
                         [
-                            [
-                                'text' => $message->from->id,
-                                'callback_data' => "info_{$message->from->id}"
-                            ]
-                        ],
-                        [
-                            [
-                                'text' => $message->message_id,
-                                'url' => 'https://google.com'
-                            ]
-                        ],
-                        [
-                            [
-                                'text' => property_exists($message->chat, 'title') ? $message->chat->title : $message->chat->first_name . ' ' . $message->chat->last_name,
-                                'url' => property_exists($message->chat, 'username') ? "https://t.me/{$message->chat->username}" : 'https://google.com/'
-                            ]
+                            'text' => $message->from->id,
+                            'callback_data' => "info_{$message->from->id}"
                         ]
-                    ]])
-                ]);
+                    ],
+                    [
+                        [
+                            'text' => $message->message_id,
+                            'url' => 'https://google.com'
+                        ]
+                    ],
+                    [
+                        [
+                            'text' => property_exists($message->chat, 'title') ? $message->chat->title : $message->chat->first_name . ' ' . $message->chat->last_name,
+                            'url' => (property_exists($message->chat, 'username') ? "https://t.me/{$message->chat->username}" : 'https://google.com/')
+                        ]
+                    ]
+                ]])
+            ]);
 
-                
-                $this->Bot->SendMessage([
-                    'chat_id' => $message->chat->id,
-                    'text' => 'تم إرسال الرسالة إلى الفريق بنجاح!',
-                    'reply_to_message_id' => $message->message_id,
-                    'reply_markup' => json_encode([
-                        'force_reply' => true,
-                        'input_field_placeholder' => 'إرسال رسالة أخرى لفريق غيث؟',
-                        'selective' => true
-                    ])
-                ]);
-            }
+            
+            $this->Bot->SendMessage([
+                'chat_id' => $message->chat->id,
+                'text' => 'تم إرسال الرسالة إلى الفريق بنجاح!',
+                'reply_to_message_id' => $message->message_id,
+                'reply_markup' => json_encode([
+                    'force_reply' => true,
+                    'input_field_placeholder' => 'إرسال رسالة أخرى لفريق غيث؟',
+                    'selective' => true
+                ])
+            ]);
         }
         return true;
     }
