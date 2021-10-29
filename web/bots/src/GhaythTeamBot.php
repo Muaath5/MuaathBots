@@ -86,6 +86,14 @@ class GhaythTeamBot extends UpdatesHandler
                             ])
                         ]);
                         break;
+                    
+                    case '/help':
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => 'فريق غيث',
+                            'reply_to_message_id' => $message->message_id
+                        ]);
+                        break;
 
                     default:
                         $this->Bot->SendMessage([

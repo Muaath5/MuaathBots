@@ -19,5 +19,5 @@
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
     "SaveFilePath": "\/app\/web\/bots\/TestPaymentV2Bot\/settings.json",
-    "CheckUpdates": true
+    "CheckUpdates": false
 }
