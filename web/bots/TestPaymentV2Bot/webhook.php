@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace MuaathBots;
-
 require_once '/app/vendor/autoload.php';
 
 use MuaathBots\TestPaymentV2Bot;
