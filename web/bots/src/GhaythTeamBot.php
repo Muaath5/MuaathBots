@@ -21,10 +21,11 @@ class GhaythTeamBot extends UpdatesHandler
     # Write the handler for updates that your bot needs
     public function MessageHandler(object $message): bool
     {
+        $is_admin = false;
         # The bot class will be stored in $this->Bot
         if (property_exists($message, 'from'))
         {
-            $is_admin = (in_array($message->from->id, $this->BotAdmins) && $message->chat->id == $this->MessagesChatID);
+            $is_admin = in_array($message->from->id, $this->BotAdmins);
         }
         
         # First, Reply on commands
@@ -41,7 +42,7 @@ class GhaythTeamBot extends UpdatesHandler
                             'chat_id' => $message->chat->id,
                             'text' => '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
 
-أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉',
+أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉' + ($is_admin ? "\n\nأنت مشرف في البوت، أضافك @Muaath_5" : ''),
                             'reply_to_message_id' => $message->message_id,
                             'reply_markup' => json_encode([
                                 'force_reply' => true,
@@ -75,41 +76,37 @@ class GhaythTeamBot extends UpdatesHandler
         # Check if it was an admin response
         if ($is_admin)
         {
-            if (property_exists($message, 'reply_to_message'))
+            if ($message->chat->id == $this->MessagesChatID)
             {
-                if (property_exists($message->reply_to_message, 'reply_markup'))
+                if (property_exists($message, 'reply_to_message'))
                 {
+                    if (property_exists($message->reply_to_message, 'reply_markup'))
+                    {
 
-                    $reply_chat_id = intval($message->reply_to_message->reply_markup->inline_keyboard[0][0]->text);
-                    $reply_message_id = intval($message->reply_to_message->reply_markup->inline_keyboard[1][0]->text);
+                        $reply_chat_id = intval($message->reply_to_message->reply_markup->inline_keyboard[0][0]->text);
+                        $reply_message_id = intval($message->reply_to_message->reply_markup->inline_keyboard[1][0]->text);
 
-                    $this->Bot->CopyMessage([
-                        'from_chat_id' => $message->chat->id,
-                        'message_id' => $message->message_id,
-                        'chat_id' => $reply_chat_id,
-                        'allow_sending_without_reply' => true,
-                        'caption' => $message->caption ?? null,
-                        'caption_entities' => $message->caption_entities ?? null,
-                        'reply_to_message_id' => $reply_message_id
-                    ]);
-                }
-                else
-                {
-                    $this->Bot->SendMessage([
-                        'chat_id' => $this->MessagesChatID,
-                        'text' => 'يجب الرد على رسالة من المستخدمين',
-                        'parse_mode' => 'HTML'
-                    ]);    
+                        $this->Bot->CopyMessage([
+                            'from_chat_id' => $message->chat->id,
+                            'message_id' => $message->message_id,
+                            'chat_id' => $reply_chat_id,
+                            'allow_sending_without_reply' => true,
+                            'caption' => $message->caption ?? null,
+                            'caption_entities' => $message->caption_entities ?? null,
+                            'reply_to_message_id' => $reply_message_id
+                        ]);
+                    }
+                    else
+                    {
+                        $this->Bot->SendMessage([
+                            'chat_id' => $this->MessagesChatID,
+                            'text' => 'يجب الرد على رسالة من المستخدمين',
+                            'parse_mode' => 'HTML'
+                        ]);    
+                    }
                 }
             }
-        }
-        else if ($message->chat->id == $this->MessagesChatID)
-        {
-            $this->Bot->SendMessage([
-                'chat_id' => $message->chat->id,
-                'text' => 'أنت لست مشرفًا لترد على الرسائل! تواصل مع @Muaath_5 ليضيفك كمشرف',
-                'reply_to_message_id' => $message->message_id,
-            ]);
+            
         }
         else
         {

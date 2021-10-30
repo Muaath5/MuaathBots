@@ -3,13 +3,9 @@
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
         "message",
-        "edited_message",
         "channel_post",
-        "edited_chanel_post",
-        "my_chat_member",
-        "inline_query",
-        "shipping_query",
-        "pre_checkout_query"
+        "callback_query",
+        "my_chat_member"
     ],
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
@@ -18,6 +14,6 @@
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
-    "SaveFilePath": "\/app\/web\/bots\/TestPaymentV2Bot\/settings.json",
+    "SaveFilePath": "\/app\/web\/bots\/GhaythTeamBot\/settings.json",
     "CheckUpdates": false
 }
