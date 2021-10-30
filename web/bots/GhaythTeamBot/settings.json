@@ -3,14 +3,13 @@
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
         "message",
-        "channel_post",
         "callback_query",
         "my_chat_member"
     ],
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
-    "AutoHandleDuplicateUpdates": true,
+    "AutoHandleDuplicateUpdates": false,
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",

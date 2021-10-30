@@ -154,11 +154,6 @@ class GhaythTeamBot extends UpdatesHandler
         return true;
     }
 
-    public function ChannelPostHandler(object $channel_post): bool
-    {
-        return $this->MessageHandler($channel_post);
-    }
-
     public function CallbackQueryHandler(object $callback_query): bool
     {
         if (str_starts_with($callback_query->data, 'info_'))
