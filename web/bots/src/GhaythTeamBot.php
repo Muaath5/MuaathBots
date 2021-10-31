@@ -44,7 +44,9 @@ class GhaythTeamBot extends UpdatesHandler
                         
                         if ($is_admin)
                         {
-                            $reply += "\n\n<b>أنت مشرف في البوت!</b>";
+                            $reply += '
+
+<b>أنت مشرف في البوت!</b>';
                         }
 
                         $this->Bot->SendMessage([
