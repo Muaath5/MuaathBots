@@ -41,12 +41,19 @@ class GhaythTeamBot extends UpdatesHandler
                         $reply = '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
 
 أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉';
+
+                        $reply_markup = json_encode([
+                            'force_reply' => true,
+                            'input_field_placeholder' => 'أرسل الرسالة :)',
+                            'selective' => true
+                        ]);
                         
                         if ($is_admin)
                         {
-                            $reply += '
+                            $reply = '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
 
 <b>أنت مشرف في البوت!</b>';
+                            $reply_markup = /*json_encode()*/'';
                         }
 
                         $this->Bot->SendMessage([
@@ -54,11 +61,7 @@ class GhaythTeamBot extends UpdatesHandler
                             'text' => $reply,
                             'reply_to_message_id' => $message->message_id,
                             'parse_mode' => 'HTML',
-                            'reply_markup' => json_encode([
-                                'force_reply' => true,
-                                'input_field_placeholder' => 'أرسل الرسالة :)',
-                                'selective' => true
-                            ])
+                            'reply_markup' => $reply_markup
                         ]);
                         return true;
                     
