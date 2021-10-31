@@ -38,12 +38,20 @@ class GhaythTeamBot extends UpdatesHandler
                 {
                     case '/start':
                     case '/start@GhaythTeamBot':
+                        $reply = '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
+
+أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉';
+                        
+                        if ($is_admin)
+                        {
+                            $reply += "\n\n<b>أنت مشرف في البوت!</b>";
+                        }
+
                         $this->Bot->SendMessage([
                             'chat_id' => $message->chat->id,
-                            'text' => '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
-
-أرسل رسالتك وسيرد عليها مشرفو فريق غيث في أسرع وقت 😉' + ($is_admin ? "\n\nأنت مشرف في البوت، أضافك @Muaath_5" : ''),
+                            'text' => $reply,
                             'reply_to_message_id' => $message->message_id,
+                            'parse_mode' => 'HTML',
                             'reply_markup' => json_encode([
                                 'force_reply' => true,
                                 'input_field_placeholder' => 'أرسل الرسالة :)',
