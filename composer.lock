@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "muaath5/simple-bot-api",
-            "version": "v5.3.3",
+            "version": "v5.3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muaath5/SimpleBotAPI.git",
-                "reference": "ee9dcd2f8c37d8b6669293f1d7dc3459a7b89188"
+                "reference": "e88e1194805666200169dbf96aedcf5b5064593a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/ee9dcd2f8c37d8b6669293f1d7dc3459a7b89188",
-                "reference": "ee9dcd2f8c37d8b6669293f1d7dc3459a7b89188",
+                "url": "https://api.github.com/repos/Muaath5/SimpleBotAPI/zipball/e88e1194805666200169dbf96aedcf5b5064593a",
+                "reference": "e88e1194805666200169dbf96aedcf5b5064593a",
                 "shasum": ""
             },
             "require-dev": {
@@ -45,24 +45,24 @@
             "support": {
                 "email": "muaath1428@hotmail.com",
                 "issues": "https://github.com/Muaath5/SimpleBotAPI/issues",
-                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/v5.3.3"
+                "source": "https://github.com/Muaath5/SimpleBotAPI/tree/v5.3.3.1"
             },
-            "time": "2021-10-09T15:10:06+00:00"
+            "time": "2021-11-01T16:00:04+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v199",
+            "version": "v200",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "1a4e5d3ffe128f8eb8a17e50616462d3c804e11f"
+                "reference": "ffa4d0e714439d6f54f9608a0aa16674e82ed0a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/1a4e5d3ffe128f8eb8a17e50616462d3c804e11f",
-                "reference": "1a4e5d3ffe128f8eb8a17e50616462d3c804e11f",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/ffa4d0e714439d6f54f9608a0aa16674e82ed0a1",
+                "reference": "ffa4d0e714439d6f54f9608a0aa16674e82ed0a1",
                 "shasum": ""
             },
             "bin": [
@@ -92,9 +92,9 @@
             ],
             "support": {
                 "issues": "https://github.com/heroku/heroku-buildpack-php/issues",
-                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v199"
+                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v200"
             },
-            "time": "2021-10-08T15:04:20+00:00"
+            "time": "2021-10-28T22:02:01+00:00"
         }
     ],
     "aliases": [],

@@ -5,17 +5,18 @@ namespace MuaathBots;
 # Reuire autoload.php
 require '/app/vendor/autoload.php';
 
+use SimpleBotAPI\Exceptions\TelegramException;
 use SimpleBotAPI\UpdatesHandler;
 
 class GhaythTeamBot extends UpdatesHandler
 {
     protected int|float|string $MessagesChatID;
-    private array $BotAdmins;
 
-    public function __construct(int|float|string $messages_chat_id, array $bot_admins)
+    private string $ADD_ADMIN_CMD = '!أضف مشرفًا ➕';
+
+    public function __construct(int|float|string $messages_chat_id)
     {
         $this->MessagesChatID = $messages_chat_id;
-        $this->BotAdmins = $bot_admins;
     }
 
     # Write the handler for updates that your bot needs
@@ -32,7 +33,7 @@ class GhaythTeamBot extends UpdatesHandler
         if (property_exists($message, 'text'))
         {
             # Commands
-            if ($message->text[0] == '/')
+            if ($message->text[0] == '/' || $message->text[0] == '!')
             {
                 switch ($message->text)
                 {
@@ -53,7 +54,13 @@ class GhaythTeamBot extends UpdatesHandler
                             $reply = '😀 السلام عليكم، هذا بوت تواصل مع فريق غيث.
 
 <b>أنت مشرف في البوت!</b>';
-                            $reply_markup = /*json_encode()*/'';
+                            $reply_markup = json_encode([
+                                'keyboard' => [
+                                    [['text' => $this->ADD_ADMIN_CMD]]
+                                ],
+                                'one_time_keyboard' => false,
+                                'resize_keyboard' => false, # Only currently, Because only we have one keyboard
+                            ]);
                         }
 
                         $this->Bot->SendMessage([
@@ -76,12 +83,78 @@ class GhaythTeamBot extends UpdatesHandler
                         ]);
                         return true;
 
+                    case $this->ADD_ADMIN_CMD:
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => '#1 الآن أرسل لي رقم المعرف (ID) الخاص بالشحص الذي تريد إضافته، تأكد من أن الشخص موجود في مجموعة البوت وأنه قد راسل البوت سابقًا',
+                            'reply_markup' => json_encode([
+                                'force_reply' => true,
+                                'selective' => true
+                            ])
+                        ]);
+                        return true;
+
                     default:
                         $this->Bot->SendMessage([
                             'chat_id' => $message->chat->id,
                             'text' => 'عذرًا، الأمر غير معروف'
                         ]);
                         return true;
+                }
+            }
+        }
+
+        # Check if it was a response to a query
+        if (property_exists($message, 'reply_to_message'))
+        {
+            if ($message->reply_to_message->text[0] === '#')
+            {
+                // ADD_ADMIN_CMD
+                if ($message->reply_to_message->text[1] == '1')
+                {
+                    $new_admin_id = intval($message->text);
+                    # Error, Not number was sent
+                    if ($new_admin_id == 0)
+                    {
+                        $this->Bot->SendMessage([
+                            'chat_id' => $message->chat->id,
+                            'text' => '#1 يجب أن ترسل <b>رقم المعرف(ID)</b> الخاص بالشحص الذي تريد إضافته، تأكد من أن الشخص موجود في مجموعة البوت',
+                            'reply_markup' => json_encode([
+                                'force_reply' => true,
+                                'selective' => true
+                            ])
+                        ]);
+                        return true;
+                    }
+
+                    try
+                    {
+                        $this->Bot->GetChat(['chat_id' => $new_admin_id]);
+                    }
+                    catch (TelegramException $ex)
+                    {
+                        if ($ex->getCode() == 400)
+                        {
+                            $this->Bot->SendMessage([
+                                'chat_id' => $message->chat->id,
+                                'text' => '#1 تأكد من أن الشخص قد أرسل إلى البوت رسالةً واحدةً بحدٍ أدنى، ثم أعد إرسال ID الخاص به',
+                                'reply_markup' => json_encode([
+                                    'force_reply' => true,
+                                    'selective' => true
+                                ])
+                            ]);
+                            return true;
+                        }
+                    }
+
+                    # Another thing, Bot should check if user is in the group, But not a priority
+
+                    # Adding the admin
+                    array_push($this->Bot->Settings->BotAdmins, $new_admin_id);
+                    $this->Bot->SendMessage([
+                        'chat_id' => $message->chat->id,
+                        'text' => '',
+                    ]);
                 }
             }
         }
@@ -95,7 +168,6 @@ class GhaythTeamBot extends UpdatesHandler
                 {
                     if (property_exists($message->reply_to_message, 'reply_markup'))
                     {
-
                         $reply_chat_id = intval($message->reply_to_message->reply_markup->inline_keyboard[0][0]->text);
                         $reply_message_id = intval($message->reply_to_message->reply_markup->inline_keyboard[1][0]->text);
 
@@ -108,14 +180,6 @@ class GhaythTeamBot extends UpdatesHandler
                             'caption_entities' => $message->caption_entities ?? null,
                             'reply_to_message_id' => $reply_message_id
                         ]);
-                    }
-                    else
-                    {
-                        $this->Bot->SendMessage([
-                            'chat_id' => $this->MessagesChatID,
-                            'text' => 'يجب الرد على رسالة من المستخدمين',
-                            'parse_mode' => 'HTML'
-                        ]);    
                     }
                 }
             }

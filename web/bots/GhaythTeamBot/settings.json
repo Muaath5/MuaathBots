@@ -1,5 +1,7 @@
 {
-    "ReceivingUpdatesType": "webhook",
+    "BotAdmins": [
+        1265170068, 1126842646,
+        646520214, 1218401050, 1257590458],
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
         "message",
@@ -9,7 +11,7 @@
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
-    "AutoHandleDuplicateUpdates": false,
+    "HandleDuplicateUpdatesLevel": 1,
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
