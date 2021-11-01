@@ -1,17 +1,18 @@
 {
-    "ReceivingUpdatesType": "webhook",
+    "BotAdmins": [1265170068],
+    "AutoSaveBotUsers": false,
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
         "message",
         "edited_message",
         "channel_post",
-        "edited_chanel_post",
+        "edited_channel_post",
         "my_chat_member"
     ],
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
-    "AutoHandleDuplicateUpdates": true,
+    "HandleDuplicateUpdatesLevel": 1,
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
