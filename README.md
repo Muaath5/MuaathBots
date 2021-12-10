@@ -1,6 +1,6 @@
 # Muaath Bots
 [![Licence: GPL v3.0](https://img.shields.io/badge/Licence-GPL%20v3.0-green)](LICENCE)
-[![Bot API Version: 5.3](https://img.shields.io/badge/Bot%20API%20Version-5.3-dodgerblue)](https://core.telegram.org/bots/api#april-26-2021)
+[![Bot API Version: 5.5.1](https://img.shields.io/badge/Bot%20API%20Version-5.5.1-dodgerblue)](https://core.telegram.org/bots/api#december-7-2021)
 
 **Muaath Bots** is some PHP Telegram bots that can be recreated by everyone.
 
@@ -9,7 +9,6 @@
 - Open source and uses `git`
 - Can be hosted in Heroku free
 - Configuration stored in environment variables
-- All bots uses **Bot API 5.3** or earlier
 - Uses GitHub Actions
 - Bots uses [Simple Bot API Library](https://github.com/Muaath5/SimpleBotAPI)
 - Single file for webhook
