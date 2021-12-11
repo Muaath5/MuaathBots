@@ -236,25 +236,39 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Started conversion with the bot."
+                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Started conversion with the bot.",
+                    'parse_mode' => 'HTML'
                 ]);
             }
             else
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Added the bot to chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
+                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Added the bot to chat:
+    {$my_chat_member->chat->title} [@{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
+                    'parse_mode' => 'HTML'
                 ]);
             }
         }
         else if ($my_chat_member->new_chat_member->status === 'kicked')
         {
-            $this->Bot->SendMessage([
-                'chat_id' => $this->LogsChatID,
-                'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Kicked the bot from chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
-            ]);
+            if ($my_chat_member->chat->id == $my_chat_member->from->id)
+            {
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "<b>Bot was #blocked by:</b> <code>{$my_chat_member->from->id}</code> {$my_chat_member->from->first_name} @{$my_chat_member->from->username}",
+                    'parse_mode' => 'HTML'
+                ]);
+            }
+            else
+            {
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Kicked/Blocked the bot from chat:
+    {$my_chat_member->chat->title} [@{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
+                    'parse_mode' => 'HTML'
+                ]);
+            }
         }
         return true;
     }
