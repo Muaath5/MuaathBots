@@ -236,7 +236,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Started conversion with the bot.",
+                    'text' => "User {$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Unblocked the bot.",
                     'parse_mode' => 'HTML'
                 ]);
             }
@@ -244,7 +244,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Added the bot to chat:
+                    'text' => "User {$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Added the bot to chat:
     {$my_chat_member->chat->title} [@{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
                     'parse_mode' => 'HTML'
                 ]);
@@ -264,7 +264,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Kicked/Blocked the bot from chat:
+                    'text' => "User {$my_chat_member->from->first_name} [@{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] #Kicked/Blocked the bot from chat:
     {$my_chat_member->chat->title} [@{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
                     'parse_mode' => 'HTML'
                 ]);
@@ -283,7 +283,7 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 if (str_contains($edited_channel_post->text, '-----------')) $deleteIt = true;
             }
             if (property_exists($edited_channel_post, 'caption')) 
-            {
+            {   
                 if (str_contains($edited_channel_post->caption, '-----------')) $deleteIt = true;
             }
         }

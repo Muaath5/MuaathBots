@@ -251,16 +251,30 @@ class TestPaymentV2Bot extends UpdatesHandler
                     ]);
                     
                     # Logging
-                    $newInvoiceRequestText = "New invoice request 📲:
-                    First name: {$senderChat->first_name}.
-                    Last name: {$senderChat->last_name}.
-                    Username: @{$senderChat->username} ({$senderChat->id}).
-                    Language (null if not available): {$senderChat->language_code}.
-                    Which command was used: {$message->text}.";
+                    $newInvoiceRequestText = "<b>New invoice #request</b> 📲:
+    ID: <code>{$senderChat->id}</cpde>
+    First name: {$senderChat->first_name}
+    Last name: {$senderChat->last_name}
+    Username: @{$senderChat->username}
+    Language code: {$senderChat->language_code}
+    Used command: {$message->text}";
                     
+                    $userKeyboard = [
+                        'inline_keyboard' => [
+                            [
+                                [
+                                    'text' => 'Show user',
+                                    'url' => (property_exists($senderChat, 'username') ? "https://t.me/{$senderChat->username}" : "tg://user?id={$senderChat->id}")
+                                ]
+                            ]
+                        ]
+                    ];
+
                     $this->Bot->SendMessage([
                         'chat_id' => $this->LogsChatID,
-                        'text' => $newInvoiceRequestText
+                        'text' => $newInvoiceRequestText,
+                        'parse_mode' => 'HTML',
+                        'reply_markup' => json_encode($userKeyboard)
                     ]);
                         
 
