@@ -252,7 +252,7 @@ class TestPaymentV2Bot extends UpdatesHandler
                     
                     # Logging
                     $newInvoiceRequestText = "<b>New invoice #request</b> 📲:
-    ID: <code>{$senderChat->id}</cpde>
+    ID: <code>{$senderChat->id}</code>
     First name: {$senderChat->first_name}
     Last name: {$senderChat->last_name}
     Username: @{$senderChat->username}
