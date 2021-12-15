@@ -3,12 +3,12 @@
     {
         "commands":
         {
-            "start": "مرحبًا بك في هذا الآلي، هذا الآلي يقوم بحذف جميع أنواع الأزرار الشفافة من القنوات والمجموعات\n\n<b>طريقة استخدام الآلي:</b>\n1. أضف الآلي إلى قناة أو مجموعة\n2. رقِّ الآلي إلى مشرف وأعطه الآلي هذه الصلاحيات: حذف الرسائل\n3. الآلي سيعمل بنجاح!",
+            "start": "مرحبًا بك في هذا الآلي، هذا الآلي يقوم بحذف جميع أنواع الأزرار الشفافة من القنوات\n\n<b>طريقة استخدام الآلي:</b>\n1. أضف الآلي إلى قناة\n2. رقِّ الآلي إلى مشرف وأعطه الآلي هذه الصلاحيات: حذف الرسائل\n3. الآلي سيعمل بنجاح!",
             "project": "هذا المشروع <a href=\"https://github.com/Muaath5/MuaathBots\">مفتوح المصدر على GitHub</a>، صنعه @Muaath_5"
         },
         "errors":
         {
-            "bad_request": "خطأ، فضلًا تأكد من صلاحيات الآلي، أو تواصل مع مطور البوت",
+            "bad_request": "خطأ، فضلًا تأكد من صلاحيات الآلي، أو تواصل مع <a href\"https://t.me/Muaath_5\">مطور البوت</a>",
             "command_not_found": "عذرًا، الأمر غير موجود!"
         },
         "buttons":
@@ -20,12 +20,12 @@
     {
         "commands":
         {
-            "start": "Welcome to this bot, This bot deletes all types of inline buttons\n\n<b>How to use the Bot?</b>\n1. Add the Bot to a group or a channel.\n2. Promote the bot as admin, And give him this permissions: Delete messages.\n3. The Bot will work successfully!",
+            "start": "Welcome to this bot, This bot deletes all types of inline buttons in <b>channels only</b>\n\n<b>How to use the Bot?</b>\n1. Add the Bot to a channel.\n2. Promote the bot to admin, And give it this permissions: Delete messages.\n3. The Bot will work successfully!",
             "project": "This project is an <a href=\"https://github.com/Muaath5/MuaathBots\">Open Source Project</a> on GitHub, By @Muaath_5"
         },
         "errors":
         {
-            "bad_request": "Error, Please check bot's permissions, Or contact with bot developer",
+            "bad_request": "Error, Please check bot's permissions. If everything seems good, contact with <a href=\"https://t.me/Muaath_5\">bot developer</a>",
             "command_not_found": "Sorry, Command not found!"
         },
         "buttons":
