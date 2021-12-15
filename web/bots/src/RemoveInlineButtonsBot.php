@@ -46,20 +46,15 @@ class RemoveInlineButtonsBot extends UpdatesHandler
     {
         try
         {
-            if (in_array($message->from->id, $this->Settings->bot_admins))
+            # Main feature of the bot
+            if (property_exists($message, 'reply_markup'))
             {
-                # Nothing here now..
+                $this->Bot->DeleteMessage([
+                    'chat_id' => $message->chat->id,
+                    'message_id' => $message->message_id
+                ]);
             }
-            else
-            {
-                if (property_exists($message, 'reply_markup'))
-                {
-                    $this->Bot->DeleteMessage([
-                        'chat_id' => $message->chat->id,
-                        'message_id' => $message->message_id
-                    ]);
-                }
-            }
+        
             
             if (property_exists($message, 'text'))
             {    
@@ -82,10 +77,11 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                     'text' => $this->Settings->$lang->errors->bad_request
                 ]);
             }
-            else
-            {
-
-            }
+            $this->Bot->SendMessage([
+                'chat_id' => $this->LogsChatID,
+                'text' => "<b>Telegram Error {$tgex->getCode()}</b>\n{$tgex}",
+                'parse_mode' => 'HTML'
+            ]);
         }
         catch (\Exception $ex)
         {
@@ -136,10 +132,14 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                 return true;
             }
 
-            http_response_code(500);
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
-                'text' => "<b>Telegram Error[{$tgex->getCode()}]:</b>\n{$tgex->getMessage()}\n\nUser language: <code>{$lang}</code>\nUser ID: <code>{$message->from->id}</code>&{$message->from->username}",
+                'text' => "<b>Telegram Error {$tgex->getCode()}</b>
+    {$tgex}
+                
+    User language: <code>{$lang}</code>
+    ID: <code>{$message->from->id}</code>
+    Username: {$message->from->username}",
                 'parse_mode' => 'HTML'
             ]);
         }
@@ -199,20 +199,13 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                         'chat_id' => $channel_post->chat->id,
                         'text' => $this->Settings->$lang->errors->bad_request
                     ]);
-                    $this->Bot->SendMessage([
-                        'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Error:</b>\n$tgex",
-                        'parse_mode' => 'HTML'
-                    ]);
                 }
-                else
-                {
-                    $this->Bot->SendMessage([
-                        'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Error:</b>\n$tgex",
-                        'parse_mode' => 'HTML'
-                    ]);
-                }
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "<b>Telegram Error {$tgex->getCode()}</b>
+    {$tgex}",
+                    'parse_mode' => 'HTML'
+                ]);
             }
             catch (\Exception $ex)
             {
@@ -310,26 +303,21 @@ class RemoveInlineButtonsBot extends UpdatesHandler
                         break;
                     }
                 }
+                // Bad request
                 if ($tgex->getCode() == 400)
                 {
                     $this->Bot->SendMessage([
                         'chat_id' => $edited_channel_post->chat->id,
                         'text' => $this->Settings->$lang->errors->bad_request
                     ]);
-                    $this->Bot->SendMessage([
-                        'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Telegram Error:</b>\n$tgex",
-                        'parse_mode' => 'HTML'
-                    ]);
+                   
                 }
-                else
-                {
-                    $this->Bot->SendMessage([
-                        'chat_id' => $this->LogsChatID,
-                        'text' => "<b>Telegram Error:</b>\n$tgex",
-                        'parse_mode' => 'HTML'
-                    ]);
-                }
+                $this->Bot->SendMessage([
+                    'chat_id' => $this->LogsChatID,
+                    'text' => "<b>Telegram Error {$tgex->getCode()}</b>
+    {$tgex}",
+                    'parse_mode' => 'HTML'
+                ]);
             }
             catch (\Exception $ex)
             {

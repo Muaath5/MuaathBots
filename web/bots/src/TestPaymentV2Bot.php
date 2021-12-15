@@ -257,7 +257,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     Last name: {$senderChat->last_name}
     Username: @{$senderChat->username}
     Language code: {$senderChat->language_code}
-    Used command: {$message->text}";
+    Used command: <code>{$message->text}</code>";
                     
                     $userKeyboard = [
                         'inline_keyboard' => [
