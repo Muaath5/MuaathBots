@@ -98,7 +98,12 @@ class TestPaymentV2Bot extends UpdatesHandler
                 $info = "<b>Successful payment info 😃:</b>
                 
 <b>User info:</b>
-    Telegram User: {$message->from->first_name} @{$message->from->username} (<code>{$message->from->id}</code>).
+    Telegram User:
+        ID: <code>{$message->from->id}</code>
+        First Name: {$message->from->first_name}
+        Last Name: {$message->from->last_name}
+        Username: @{$message->from->username}
+        Language code: <code>{$message->from->language_code}</code>
     Name: {$message->successful_payment->order_info->name}
     Phone number: {$message->successful_payment->order_info->phone_number}
     Email: {$message->successful_payment->order_info->email}
@@ -115,10 +120,10 @@ class TestPaymentV2Bot extends UpdatesHandler
     Post code: {$message->successful_payment->order_info->shipping_address->post_code}.
                 
 <b>Invoice result</b>
-    Invoice payload: <code>{$message->successful_payment->invoice_payload}</code>.    
+    Invoice payload: <code>{$message->successful_payment->invoice_payload}</code>
     Total amount: {$floatTotalAmount} {$message->successful_payment->currency}.
-    Telegram payment ID: {$message->successful_payment->telegram_payment_charge_id}.
-    Provider payment ID: {$message->successful_payment->provider_payment_charge_id}";
+    Telegram payment ID: <code>{$message->successful_payment->telegram_payment_charge_id}</code>
+    Provider payment ID: <code>{$message->successful_payment->provider_payment_charge_id}</code>";
                 
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
@@ -256,7 +261,7 @@ class TestPaymentV2Bot extends UpdatesHandler
     First name: {$senderChat->first_name}
     Last name: {$senderChat->last_name}
     Username: @{$senderChat->username}
-    Language code: {$senderChat->language_code}
+    Language code: <code>{$message->from->language_code}</code>
     Used command: <code>{$message->text}</code>";
                     
                     $userKeyboard = [
@@ -319,16 +324,30 @@ class TestPaymentV2Bot extends UpdatesHandler
                                 'is_flexible' => $this->Settings->$lang->invoices[$i]->is_flexible]);
                             
                             # Logging
-                            $newInvoiceRequestText = "New invoice request 📲:
-                            First name: {$senderChat->first_name}.
-                            Last name: {$senderChat->last_name}.
-                            Username: @{$senderChat->username} ({$senderChat->id}).
-                            Language (null if not available): {$senderChat->language_code}.
-                            Which command was used: {$message->text}.";
+                            $newInvoiceRequestText = "<b>New invoice #request</b> 📲:
+    ID: <code>{$senderChat->id}</code>
+    First name: {$senderChat->first_name}
+    Last name: {$senderChat->last_name}
+    Username: @{$senderChat->username}
+    Language code: <code>{$message->from->language_code}</code>
+    Used command: <code>{$message->text}</code>";
                             
+                            $userKeyboard = [
+                                'inline_keyboard' => [
+                                    [
+                                        [
+                                            'text' => 'Show user',
+                                            'url' => (property_exists($senderChat, 'username') ? "https://t.me/{$senderChat->username}" : "tg://user?id={$senderChat->id}")
+                                        ]
+                                    ]
+                                ]
+                            ];
+
                             $this->Bot->SendMessage([
                                 'chat_id' => $this->LogsChatID,
                                 'text' => $newInvoiceRequestText,
+                                'parse_mode' => 'HTML',
+                                'reply_markup' => json_encode($userKeyboard)
                             ]);
                             
                             break;
@@ -423,14 +442,15 @@ class TestPaymentV2Bot extends UpdatesHandler
             # Logging error
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
-                'text' => "<b>New inline invoice request:</b>
+                'text' => "<b>New inline invoice #request:</b>
     <b>User:</b>
-        ID: {$inline_query->from->id}.
-        First name: {$inline_query->from->first_name}.
-        Last name: {$inline_query->from->last_name}.
-        Username: {$inline_query->from->username}.
-    <b>Query:</b> {$inline_query->query}.
-    <b>Chat type:</b> {$inline_query->chat_type}.
+        ID: <code>{$inline_query->from->id}</code>
+        First name: {$inline_query->from->first_name}
+        Last name: {$inline_query->from->last_name}
+        Username: @{$inline_query->from->username}
+        Language code: <code>{$inline_query->from->language_code}</code>
+    <b>Query:</b> <code>{$inline_query->query}</code>
+    <b>Chat type:</b> {$inline_query->chat_type}
     
     <b>Error:</b>
     <i>{$ex}</i>
@@ -539,7 +559,8 @@ class TestPaymentV2Bot extends UpdatesHandler
             {
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
-                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Started conversion with the bot."
+                    'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Started conversion with the bot.",
+                    'parse_mode' => 'HTML'
                 ]);
             }
             else
@@ -547,7 +568,8 @@ class TestPaymentV2Bot extends UpdatesHandler
                 $this->Bot->SendMessage([
                     'chat_id' => $this->LogsChatID,
                     'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Added the bot to chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
+    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
+                    'parse_mode' => 'HTML'
                 ]);
             }
         }
@@ -556,7 +578,8 @@ class TestPaymentV2Bot extends UpdatesHandler
             $this->Bot->SendMessage([
                 'chat_id' => $this->LogsChatID,
                 'text' => "{$my_chat_member->from->first_name} [{$my_chat_member->from->username}, <code>{$my_chat_member->from->id}</code>] Kicked the bot from chat:
-    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]"
+    {$my_chat_member->chat->title} [{$my_chat_member->chat->username}, <code>{$my_chat_member->chat->id}</code>]",
+                'parse_mode' => 'HTML'
             ]);
         }
         return true;
