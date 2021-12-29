@@ -10,5 +10,5 @@ use SimpleBotAPI\TelegramBot;
 $Bot = new TelegramBot(getenv('PAYMENT_BOT_TOKEN'), new TestPaymentV2Bot(), BotSettings::Import(__DIR__ . '/settings.json'));
 if (!$Bot->OnWebhookUpdate())
 {
-    echo 'false';
+    error_log("Webhook error");
 }

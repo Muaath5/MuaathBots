@@ -378,8 +378,8 @@
                 "supported_cities": [["Москва"], ["Киев"], ["Кабул"]],
                 "limit": 1000,
         
-                "suggested_tip_amounts": [100, 200, 400, 800],
-                "max_tip_amount": 5000,
+                "suggested_tip_amounts": [7000, 8000, 9000, 10000],
+                "max_tip_amount": 20000,
         
                 "shipping_options":
                 [
@@ -400,15 +400,15 @@
                 [
                     {
                         "label": "Чашечку кофе",
-                        "amount": 700
+                        "amount": 10000
                     },
                     {
                         "label": "Восхитительный шоколад",
-                        "amount": 500
+                        "amount": 7550
                     },
                     {
                         "label": "Бутылка воды",
-                        "amount": 100
+                        "amount": 7500
                     }
                 ]
             }
