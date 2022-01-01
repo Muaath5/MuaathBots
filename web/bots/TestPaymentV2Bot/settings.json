@@ -13,7 +13,7 @@
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
-    "HandleDuplicateUpdatesLevel": 1,
+    "HandleDuplicateUpdatesLevel": 2,
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",

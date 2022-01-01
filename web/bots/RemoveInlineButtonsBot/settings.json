@@ -4,7 +4,6 @@
     "UpdatesTimeout": 1,
     "AllowedUpdates": [
         "message",
-        "edited_message",
         "channel_post",
         "edited_channel_post",
         "my_chat_member"
@@ -12,7 +11,7 @@
     "LastUpdateID": -1,
     "LastUpdateDate": 0,
     "AutoHandleSettings": true,
-    "HandleDuplicateUpdatesLevel": 1,
+    "HandleDuplicateUpdatesLevel": 2,
     "AutoHandleFloodException": true,
     "AutoHandleChatMigratedException": true,
     "APIHost": "https:\/\/api.telegram.org",
